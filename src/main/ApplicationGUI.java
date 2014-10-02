@@ -1,0 +1,3602 @@
+package main;
+
+import java.awt.Toolkit;
+import java.awt.event.*;
+import java.awt.image.BufferedImage;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.lang.Math.*;
+import java.text.DecimalFormat;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+import javax.imageio.ImageIO;
+import javax.swing.*;
+import javax.swing.SwingWorker.StateValue;
+import javax.swing.filechooser.FileNameExtensionFilter;
+import javax.swing.table.DefaultTableCellRenderer;
+
+public class ApplicationGUI extends javax.swing.JFrame {
+
+    //<editor-fold defaultstate="collapsed" desc="Variables">
+    private boolean VALID_RUN_FLAG = true;
+    private final int NUMBER_SYNGAS_SPECIES = 12;
+    private final int NUMBER_AIR_SPECIES = 4;
+    private final int NUMBER_FLUEGAS_SPECIES = 5;
+    private final int NUMBER_AMMONIA_INJECTION_SPECIES = 2;
+    
+    private final int NUMBER_SYNGAS_MFR_FIELDS = 2;
+    private final int NUMBER_AIR_MFR_FIELDS = 3;
+    private final int NUMBER_FLUEGAS_MFR_FIELDS = 3;         
+    private final int NUMBER_AMMONIA_MFR_FIELDS = 2;
+    private final int NUMBER_TO_DESIGN_FIELDS = 8;
+    private final int TOTAL_NUMBER_TEXTFIELDS = 54;
+            
+    private final double DEFAULT_SYNGAS_N2 = 0.5401,
+                         DEFAULT_SYNGAS_O2 = 0.00,
+                         DEFAULT_SYNGAS_AR = 0.0010,
+                         DEFAULT_SYNGAS_H2O = 0.205,
+                         DEFAULT_SYNGAS_CO2 = 0.1054,
+                         DEFAULT_SYNGAS_CO = 0.0557,
+                         DEFAULT_SYNGAS_CH4 = 0.0263,
+                         DEFAULT_SYNGAS_H2 = 0.0264,
+                         DEFAULT_SYNGAS_H2S = 0.0022,
+                         DEFAULT_SYNGAS_HCL = 0.0002,
+                         DEFAULT_SYNGAS_C6H6 = 0.0129,
+                         DEFAULT_SYNGAS_NH3 = 0.0248,
+                         DEFAULT_AIR_N2 = 0.78,
+                         DEFAULT_AIR_O2 = 0.21,
+                         DEFAULT_AIR_AR = 0.01;
+    private final double N_MW = 14.007;
+    private final double O_MW = 15.999;
+    private final double AR_MW = 39.948;
+    private final double H_MW = 1.0079;
+    
+     
+    
+    private ThermalOxidizer thermalOxidizer;
+    private HashMap textFieldHash;
+    private String runDirectory;
+    
+    private JTextField[] synGasSpeciesTextfieldsArray = new JTextField[NUMBER_SYNGAS_SPECIES];
+    private JTextField[] airSpeciesTextfieldsArray = new JTextField[NUMBER_AIR_SPECIES];
+    private JTextField[] flueGasSpeciesTextfieldsArray = new JTextField[NUMBER_FLUEGAS_SPECIES];
+    private JTextField[] ammoniaSpeciesTextfieldsArray = new JTextField[NUMBER_AMMONIA_INJECTION_SPECIES];
+    
+    private JTextField[] synGasVolFlowRateTextfieldsArray = new JTextField[NUMBER_SYNGAS_MFR_FIELDS];
+    private JTextField[] airMassFlowRateTextfieldsArray = new JTextField[NUMBER_AIR_MFR_FIELDS];
+    private JTextField[] flueGasMassFlowRateTextfieldsArray = new JTextField[NUMBER_FLUEGAS_MFR_FIELDS];
+    private JTextField[] ammoniaMassFlowRateTextfieldsArray = new JTextField[NUMBER_AMMONIA_MFR_FIELDS];
+    
+    private JTextField[] thermalOxidizerDesignTextfieldsArray = new JTextField[NUMBER_TO_DESIGN_FIELDS];
+    
+    private JTextField[] allTextFieldsArray = new JTextField[TOTAL_NUMBER_TEXTFIELDS];
+    
+    // </editor-fold>
+    
+    //<editor-fold defaultstate="collapsed" desc="Action definitions (DO NOT MODIFY)">
+    Action setDefault = new AbstractAction("setDefaultValues") {
+        @Override
+        public void actionPerformed(ActionEvent ae) {
+            setDefaultValues();
+        }
+    };
+    Action updateAll = new AbstractAction("updateAll") {
+        @Override
+        public void actionPerformed(ActionEvent ae) {
+            System.out.println("NEED TO ADD CODE FOR THS BUTTON");
+        }
+    };
+    Action runTO = new AbstractAction("runTO") {
+        @Override
+        public void actionPerformed(ActionEvent ae) {
+            runButton.setEnabled(false);
+            jProgressBar1.setStringPainted(true);
+            textFieldValuesToHash();
+            //this.listTextFieldValues
+            runThermalOxidizer();
+        }
+    };
+    //</editor-fold>
+
+    public ApplicationGUI() {
+        initComponents();
+        myInit();
+        //jTabbedPane1.setEnabledAt(1, false);
+        //System.out.println(new SimpleDateFormat("yyyyMMdd_HHmmss").format(Calendar.getInstance().getTime()));
+    }
+
+    /**
+     * This method is called from within the constructor to initialize the form.
+     * WARNING: Do NOT modify this code. The content of this method is always
+     * regenerated by the Form Editor.
+     */
+    @SuppressWarnings("unchecked")
+    // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
+    private void initComponents() {
+
+        jScrollPane = new javax.swing.JScrollPane();
+        jTabbedPane = new javax.swing.JTabbedPane();
+        tab1_panel = tab1_panel = new JPanel() {
+
+            //public Image img;
+
+            //@Override
+            //public void paintComponent(Graphics g){
+                //img = Toolkit.getDefaultToolkit().getImage(
+                    //ApplicationGUI.class.getResource("/images/bg5.jpg"));
+                //g.drawImage(img, 0, 0, this.getWidth(), this.getHeight(), this);
+                //}
+        };
+        synGas_panel = new javax.swing.JPanel();
+        synGas_title_label = new javax.swing.JLabel();
+        synGasPanel_subPanel1 = new javax.swing.JPanel();
+        synN2_label = new javax.swing.JLabel();
+        synAR_label = new javax.swing.JLabel();
+        synO2_label = new javax.swing.JLabel();
+        synH20_label = new javax.swing.JLabel();
+        synC6H6_label = new javax.swing.JLabel();
+        synCH4_label = new javax.swing.JLabel();
+        synNH3_label = new javax.swing.JLabel();
+        synH2S_label = new javax.swing.JLabel();
+        synH2_label = new javax.swing.JLabel();
+        synCO_label = new javax.swing.JLabel();
+        synCO2_label = new javax.swing.JLabel();
+        synHCL_label = new javax.swing.JLabel();
+        syn_total_label = new javax.swing.JLabel();
+        syn_N2_tf = new javax.swing.JTextField();
+        syn_AR_tf = new javax.swing.JTextField();
+        syn_O2_tf = new javax.swing.JTextField();
+        syn_H2O_tf = new javax.swing.JTextField();
+        syn_C6H6_tf = new javax.swing.JTextField();
+        syn_CH4_tf = new javax.swing.JTextField();
+        syn_NH3_tf = new javax.swing.JTextField();
+        syn_H2S_tf = new javax.swing.JTextField();
+        syn_H2_tf = new javax.swing.JTextField();
+        syn_CO_tf = new javax.swing.JTextField();
+        syn_CO2_tf = new javax.swing.JTextField();
+        syn_HCL_tf = new javax.swing.JTextField();
+        syn_totalFraction_tf = new javax.swing.JTextField();
+        synVolumeFraction_label = new javax.swing.JLabel();
+        airSpecies_label = new javax.swing.JLabel();
+        synGasPanel_subPanel2 = new javax.swing.JPanel();
+        synVolFlowRate_label = new javax.swing.JLabel();
+        synTemp_label = new javax.swing.JLabel();
+        syn_tempF_tf = new javax.swing.JTextField();
+        syn_VolFlowRate_tf = new javax.swing.JTextField();
+        synVolFlowRate_units_label = new javax.swing.JLabel();
+        air_panel = new javax.swing.JPanel();
+        air_title_label = new javax.swing.JLabel();
+        airPanel_subPanel1 = new javax.swing.JPanel();
+        jLabel58 = new javax.swing.JLabel();
+        air_massFlowRate_ring1_label = new javax.swing.JLabel();
+        air_massFlowRate_ring2_label = new javax.swing.JLabel();
+        air_massFlowRateTotal_label = new javax.swing.JLabel();
+        air_tempF_label = new javax.swing.JLabel();
+        air_tempF_tf = new javax.swing.JTextField();
+        air_massFlowRate_total_tf = new javax.swing.JTextField();
+        air_massFlowRate_ring2_tf = new javax.swing.JTextField();
+        air_massFlowRate_ring1_tf = new javax.swing.JTextField();
+        jLabel11 = new javax.swing.JLabel();
+        jLabel12 = new javax.swing.JLabel();
+        air_massFlowRate_ring1_percentage_tf = new javax.swing.JTextField();
+        air_massFlowRate_ring2_percentage_tf = new javax.swing.JTextField();
+        air_massFlowRate_total_percentage_tf = new javax.swing.JTextField();
+        air_VolumeFraction_label = new javax.swing.JLabel();
+        air_species_label = new javax.swing.JLabel();
+        air_N2_label = new javax.swing.JLabel();
+        air_N2_tf = new javax.swing.JTextField();
+        air_AR_tf = new javax.swing.JTextField();
+        airAR_label = new javax.swing.JLabel();
+        airO2_label = new javax.swing.JLabel();
+        air_O2_tf = new javax.swing.JTextField();
+        airVolumeFractionTotal_label = new javax.swing.JLabel();
+        air_totalVolumeFraction_tf = new javax.swing.JTextField();
+        air_H2ObyMass_tf = new javax.swing.JTextField();
+        jLabel8 = new javax.swing.JLabel();
+        jLabel9 = new javax.swing.JLabel();
+        air_H2ObyVolume_tf = new javax.swing.JTextField();
+        airH2O_label = new javax.swing.JLabel();
+        flueGas_panel = new javax.swing.JPanel();
+        flueGas_title_label = new javax.swing.JLabel();
+        flueGasPanel_subPanel1 = new javax.swing.JPanel();
+        jLabel68 = new javax.swing.JLabel();
+        jLabel16 = new javax.swing.JLabel();
+        flueGas_massFlowRate_ring1_tf = new javax.swing.JTextField();
+        jLabel17 = new javax.swing.JLabel();
+        flueGas_massFlowRate_ring1_percentage_tf = new javax.swing.JTextField();
+        flueGas_massFlowRate_ring2_percentage_tf = new javax.swing.JTextField();
+        flueGas_massFlowRate_total_percentage_tf = new javax.swing.JTextField();
+        flueGas_massFlowRate_total_tf = new javax.swing.JTextField();
+        flueGas_massFlowRate_ring2_tf = new javax.swing.JTextField();
+        jLabel70 = new javax.swing.JLabel();
+        jLabel15 = new javax.swing.JLabel();
+        flueGas_tempF_label = new javax.swing.JLabel();
+        flueGas_tempF_tf = new javax.swing.JTextField();
+        jLabel69 = new javax.swing.JLabel();
+        flueGasPanel_subPanel2 = new javax.swing.JPanel();
+        flueGas_total_tf = new javax.swing.JTextField();
+        flueGas_total_label = new javax.swing.JLabel();
+        flueGas_CO2_label = new javax.swing.JLabel();
+        flueGas_CO2_tf = new javax.swing.JTextField();
+        flueGas_H2O_tf = new javax.swing.JTextField();
+        flueGas_H2O_label = new javax.swing.JLabel();
+        flueGas_O2_label = new javax.swing.JLabel();
+        flueGas_O2_tf = new javax.swing.JTextField();
+        flueGas_species_label = new javax.swing.JLabel();
+        flueGas_volumeFraction_label = new javax.swing.JLabel();
+        flueGas_N2_tf = new javax.swing.JTextField();
+        flueGas_N2_label = new javax.swing.JLabel();
+        flueGas_AR_label = new javax.swing.JLabel();
+        flueGas_AR_tf = new javax.swing.JTextField();
+        ammonia_panel = new javax.swing.JPanel();
+        ammonia_subPanel1 = new javax.swing.JPanel();
+        ammonia_title_label = new javax.swing.JLabel();
+        jPanel12 = new javax.swing.JPanel();
+        jLabel49 = new javax.swing.JLabel();
+        ammoniaInject_H2O_label = new javax.swing.JLabel();
+        jLabel50 = new javax.swing.JLabel();
+        ammoniaInject_H2O_tf = new javax.swing.JTextField();
+        ammoniaInject_NH3_label = new javax.swing.JLabel();
+        ammoniaInject_NH3_tf = new javax.swing.JTextField();
+        ammoniaInject_total_tf = new javax.swing.JTextField();
+        ammoniaInject_total_label = new javax.swing.JLabel();
+        jPanel13 = new javax.swing.JPanel();
+        jLabel52 = new javax.swing.JLabel();
+        jLabel4 = new javax.swing.JLabel();
+        ammoniaInject_massFlow_label = new javax.swing.JLabel();
+        ammoniaInject_massFlowRate_tf = new javax.swing.JTextField();
+        ammoniaInject_tempF_label = new javax.swing.JLabel();
+        ammoniaInject_tempF_tf = new javax.swing.JTextField();
+        buttons_panel = new javax.swing.JPanel();
+        setDefaultValuesButton = new javax.swing.JButton();
+        runButton = new javax.swing.JButton();
+        jProgressBar1 = new javax.swing.JProgressBar();
+        clockLabel1 = new main.ClockLabel();
+        thermalOxidizerDesign_panel = new javax.swing.JPanel();
+        jLabel1 = new javax.swing.JLabel();
+        jLabel5 = new javax.swing.JLabel();
+        jLabel14 = new javax.swing.JLabel();
+        jLabel39 = new javax.swing.JLabel();
+        jLabel40 = new javax.swing.JLabel();
+        thermOxDiameter = new javax.swing.JTextField();
+        thermOxLength = new javax.swing.JTextField();
+        thermOxLengthInc = new javax.swing.JTextField();
+        ring1distanceTF = new javax.swing.JTextField();
+        ring2distanceTF = new javax.swing.JTextField();
+        jLabel53 = new javax.swing.JLabel();
+        jLabel54 = new javax.swing.JLabel();
+        ammoniaInjectionSiteTF = new javax.swing.JTextField();
+        jLabel74 = new javax.swing.JLabel();
+        tempLossPerFoot = new javax.swing.JTextField();
+        jLabel75 = new javax.swing.JLabel();
+        jLabel34 = new javax.swing.JLabel();
+        jLabel42 = new javax.swing.JLabel();
+        jLabel48 = new javax.swing.JLabel();
+        jLabel72 = new javax.swing.JLabel();
+        jLabel76 = new javax.swing.JLabel();
+        jLabel77 = new javax.swing.JLabel();
+        jLabel78 = new javax.swing.JLabel();
+        thermOxDesign_ambientTemp_label = new javax.swing.JLabel();
+        ambientTemp_tf = new javax.swing.JTextField();
+        tab2_panel = new javax.swing.JPanel();
+        outlet_concentration_table = new javax.swing.JTable();
+        profile_tabPane = new javax.swing.JTabbedPane();
+        temp_profile_panel = new javax.swing.JPanel();
+        co_profile_panel = new javax.swing.JPanel();
+        nox_profile_panel = new javax.swing.JPanel();
+        openOutputFolder_button = new javax.swing.JButton();
+        jMenuBar = new javax.swing.JMenuBar();
+        file_menu = new javax.swing.JMenu();
+        openFile_menuItem = new javax.swing.JMenuItem();
+        saveInputFile_menuItem = new javax.swing.JMenuItem();
+        saveOutputFile_menuItem = new javax.swing.JMenuItem();
+        exit_menuItem = new javax.swing.JMenuItem();
+        edit_menu = new javax.swing.JMenu();
+        setDefaultValues_menuItem = new javax.swing.JMenuItem();
+        clearFields_menuItemm = new javax.swing.JMenuItem();
+        run_menu = new javax.swing.JMenu();
+        run_menuItem = new javax.swing.JMenuItem();
+        cancelRun_menuItem = new javax.swing.JMenuItem();
+        about_menu = new javax.swing.JMenu();
+        about_menuItem = new javax.swing.JMenuItem();
+
+        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Oxidizer Model");
+
+        tab1_panel.setBackground(new java.awt.Color(215, 200, 121));
+        tab1_panel.setForeground(new java.awt.Color(255, 255, 255));
+
+        synGas_panel.setBackground(new java.awt.Color(205, 198, 144));
+        synGas_panel.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(51, 51, 51)));
+
+        synGas_title_label.setBackground(new java.awt.Color(192, 184, 96));
+        synGas_title_label.setFont(new java.awt.Font("Tahoma", 1, 15)); // NOI18N
+        synGas_title_label.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        synGas_title_label.setText("Synthesis Gas   ");
+
+        synGasPanel_subPanel1.setBackground(new java.awt.Color(32, 32, 32));
+        synGasPanel_subPanel1.setOpaque(false);
+
+        synN2_label.setText("N2");
+
+        synAR_label.setText("AR");
+
+        synO2_label.setText("O2");
+
+        synH20_label.setText("H2O");
+
+        synC6H6_label.setText("C6H6");
+
+        synCH4_label.setText("CH4");
+
+        synNH3_label.setText("NH3");
+
+        synH2S_label.setText("H2S");
+
+        synH2_label.setText("H2");
+
+        synCO_label.setText("CO");
+
+        synCO2_label.setText("CO2");
+
+        synHCL_label.setText("HCL");
+
+        syn_total_label.setText("Total");
+
+        syn_N2_tf.setColumns(7);
+        syn_N2_tf.setHorizontalAlignment(javax.swing.JTextField.TRAILING);
+        syn_N2_tf.setText("0.0");
+        syn_N2_tf.setCursor(new java.awt.Cursor(java.awt.Cursor.TEXT_CURSOR));
+        syn_N2_tf.setInputVerifier(new MyAbstractValidator(this, syn_N2_tf, ""));
+        syn_N2_tf.setName("synGas_species"); // NOI18N
+        syn_N2_tf.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                syn_N2_tfActionPerformed(evt);
+            }
+        });
+
+        syn_AR_tf.setColumns(7);
+        syn_AR_tf.setHorizontalAlignment(javax.swing.JTextField.TRAILING);
+        syn_AR_tf.setText("0.0");
+        syn_AR_tf.setInputVerifier(new MyAbstractValidator(this, syn_AR_tf, ""));
+        syn_AR_tf.setName("synGas_species"); // NOI18N
+        syn_AR_tf.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                syn_AR_tfActionPerformed(evt);
+            }
+        });
+
+        syn_O2_tf.setColumns(7);
+        syn_O2_tf.setHorizontalAlignment(javax.swing.JTextField.TRAILING);
+        syn_O2_tf.setText("0.0");
+        syn_O2_tf.setInputVerifier(new MyAbstractValidator(this, syn_O2_tf, ""));
+        syn_O2_tf.setName("synGas_species"); // NOI18N
+        syn_O2_tf.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                syn_O2_tfActionPerformed(evt);
+            }
+        });
+
+        syn_H2O_tf.setColumns(7);
+        syn_H2O_tf.setHorizontalAlignment(javax.swing.JTextField.TRAILING);
+        syn_H2O_tf.setText("0.0");
+        syn_H2O_tf.setInputVerifier(new MyAbstractValidator(this, syn_H2O_tf, ""));
+        syn_H2O_tf.setName("synGas_species"); // NOI18N
+        syn_H2O_tf.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                syn_H2O_tfActionPerformed(evt);
+            }
+        });
+
+        syn_C6H6_tf.setColumns(7);
+        syn_C6H6_tf.setHorizontalAlignment(javax.swing.JTextField.TRAILING);
+        syn_C6H6_tf.setText("0.0");
+        syn_C6H6_tf.setInputVerifier(new MyAbstractValidator(this, syn_C6H6_tf, ""));
+        syn_C6H6_tf.setName("synGas_species"); // NOI18N
+        syn_C6H6_tf.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                syn_C6H6_tfActionPerformed(evt);
+            }
+        });
+
+        syn_CH4_tf.setColumns(7);
+        syn_CH4_tf.setHorizontalAlignment(javax.swing.JTextField.TRAILING);
+        syn_CH4_tf.setText("0.0");
+        syn_CH4_tf.setInputVerifier(new MyAbstractValidator(this, syn_CH4_tf, ""));
+        syn_CH4_tf.setName("synGas_species"); // NOI18N
+        syn_CH4_tf.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                syn_CH4_tfActionPerformed(evt);
+            }
+        });
+
+        syn_NH3_tf.setColumns(7);
+        syn_NH3_tf.setHorizontalAlignment(javax.swing.JTextField.TRAILING);
+        syn_NH3_tf.setText("0.0");
+        syn_NH3_tf.setInputVerifier(new MyAbstractValidator(this, syn_NH3_tf, ""));
+        syn_NH3_tf.setName("synGas_species"); // NOI18N
+        syn_NH3_tf.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                syn_NH3_tfActionPerformed(evt);
+            }
+        });
+
+        syn_H2S_tf.setColumns(7);
+        syn_H2S_tf.setHorizontalAlignment(javax.swing.JTextField.TRAILING);
+        syn_H2S_tf.setText("0.0");
+        syn_H2S_tf.setInputVerifier(new MyAbstractValidator(this, syn_H2S_tf, ""));
+        syn_H2S_tf.setName("synGas_species"); // NOI18N
+        syn_H2S_tf.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                syn_H2S_tfActionPerformed(evt);
+            }
+        });
+
+        syn_H2_tf.setColumns(7);
+        syn_H2_tf.setHorizontalAlignment(javax.swing.JTextField.TRAILING);
+        syn_H2_tf.setText("0.0");
+        syn_H2_tf.setInputVerifier(new MyAbstractValidator(this, syn_H2_tf, ""));
+        syn_H2_tf.setName("synGas_species"); // NOI18N
+        syn_H2_tf.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                syn_H2_tfActionPerformed(evt);
+            }
+        });
+
+        syn_CO_tf.setColumns(7);
+        syn_CO_tf.setHorizontalAlignment(javax.swing.JTextField.TRAILING);
+        syn_CO_tf.setText("0.0");
+        syn_CO_tf.setInputVerifier(new MyAbstractValidator(this, syn_CO_tf, ""));
+        syn_CO_tf.setName("synGas_species"); // NOI18N
+        syn_CO_tf.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                syn_CO_tfActionPerformed(evt);
+            }
+        });
+
+        syn_CO2_tf.setColumns(7);
+        syn_CO2_tf.setHorizontalAlignment(javax.swing.JTextField.TRAILING);
+        syn_CO2_tf.setText("0.0");
+        syn_CO2_tf.setInputVerifier(new MyAbstractValidator(this, syn_CO2_tf, ""));
+        syn_CO2_tf.setName("synGas_species"); // NOI18N
+        syn_CO2_tf.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                syn_CO2_tfActionPerformed(evt);
+            }
+        });
+
+        syn_HCL_tf.setColumns(7);
+        syn_HCL_tf.setHorizontalAlignment(javax.swing.JTextField.TRAILING);
+        syn_HCL_tf.setText("0.0");
+        syn_HCL_tf.setInputVerifier(new MyAbstractValidator(this, syn_HCL_tf, ""));
+        syn_HCL_tf.setName("synGas_species"); // NOI18N
+        syn_HCL_tf.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                syn_HCL_tfActionPerformed(evt);
+            }
+        });
+
+        syn_totalFraction_tf.setEditable(false);
+        syn_totalFraction_tf.setBackground(new java.awt.Color(230, 230, 230));
+        syn_totalFraction_tf.setColumns(7);
+        syn_totalFraction_tf.setHorizontalAlignment(javax.swing.JTextField.TRAILING);
+        syn_totalFraction_tf.setText("0.0");
+        syn_totalFraction_tf.setFocusable(false);
+
+        synVolumeFraction_label.setText("Volume Fraction");
+
+        airSpecies_label.setText("Species");
+
+        javax.swing.GroupLayout synGasPanel_subPanel1Layout = new javax.swing.GroupLayout(synGasPanel_subPanel1);
+        synGasPanel_subPanel1.setLayout(synGasPanel_subPanel1Layout);
+        synGasPanel_subPanel1Layout.setHorizontalGroup(
+            synGasPanel_subPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(synGasPanel_subPanel1Layout.createSequentialGroup()
+                .addGroup(synGasPanel_subPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(synGasPanel_subPanel1Layout.createSequentialGroup()
+                        .addGap(15, 15, 15)
+                        .addComponent(airSpecies_label))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, synGasPanel_subPanel1Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addGroup(synGasPanel_subPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(syn_total_label, javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(synN2_label, javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(synAR_label, javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(synO2_label, javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(synH20_label, javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(synC6H6_label, javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(synCH4_label, javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(synNH3_label, javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(synH2S_label, javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(synH2_label, javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(synCO_label, javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(synCO2_label, javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(synHCL_label, javax.swing.GroupLayout.Alignment.TRAILING))))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(synGasPanel_subPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(syn_totalFraction_tf, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(syn_N2_tf, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(synVolumeFraction_label)
+                    .addComponent(syn_AR_tf, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(syn_O2_tf, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(syn_H2O_tf, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(syn_C6H6_tf, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(syn_CH4_tf, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(syn_NH3_tf, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(syn_H2S_tf, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(syn_H2_tf, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(syn_CO_tf, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(syn_CO2_tf, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(syn_HCL_tf, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+        );
+        synGasPanel_subPanel1Layout.setVerticalGroup(
+            synGasPanel_subPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(synGasPanel_subPanel1Layout.createSequentialGroup()
+                .addGroup(synGasPanel_subPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(synVolumeFraction_label)
+                    .addComponent(airSpecies_label))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(synGasPanel_subPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(syn_N2_tf, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(synN2_label))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(synGasPanel_subPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(syn_AR_tf, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(synAR_label))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(synGasPanel_subPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(syn_O2_tf, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(synO2_label))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(synGasPanel_subPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(syn_H2O_tf, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(synH20_label))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(synGasPanel_subPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(syn_C6H6_tf, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(synC6H6_label))
+                .addGap(8, 8, 8)
+                .addGroup(synGasPanel_subPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(syn_CH4_tf, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(synCH4_label))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(synGasPanel_subPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(syn_NH3_tf, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(synNH3_label))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(synGasPanel_subPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(syn_H2S_tf, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(synH2S_label))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(synGasPanel_subPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(syn_H2_tf, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(synH2_label))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(synGasPanel_subPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(syn_CO_tf, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(synCO_label))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(synGasPanel_subPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(syn_CO2_tf, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(synCO2_label))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(synGasPanel_subPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(syn_HCL_tf, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(synHCL_label))
+                .addGap(18, 18, 18)
+                .addGroup(synGasPanel_subPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(syn_totalFraction_tf, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(syn_total_label))
+                .addGap(0, 11, Short.MAX_VALUE))
+        );
+
+        synGasPanel_subPanel2.setBackground(new java.awt.Color(189, 195, 199));
+        synGasPanel_subPanel2.setOpaque(false);
+
+        synVolFlowRate_label.setText("Vol Flow Rate");
+
+        synTemp_label.setText("Temperature (\u00b0F)");
+
+        syn_tempF_tf.setColumns(6);
+        syn_tempF_tf.setHorizontalAlignment(javax.swing.JTextField.TRAILING);
+        syn_tempF_tf.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                syn_tempF_tfActionPerformed(evt);
+            }
+        });
+
+        syn_VolFlowRate_tf.setColumns(6);
+        syn_VolFlowRate_tf.setHorizontalAlignment(javax.swing.JTextField.TRAILING);
+        syn_VolFlowRate_tf.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                syn_VolFlowRate_tfActionPerformed(evt);
+            }
+        });
+
+        synVolFlowRate_units_label.setText("acfm");
+
+        javax.swing.GroupLayout synGasPanel_subPanel2Layout = new javax.swing.GroupLayout(synGasPanel_subPanel2);
+        synGasPanel_subPanel2.setLayout(synGasPanel_subPanel2Layout);
+        synGasPanel_subPanel2Layout.setHorizontalGroup(
+            synGasPanel_subPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(synGasPanel_subPanel2Layout.createSequentialGroup()
+                .addGroup(synGasPanel_subPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(synVolFlowRate_label, javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(synTemp_label, javax.swing.GroupLayout.Alignment.TRAILING))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(synGasPanel_subPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(syn_VolFlowRate_tf, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(syn_tempF_tf, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(synGasPanel_subPanel2Layout.createSequentialGroup()
+                        .addGap(12, 12, 12)
+                        .addComponent(synVolFlowRate_units_label)))
+                .addGap(24, 24, 24))
+        );
+        synGasPanel_subPanel2Layout.setVerticalGroup(
+            synGasPanel_subPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(synGasPanel_subPanel2Layout.createSequentialGroup()
+                .addContainerGap(19, Short.MAX_VALUE)
+                .addComponent(synVolFlowRate_units_label)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(synGasPanel_subPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(syn_VolFlowRate_tf, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(synVolFlowRate_label))
+                .addGap(18, 18, 18)
+                .addGroup(synGasPanel_subPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
+                    .addComponent(syn_tempF_tf, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(synTemp_label)))
+        );
+
+        javax.swing.GroupLayout synGas_panelLayout = new javax.swing.GroupLayout(synGas_panel);
+        synGas_panel.setLayout(synGas_panelLayout);
+        synGas_panelLayout.setHorizontalGroup(
+            synGas_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(synGas_panelLayout.createSequentialGroup()
+                .addGroup(synGas_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(synGas_title_label, javax.swing.GroupLayout.PREFERRED_SIZE, 195, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(synGas_panelLayout.createSequentialGroup()
+                        .addContainerGap()
+                        .addGroup(synGas_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(synGasPanel_subPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(synGasPanel_subPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        synGas_panelLayout.setVerticalGroup(
+            synGas_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(synGas_panelLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(synGas_title_label)
+                .addGap(18, 18, 18)
+                .addComponent(synGasPanel_subPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(synGasPanel_subPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(89, Short.MAX_VALUE))
+        );
+
+        air_panel.setBackground(new java.awt.Color(205, 198, 144));
+        air_panel.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(51, 51, 51)));
+
+        air_title_label.setBackground(new java.awt.Color(192, 184, 96));
+        air_title_label.setFont(new java.awt.Font("Tahoma", 1, 15)); // NOI18N
+        air_title_label.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        air_title_label.setText("Air");
+        air_title_label.setMaximumSize(new java.awt.Dimension(19, 17));
+        air_title_label.setMinimumSize(new java.awt.Dimension(19, 17));
+
+        airPanel_subPanel1.setBackground(new java.awt.Color(189, 195, 199));
+        airPanel_subPanel1.setOpaque(false);
+
+        jLabel58.setText("Mass Flow Rate -------------------------------------");
+
+        air_massFlowRate_ring1_label.setText("Ring 1");
+
+        air_massFlowRate_ring2_label.setText("Ring 2");
+
+        air_massFlowRateTotal_label.setText("Total");
+
+        air_tempF_label.setText("Temperature (\u00b0F)");
+
+        air_tempF_tf.setColumns(5);
+        air_tempF_tf.setHorizontalAlignment(javax.swing.JTextField.TRAILING);
+        air_tempF_tf.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                air_tempF_tfActionPerformed(evt);
+            }
+        });
+
+        air_massFlowRate_total_tf.setEditable(false);
+        air_massFlowRate_total_tf.setBackground(new java.awt.Color(230, 230, 230));
+        air_massFlowRate_total_tf.setColumns(5);
+        air_massFlowRate_total_tf.setHorizontalAlignment(javax.swing.JTextField.TRAILING);
+        air_massFlowRate_total_tf.setFocusable(false);
+
+        air_massFlowRate_ring2_tf.setColumns(5);
+        air_massFlowRate_ring2_tf.setHorizontalAlignment(javax.swing.JTextField.TRAILING);
+        air_massFlowRate_ring2_tf.setText("0");
+        air_massFlowRate_ring2_tf.setInputVerifier(new MyAbstractValidator(this, air_massFlowRate_ring2_tf, ""));
+        air_massFlowRate_ring2_tf.setName("air_ring2"); // NOI18N
+        air_massFlowRate_ring2_tf.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                air_massFlowRate_ring2_tfActionPerformed(evt);
+            }
+        });
+
+        air_massFlowRate_ring1_tf.setColumns(5);
+        air_massFlowRate_ring1_tf.setHorizontalAlignment(javax.swing.JTextField.TRAILING);
+        air_massFlowRate_ring1_tf.setText("0");
+        air_massFlowRate_ring1_tf.setInputVerifier(new MyAbstractValidator(this, air_massFlowRate_ring1_tf, ""));
+        air_massFlowRate_ring1_tf.setName("air_ring1"); // NOI18N
+        air_massFlowRate_ring1_tf.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                air_massFlowRate_ring1_tfActionPerformed(evt);
+            }
+        });
+
+        jLabel11.setText("(lbs/hr)");
+
+        jLabel12.setText("%");
+
+        air_massFlowRate_ring1_percentage_tf.setEditable(false);
+        air_massFlowRate_ring1_percentage_tf.setBackground(new java.awt.Color(230, 230, 230));
+        air_massFlowRate_ring1_percentage_tf.setColumns(5);
+        air_massFlowRate_ring1_percentage_tf.setHorizontalAlignment(javax.swing.JTextField.TRAILING);
+        air_massFlowRate_ring1_percentage_tf.setText("0");
+        air_massFlowRate_ring1_percentage_tf.setFocusable(false);
+
+        air_massFlowRate_ring2_percentage_tf.setEditable(false);
+        air_massFlowRate_ring2_percentage_tf.setBackground(new java.awt.Color(230, 230, 230));
+        air_massFlowRate_ring2_percentage_tf.setColumns(5);
+        air_massFlowRate_ring2_percentage_tf.setHorizontalAlignment(javax.swing.JTextField.TRAILING);
+        air_massFlowRate_ring2_percentage_tf.setText("0");
+        air_massFlowRate_ring2_percentage_tf.setFocusable(false);
+
+        air_massFlowRate_total_percentage_tf.setEditable(false);
+        air_massFlowRate_total_percentage_tf.setBackground(new java.awt.Color(230, 230, 230));
+        air_massFlowRate_total_percentage_tf.setColumns(5);
+        air_massFlowRate_total_percentage_tf.setHorizontalAlignment(javax.swing.JTextField.TRAILING);
+        air_massFlowRate_total_percentage_tf.setFocusable(false);
+
+        javax.swing.GroupLayout airPanel_subPanel1Layout = new javax.swing.GroupLayout(airPanel_subPanel1);
+        airPanel_subPanel1.setLayout(airPanel_subPanel1Layout);
+        airPanel_subPanel1Layout.setHorizontalGroup(
+            airPanel_subPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(airPanel_subPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(airPanel_subPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(airPanel_subPanel1Layout.createSequentialGroup()
+                        .addComponent(air_tempF_label)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(air_tempF_tf, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(airPanel_subPanel1Layout.createSequentialGroup()
+                        .addGap(16, 16, 16)
+                        .addGroup(airPanel_subPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jLabel11, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(airPanel_subPanel1Layout.createSequentialGroup()
+                                .addComponent(air_massFlowRate_ring1_label)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(air_massFlowRate_ring1_tf, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(airPanel_subPanel1Layout.createSequentialGroup()
+                                .addComponent(air_massFlowRateTotal_label)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(air_massFlowRate_total_tf, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(airPanel_subPanel1Layout.createSequentialGroup()
+                                .addComponent(air_massFlowRate_ring2_label)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(air_massFlowRate_ring2_tf, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(airPanel_subPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(air_massFlowRate_ring2_percentage_tf, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(air_massFlowRate_ring1_percentage_tf, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(air_massFlowRate_total_percentage_tf, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(airPanel_subPanel1Layout.createSequentialGroup()
+                                .addGap(11, 11, 11)
+                                .addComponent(jLabel12))))
+                    .addGroup(airPanel_subPanel1Layout.createSequentialGroup()
+                        .addGap(8, 8, 8)
+                        .addComponent(jLabel58)))
+                .addContainerGap(34, Short.MAX_VALUE))
+        );
+        airPanel_subPanel1Layout.setVerticalGroup(
+            airPanel_subPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(airPanel_subPanel1Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jLabel58)
+                .addGap(18, 18, 18)
+                .addGroup(airPanel_subPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel12)
+                    .addComponent(jLabel11))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(airPanel_subPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(air_massFlowRate_ring1_label)
+                    .addComponent(air_massFlowRate_ring1_tf, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(air_massFlowRate_ring1_percentage_tf, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(airPanel_subPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(air_massFlowRate_ring2_label)
+                    .addComponent(air_massFlowRate_ring2_tf, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(air_massFlowRate_ring2_percentage_tf, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(12, 12, 12)
+                .addGroup(airPanel_subPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(air_massFlowRate_total_tf, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(air_massFlowRate_total_percentage_tf, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(air_massFlowRateTotal_label))
+                .addGap(18, 18, 18)
+                .addGroup(airPanel_subPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(air_tempF_label)
+                    .addComponent(air_tempF_tf, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(31, 31, 31))
+        );
+
+        air_VolumeFraction_label.setText("Volume Fraction");
+
+        air_species_label.setText("Species");
+
+        air_N2_label.setText("N2");
+
+        air_N2_tf.setEditable(false);
+        air_N2_tf.setBackground(new java.awt.Color(230, 230, 230));
+        air_N2_tf.setColumns(7);
+        air_N2_tf.setHorizontalAlignment(javax.swing.JTextField.TRAILING);
+        air_N2_tf.setText("0.78");
+        air_N2_tf.setFocusable(false);
+        air_N2_tf.setName("air_species"); // NOI18N
+
+        air_AR_tf.setEditable(false);
+        air_AR_tf.setBackground(new java.awt.Color(230, 230, 230));
+        air_AR_tf.setColumns(7);
+        air_AR_tf.setHorizontalAlignment(javax.swing.JTextField.TRAILING);
+        air_AR_tf.setText("0.01");
+        air_AR_tf.setFocusable(false);
+        air_AR_tf.setName("air_species"); // NOI18N
+        air_AR_tf.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                air_AR_tfActionPerformed(evt);
+            }
+        });
+
+        airAR_label.setText("AR");
+
+        airO2_label.setText("O2");
+
+        air_O2_tf.setEditable(false);
+        air_O2_tf.setBackground(new java.awt.Color(230, 230, 230));
+        air_O2_tf.setColumns(7);
+        air_O2_tf.setHorizontalAlignment(javax.swing.JTextField.TRAILING);
+        air_O2_tf.setText("0.21");
+        air_O2_tf.setFocusable(false);
+        air_O2_tf.setName("air_species"); // NOI18N
+
+        airVolumeFractionTotal_label.setText("Total");
+
+        air_totalVolumeFraction_tf.setEditable(false);
+        air_totalVolumeFraction_tf.setBackground(new java.awt.Color(230, 230, 230));
+        air_totalVolumeFraction_tf.setColumns(7);
+        air_totalVolumeFraction_tf.setHorizontalAlignment(javax.swing.JTextField.TRAILING);
+        air_totalVolumeFraction_tf.setText("1.0");
+        air_totalVolumeFraction_tf.setFocusable(false);
+
+        air_H2ObyMass_tf.setColumns(7);
+        air_H2ObyMass_tf.setHorizontalAlignment(javax.swing.JTextField.TRAILING);
+        air_H2ObyMass_tf.setText("0.0");
+        air_H2ObyMass_tf.setInputVerifier(new MyAbstractValidator(this, air_H2ObyMass_tf, ""));
+        air_H2ObyMass_tf.setName("air_species"); // NOI18N
+        air_H2ObyMass_tf.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                air_H2ObyMass_tfActionPerformed(evt);
+            }
+        });
+
+        jLabel8.setText("lbs H2O/lbs DA");
+
+        jLabel9.setText("Fraction by Volume");
+
+        air_H2ObyVolume_tf.setEditable(false);
+        air_H2ObyVolume_tf.setBackground(new java.awt.Color(230, 230, 230));
+        air_H2ObyVolume_tf.setColumns(7);
+        air_H2ObyVolume_tf.setHorizontalAlignment(javax.swing.JTextField.TRAILING);
+        air_H2ObyVolume_tf.setText("0");
+        air_H2ObyVolume_tf.setFocusable(false);
+        air_H2ObyVolume_tf.setName(""); // NOI18N
+        air_H2ObyVolume_tf.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                air_H2ObyVolume_tfActionPerformed(evt);
+            }
+        });
+
+        airH2O_label.setText("H2O");
+
+        javax.swing.GroupLayout air_panelLayout = new javax.swing.GroupLayout(air_panel);
+        air_panel.setLayout(air_panelLayout);
+        air_panelLayout.setHorizontalGroup(
+            air_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(air_panelLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(air_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(air_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(air_species_label, javax.swing.GroupLayout.Alignment.TRAILING)
+                        .addComponent(air_N2_label, javax.swing.GroupLayout.Alignment.TRAILING)
+                        .addComponent(airAR_label, javax.swing.GroupLayout.Alignment.TRAILING)
+                        .addComponent(airO2_label, javax.swing.GroupLayout.Alignment.TRAILING)
+                        .addComponent(airVolumeFractionTotal_label, javax.swing.GroupLayout.Alignment.TRAILING))
+                    .addComponent(airH2O_label, javax.swing.GroupLayout.Alignment.TRAILING))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(air_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(air_VolumeFraction_label)
+                    .addComponent(air_N2_tf, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(air_AR_tf, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(air_O2_tf, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(air_panelLayout.createSequentialGroup()
+                        .addComponent(air_H2ObyVolume_tf, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jLabel9))
+                    .addComponent(air_totalVolumeFraction_tf, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(air_panelLayout.createSequentialGroup()
+                        .addComponent(air_H2ObyMass_tf, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jLabel8))))
+            .addGroup(air_panelLayout.createSequentialGroup()
+                .addGap(10, 10, 10)
+                .addComponent(air_title_label, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGap(10, 10, 10))
+            .addComponent(airPanel_subPanel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        );
+        air_panelLayout.setVerticalGroup(
+            air_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(air_panelLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(air_title_label, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addGroup(air_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(air_VolumeFraction_label)
+                    .addComponent(air_species_label))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(air_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(air_N2_tf, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(air_N2_label))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(air_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(air_AR_tf, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(airAR_label))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(air_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(air_O2_tf, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(airO2_label))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(air_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(air_H2ObyMass_tf, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel8)
+                    .addComponent(airH2O_label))
+                .addGap(9, 9, 9)
+                .addGroup(air_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(air_H2ObyVolume_tf, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel9))
+                .addGap(17, 17, 17)
+                .addGroup(air_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(airVolumeFractionTotal_label)
+                    .addComponent(air_totalVolumeFraction_tf, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(47, 47, 47)
+                .addComponent(airPanel_subPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(118, Short.MAX_VALUE))
+        );
+
+        flueGas_panel.setBackground(new java.awt.Color(205, 198, 144));
+        flueGas_panel.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(51, 51, 51)));
+
+        flueGas_title_label.setBackground(new java.awt.Color(192, 184, 96));
+        flueGas_title_label.setFont(new java.awt.Font("Tahoma", 1, 15)); // NOI18N
+        flueGas_title_label.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        flueGas_title_label.setText("Flue Gas");
+
+        flueGasPanel_subPanel1.setBackground(new java.awt.Color(189, 195, 199));
+        flueGasPanel_subPanel1.setOpaque(false);
+
+        jLabel68.setBackground(new java.awt.Color(255, 153, 0));
+        jLabel68.setText("Mass Flow Rate ----------------------");
+
+        jLabel16.setBackground(new java.awt.Color(255, 153, 0));
+        jLabel16.setText("(lbs/hr)");
+
+        flueGas_massFlowRate_ring1_tf.setColumns(5);
+        flueGas_massFlowRate_ring1_tf.setHorizontalAlignment(javax.swing.JTextField.TRAILING);
+        flueGas_massFlowRate_ring1_tf.setText("0");
+        flueGas_massFlowRate_ring1_tf.setInputVerifier(new MyAbstractValidator(this, flueGas_massFlowRate_ring1_tf, ""));
+        flueGas_massFlowRate_ring1_tf.setName("flueGas_ring1"); // NOI18N
+        flueGas_massFlowRate_ring1_tf.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                flueGas_massFlowRate_ring1_tfActionPerformed(evt);
+            }
+        });
+
+        jLabel17.setBackground(new java.awt.Color(255, 153, 0));
+        jLabel17.setText("%");
+
+        flueGas_massFlowRate_ring1_percentage_tf.setEditable(false);
+        flueGas_massFlowRate_ring1_percentage_tf.setBackground(new java.awt.Color(230, 230, 230));
+        flueGas_massFlowRate_ring1_percentage_tf.setColumns(5);
+        flueGas_massFlowRate_ring1_percentage_tf.setHorizontalAlignment(javax.swing.JTextField.TRAILING);
+        flueGas_massFlowRate_ring1_percentage_tf.setText("0");
+        flueGas_massFlowRate_ring1_percentage_tf.setFocusable(false);
+
+        flueGas_massFlowRate_ring2_percentage_tf.setEditable(false);
+        flueGas_massFlowRate_ring2_percentage_tf.setBackground(new java.awt.Color(230, 230, 230));
+        flueGas_massFlowRate_ring2_percentage_tf.setColumns(5);
+        flueGas_massFlowRate_ring2_percentage_tf.setHorizontalAlignment(javax.swing.JTextField.TRAILING);
+        flueGas_massFlowRate_ring2_percentage_tf.setText("0");
+        flueGas_massFlowRate_ring2_percentage_tf.setFocusable(false);
+
+        flueGas_massFlowRate_total_percentage_tf.setEditable(false);
+        flueGas_massFlowRate_total_percentage_tf.setBackground(new java.awt.Color(230, 230, 230));
+        flueGas_massFlowRate_total_percentage_tf.setColumns(5);
+        flueGas_massFlowRate_total_percentage_tf.setHorizontalAlignment(javax.swing.JTextField.TRAILING);
+        flueGas_massFlowRate_total_percentage_tf.setFocusable(false);
+
+        flueGas_massFlowRate_total_tf.setEditable(false);
+        flueGas_massFlowRate_total_tf.setBackground(new java.awt.Color(230, 230, 230));
+        flueGas_massFlowRate_total_tf.setColumns(5);
+        flueGas_massFlowRate_total_tf.setHorizontalAlignment(javax.swing.JTextField.TRAILING);
+        flueGas_massFlowRate_total_tf.setFocusable(false);
+
+        flueGas_massFlowRate_ring2_tf.setColumns(5);
+        flueGas_massFlowRate_ring2_tf.setHorizontalAlignment(javax.swing.JTextField.TRAILING);
+        flueGas_massFlowRate_ring2_tf.setText("0");
+        flueGas_massFlowRate_ring2_tf.setInputVerifier(new MyAbstractValidator(this, flueGas_massFlowRate_ring2_tf, ""));
+        flueGas_massFlowRate_ring2_tf.setName("flueGas_ring2"); // NOI18N
+        flueGas_massFlowRate_ring2_tf.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                flueGas_massFlowRate_ring2_tfActionPerformed(evt);
+            }
+        });
+
+        jLabel70.setBackground(new java.awt.Color(255, 153, 0));
+        jLabel70.setText("Ring 2");
+
+        jLabel15.setBackground(new java.awt.Color(255, 153, 0));
+        jLabel15.setText("Total");
+
+        flueGas_tempF_label.setBackground(new java.awt.Color(255, 153, 0));
+        flueGas_tempF_label.setText("Temperature (\u00b0F)");
+
+        flueGas_tempF_tf.setColumns(5);
+        flueGas_tempF_tf.setHorizontalAlignment(javax.swing.JTextField.TRAILING);
+        flueGas_tempF_tf.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                flueGas_tempF_tfActionPerformed(evt);
+            }
+        });
+
+        jLabel69.setBackground(new java.awt.Color(255, 153, 0));
+        jLabel69.setText("Ring 1");
+
+        javax.swing.GroupLayout flueGasPanel_subPanel1Layout = new javax.swing.GroupLayout(flueGasPanel_subPanel1);
+        flueGasPanel_subPanel1.setLayout(flueGasPanel_subPanel1Layout);
+        flueGasPanel_subPanel1Layout.setHorizontalGroup(
+            flueGasPanel_subPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(flueGasPanel_subPanel1Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(flueGasPanel_subPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(flueGasPanel_subPanel1Layout.createSequentialGroup()
+                        .addGroup(flueGasPanel_subPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel69)
+                            .addComponent(jLabel70)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, flueGasPanel_subPanel1Layout.createSequentialGroup()
+                                .addComponent(jLabel15)
+                                .addGap(24, 24, 24)))
+                        .addGroup(flueGasPanel_subPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(flueGasPanel_subPanel1Layout.createSequentialGroup()
+                                .addComponent(jLabel16)
+                                .addGap(26, 26, 26)
+                                .addComponent(jLabel17))
+                            .addGroup(flueGasPanel_subPanel1Layout.createSequentialGroup()
+                                .addGroup(flueGasPanel_subPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                    .addComponent(flueGas_massFlowRate_total_tf, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(flueGas_massFlowRate_ring2_tf, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(flueGas_massFlowRate_ring1_tf, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(flueGasPanel_subPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(flueGas_massFlowRate_ring1_percentage_tf, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(flueGas_massFlowRate_ring2_percentage_tf, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(flueGas_massFlowRate_total_percentage_tf, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                    .addGroup(flueGasPanel_subPanel1Layout.createSequentialGroup()
+                        .addComponent(flueGas_tempF_label)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(flueGas_tempF_tf, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jLabel68))
+                .addGap(3, 3, 3))
+        );
+        flueGasPanel_subPanel1Layout.setVerticalGroup(
+            flueGasPanel_subPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(flueGasPanel_subPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel68)
+                .addGap(18, 18, 18)
+                .addGroup(flueGasPanel_subPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel16)
+                    .addComponent(jLabel17))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(flueGasPanel_subPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(flueGas_massFlowRate_ring1_tf, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(flueGas_massFlowRate_ring1_percentage_tf, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel69))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(flueGasPanel_subPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel70)
+                    .addComponent(flueGas_massFlowRate_ring2_tf, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(flueGas_massFlowRate_ring2_percentage_tf, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(12, 12, 12)
+                .addGroup(flueGasPanel_subPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel15)
+                    .addComponent(flueGas_massFlowRate_total_tf, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(flueGas_massFlowRate_total_percentage_tf, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(flueGasPanel_subPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(flueGas_tempF_label)
+                    .addComponent(flueGas_tempF_tf, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(42, Short.MAX_VALUE))
+        );
+
+        flueGasPanel_subPanel2.setBackground(new java.awt.Color(189, 195, 199));
+        flueGasPanel_subPanel2.setOpaque(false);
+
+        flueGas_total_tf.setEditable(false);
+        flueGas_total_tf.setBackground(new java.awt.Color(230, 230, 230));
+        flueGas_total_tf.setColumns(7);
+        flueGas_total_tf.setHorizontalAlignment(javax.swing.JTextField.TRAILING);
+        flueGas_total_tf.setText("0.0");
+        flueGas_total_tf.setFocusable(false);
+
+        flueGas_total_label.setBackground(new java.awt.Color(255, 153, 0));
+        flueGas_total_label.setText("Total");
+
+        flueGas_CO2_label.setBackground(new java.awt.Color(255, 153, 0));
+        flueGas_CO2_label.setText("CO2");
+
+        flueGas_CO2_tf.setColumns(7);
+        flueGas_CO2_tf.setHorizontalAlignment(javax.swing.JTextField.TRAILING);
+        flueGas_CO2_tf.setText("0.0");
+        flueGas_CO2_tf.setInputVerifier(new MyAbstractValidator(this, flueGas_CO2_tf, ""));
+        flueGas_CO2_tf.setName("flueGas_species"); // NOI18N
+        flueGas_CO2_tf.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                flueGas_CO2_tfActionPerformed(evt);
+            }
+        });
+
+        flueGas_H2O_tf.setColumns(7);
+        flueGas_H2O_tf.setHorizontalAlignment(javax.swing.JTextField.TRAILING);
+        flueGas_H2O_tf.setText("0.0");
+        flueGas_H2O_tf.setInputVerifier(new MyAbstractValidator(this, flueGas_H2O_tf, ""));
+        flueGas_H2O_tf.setName("flueGas_species"); // NOI18N
+        flueGas_H2O_tf.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                flueGas_H2O_tfActionPerformed(evt);
+            }
+        });
+
+        flueGas_H2O_label.setBackground(new java.awt.Color(255, 153, 0));
+        flueGas_H2O_label.setText("H2O");
+
+        flueGas_O2_label.setBackground(new java.awt.Color(255, 153, 0));
+        flueGas_O2_label.setText("O2");
+
+        flueGas_O2_tf.setColumns(7);
+        flueGas_O2_tf.setHorizontalAlignment(javax.swing.JTextField.TRAILING);
+        flueGas_O2_tf.setText("0.0");
+        flueGas_O2_tf.setInputVerifier(new MyAbstractValidator(this, flueGas_O2_tf, ""));
+        flueGas_O2_tf.setName("flueGas_species"); // NOI18N
+        flueGas_O2_tf.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                flueGas_O2_tfActionPerformed(evt);
+            }
+        });
+
+        flueGas_species_label.setBackground(new java.awt.Color(255, 153, 0));
+        flueGas_species_label.setText("Species");
+
+        flueGas_volumeFraction_label.setBackground(new java.awt.Color(255, 153, 0));
+        flueGas_volumeFraction_label.setText("Volume Fraction");
+
+        flueGas_N2_tf.setColumns(7);
+        flueGas_N2_tf.setHorizontalAlignment(javax.swing.JTextField.TRAILING);
+        flueGas_N2_tf.setText("0.0");
+        flueGas_N2_tf.setInputVerifier(new MyAbstractValidator(this, flueGas_N2_tf, ""));
+        flueGas_N2_tf.setName("flueGas_species"); // NOI18N
+        flueGas_N2_tf.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                flueGas_N2_tfActionPerformed(evt);
+            }
+        });
+
+        flueGas_N2_label.setBackground(new java.awt.Color(255, 153, 0));
+        flueGas_N2_label.setText("N2");
+
+        flueGas_AR_label.setBackground(new java.awt.Color(255, 153, 0));
+        flueGas_AR_label.setText("AR");
+
+        flueGas_AR_tf.setColumns(7);
+        flueGas_AR_tf.setHorizontalAlignment(javax.swing.JTextField.TRAILING);
+        flueGas_AR_tf.setText("0.0");
+        flueGas_AR_tf.setInputVerifier(new MyAbstractValidator(this, flueGas_AR_tf, ""));
+        flueGas_AR_tf.setName("flueGas_species"); // NOI18N
+        flueGas_AR_tf.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                flueGas_AR_tfActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout flueGasPanel_subPanel2Layout = new javax.swing.GroupLayout(flueGasPanel_subPanel2);
+        flueGasPanel_subPanel2.setLayout(flueGasPanel_subPanel2Layout);
+        flueGasPanel_subPanel2Layout.setHorizontalGroup(
+            flueGasPanel_subPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(flueGasPanel_subPanel2Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(flueGasPanel_subPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(flueGasPanel_subPanel2Layout.createSequentialGroup()
+                        .addComponent(flueGas_species_label)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(flueGas_volumeFraction_label))
+                    .addGroup(flueGasPanel_subPanel2Layout.createSequentialGroup()
+                        .addGap(15, 15, 15)
+                        .addGroup(flueGasPanel_subPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(flueGas_total_label)
+                            .addGroup(flueGasPanel_subPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(flueGas_H2O_label)
+                                .addComponent(flueGas_CO2_label)
+                                .addComponent(flueGas_O2_label, javax.swing.GroupLayout.Alignment.TRAILING)
+                                .addComponent(flueGas_AR_label, javax.swing.GroupLayout.Alignment.TRAILING)
+                                .addComponent(flueGas_N2_label, javax.swing.GroupLayout.Alignment.TRAILING)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(flueGasPanel_subPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(flueGas_total_tf, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(flueGas_N2_tf, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(flueGas_AR_tf, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(flueGas_O2_tf, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(flueGas_H2O_tf, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(flueGas_CO2_tf, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addContainerGap(18, Short.MAX_VALUE))
+        );
+        flueGasPanel_subPanel2Layout.setVerticalGroup(
+            flueGasPanel_subPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, flueGasPanel_subPanel2Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(flueGasPanel_subPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(flueGas_species_label)
+                    .addComponent(flueGas_volumeFraction_label))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(flueGasPanel_subPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(flueGas_N2_tf, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(flueGas_N2_label))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(flueGasPanel_subPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(flueGas_AR_label)
+                    .addComponent(flueGas_AR_tf, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(flueGasPanel_subPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(flueGas_O2_label)
+                    .addComponent(flueGas_O2_tf, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(flueGasPanel_subPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(flueGas_H2O_label)
+                    .addComponent(flueGas_H2O_tf, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(flueGasPanel_subPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(flueGas_CO2_label)
+                    .addComponent(flueGas_CO2_tf, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(flueGasPanel_subPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(flueGas_total_label)
+                    .addComponent(flueGas_total_tf, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+
+        javax.swing.GroupLayout flueGas_panelLayout = new javax.swing.GroupLayout(flueGas_panel);
+        flueGas_panel.setLayout(flueGas_panelLayout);
+        flueGas_panelLayout.setHorizontalGroup(
+            flueGas_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(flueGas_panelLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(flueGas_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(flueGas_title_label, javax.swing.GroupLayout.DEFAULT_SIZE, 207, Short.MAX_VALUE)
+                    .addGroup(flueGas_panelLayout.createSequentialGroup()
+                        .addGroup(flueGas_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(flueGasPanel_subPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(flueGasPanel_subPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(0, 0, 0)))
+                .addContainerGap())
+        );
+        flueGas_panelLayout.setVerticalGroup(
+            flueGas_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(flueGas_panelLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(flueGas_title_label)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(flueGasPanel_subPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(flueGasPanel_subPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+
+        ammonia_panel.setBackground(new java.awt.Color(205, 198, 144));
+        ammonia_panel.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(51, 51, 51)));
+
+        ammonia_subPanel1.setBackground(new java.awt.Color(204, 204, 204));
+        ammonia_subPanel1.setOpaque(false);
+        ammonia_subPanel1.setPreferredSize(new java.awt.Dimension(258, 302));
+
+        ammonia_title_label.setBackground(new java.awt.Color(192, 184, 96));
+        ammonia_title_label.setFont(new java.awt.Font("Tahoma", 1, 15)); // NOI18N
+        ammonia_title_label.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        ammonia_title_label.setText("Ammonia (NH3) Injection ");
+
+        jPanel12.setBackground(new java.awt.Color(189, 195, 199));
+        jPanel12.setOpaque(false);
+
+        jLabel49.setBackground(new java.awt.Color(255, 153, 0));
+        jLabel49.setText("Species");
+
+        ammoniaInject_H2O_label.setBackground(new java.awt.Color(255, 153, 0));
+        ammoniaInject_H2O_label.setText("H2O");
+
+        jLabel50.setBackground(new java.awt.Color(255, 153, 0));
+        jLabel50.setText("Mass Fraction");
+
+        ammoniaInject_H2O_tf.setColumns(7);
+        ammoniaInject_H2O_tf.setHorizontalAlignment(javax.swing.JTextField.TRAILING);
+        ammoniaInject_H2O_tf.setText("0.0");
+        ammoniaInject_H2O_tf.setInputVerifier(new MyAbstractValidator(this, ammoniaInject_H2O_tf, ""));
+        ammoniaInject_H2O_tf.setName("ammoniaInj_species"); // NOI18N
+        ammoniaInject_H2O_tf.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ammoniaInject_H2O_tfActionPerformed(evt);
+            }
+        });
+
+        ammoniaInject_NH3_label.setBackground(new java.awt.Color(255, 153, 0));
+        ammoniaInject_NH3_label.setText("NH3");
+
+        ammoniaInject_NH3_tf.setColumns(7);
+        ammoniaInject_NH3_tf.setHorizontalAlignment(javax.swing.JTextField.TRAILING);
+        ammoniaInject_NH3_tf.setText("0.0");
+        ammoniaInject_NH3_tf.setInputVerifier(new MyAbstractValidator(this, ammoniaInject_NH3_tf, ""));
+        ammoniaInject_NH3_tf.setName("ammoniaInj_species"); // NOI18N
+        ammoniaInject_NH3_tf.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ammoniaInject_NH3_tfActionPerformed(evt);
+            }
+        });
+
+        ammoniaInject_total_tf.setEditable(false);
+        ammoniaInject_total_tf.setBackground(new java.awt.Color(230, 230, 230));
+        ammoniaInject_total_tf.setColumns(7);
+        ammoniaInject_total_tf.setHorizontalAlignment(javax.swing.JTextField.TRAILING);
+        ammoniaInject_total_tf.setText("0.0");
+        ammoniaInject_total_tf.setFocusable(false);
+
+        ammoniaInject_total_label.setBackground(new java.awt.Color(255, 153, 0));
+        ammoniaInject_total_label.setText("Total");
+
+        javax.swing.GroupLayout jPanel12Layout = new javax.swing.GroupLayout(jPanel12);
+        jPanel12.setLayout(jPanel12Layout);
+        jPanel12Layout.setHorizontalGroup(
+            jPanel12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel12Layout.createSequentialGroup()
+                .addGap(10, 10, 10)
+                .addGroup(jPanel12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel49, javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(ammoniaInject_H2O_label, javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(ammoniaInject_NH3_label, javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(ammoniaInject_total_label, javax.swing.GroupLayout.Alignment.TRAILING))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel50)
+                    .addComponent(ammoniaInject_H2O_tf, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(ammoniaInject_NH3_tf, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(ammoniaInject_total_tf, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(38, Short.MAX_VALUE))
+        );
+        jPanel12Layout.setVerticalGroup(
+            jPanel12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel12Layout.createSequentialGroup()
+                .addGroup(jPanel12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel49)
+                    .addComponent(jLabel50))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(ammoniaInject_H2O_label)
+                    .addComponent(ammoniaInject_H2O_tf, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(ammoniaInject_NH3_label)
+                    .addComponent(ammoniaInject_NH3_tf, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(ammoniaInject_total_label)
+                    .addComponent(ammoniaInject_total_tf, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+
+        jPanel13.setBackground(new java.awt.Color(189, 195, 199));
+        jPanel13.setOpaque(false);
+
+        jLabel52.setBackground(new java.awt.Color(255, 153, 0));
+        jLabel52.setText("Mass Flow Rate ----------------------");
+
+        jLabel4.setBackground(new java.awt.Color(255, 153, 0));
+        jLabel4.setText("(lbs/hr)");
+
+        ammoniaInject_massFlow_label.setBackground(new java.awt.Color(255, 153, 0));
+        ammoniaInject_massFlow_label.setText("Total");
+
+        ammoniaInject_massFlowRate_tf.setColumns(5);
+        ammoniaInject_massFlowRate_tf.setHorizontalAlignment(javax.swing.JTextField.TRAILING);
+        ammoniaInject_massFlowRate_tf.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ammoniaInject_massFlowRate_tfActionPerformed(evt);
+            }
+        });
+
+        ammoniaInject_tempF_label.setBackground(new java.awt.Color(255, 153, 0));
+        ammoniaInject_tempF_label.setText("Temperature (\u00b0F)");
+
+        ammoniaInject_tempF_tf.setColumns(5);
+        ammoniaInject_tempF_tf.setHorizontalAlignment(javax.swing.JTextField.TRAILING);
+        ammoniaInject_tempF_tf.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ammoniaInject_tempF_tfActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel13Layout = new javax.swing.GroupLayout(jPanel13);
+        jPanel13.setLayout(jPanel13Layout);
+        jPanel13Layout.setHorizontalGroup(
+            jPanel13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel13Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel52, javax.swing.GroupLayout.DEFAULT_SIZE, 183, Short.MAX_VALUE)
+                    .addGroup(jPanel13Layout.createSequentialGroup()
+                        .addGroup(jPanel13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(ammoniaInject_massFlow_label, javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(ammoniaInject_tempF_label, javax.swing.GroupLayout.Alignment.TRAILING))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(jPanel13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(ammoniaInject_massFlowRate_tf, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(ammoniaInject_tempF_tf, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel4))
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+        );
+        jPanel13Layout.setVerticalGroup(
+            jPanel13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel13Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel52)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 14, Short.MAX_VALUE)
+                .addComponent(jLabel4)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
+                    .addComponent(ammoniaInject_massFlow_label)
+                    .addComponent(ammoniaInject_massFlowRate_tf, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanel13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
+                    .addComponent(ammoniaInject_tempF_label)
+                    .addComponent(ammoniaInject_tempF_tf, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(37, 37, 37))
+        );
+
+        javax.swing.GroupLayout ammonia_subPanel1Layout = new javax.swing.GroupLayout(ammonia_subPanel1);
+        ammonia_subPanel1.setLayout(ammonia_subPanel1Layout);
+        ammonia_subPanel1Layout.setHorizontalGroup(
+            ammonia_subPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(ammonia_subPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(ammonia_subPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(ammonia_title_label, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(ammonia_subPanel1Layout.createSequentialGroup()
+                        .addGroup(ammonia_subPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jPanel12, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jPanel13, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(0, 0, Short.MAX_VALUE)))
+                .addContainerGap())
+        );
+        ammonia_subPanel1Layout.setVerticalGroup(
+            ammonia_subPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(ammonia_subPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(ammonia_title_label)
+                .addGap(18, 18, 18)
+                .addComponent(jPanel12, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jPanel13, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(20, Short.MAX_VALUE))
+        );
+
+        javax.swing.GroupLayout ammonia_panelLayout = new javax.swing.GroupLayout(ammonia_panel);
+        ammonia_panel.setLayout(ammonia_panelLayout);
+        ammonia_panelLayout.setHorizontalGroup(
+            ammonia_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(ammonia_subPanel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 214, Short.MAX_VALUE)
+        );
+        ammonia_panelLayout.setVerticalGroup(
+            ammonia_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(ammonia_panelLayout.createSequentialGroup()
+                .addComponent(ammonia_subPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 336, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+
+        buttons_panel.setBackground(new java.awt.Color(205, 198, 115));
+        buttons_panel.setOpaque(false);
+
+        setDefaultValuesButton.setBackground(new java.awt.Color(57, 57, 57));
+        setDefaultValuesButton.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        setDefaultValuesButton.setForeground(new java.awt.Color(255, 255, 255));
+        setDefaultValuesButton.setMnemonic('D');
+        setDefaultValuesButton.setText("Set Default Values");
+        setDefaultValuesButton.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        setDefaultValuesButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                setDefaultValuesButtonActionPerformed(evt);
+            }
+        });
+
+        runButton.setBackground(new java.awt.Color(57, 57, 57));
+        runButton.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        runButton.setForeground(new java.awt.Color(255, 255, 255));
+        runButton.setMnemonic('R');
+        runButton.setText("Run");
+        runButton.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        runButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                runButtonActionPerformed(evt);
+            }
+        });
+
+        jProgressBar1.setBackground(new java.awt.Color(255, 255, 255));
+        jProgressBar1.setForeground(new java.awt.Color(0, 204, 204));
+
+        clockLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+
+        javax.swing.GroupLayout buttons_panelLayout = new javax.swing.GroupLayout(buttons_panel);
+        buttons_panel.setLayout(buttons_panelLayout);
+        buttons_panelLayout.setHorizontalGroup(
+            buttons_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(buttons_panelLayout.createSequentialGroup()
+                .addGap(18, 18, 18)
+                .addGroup(buttons_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
+                    .addComponent(runButton, javax.swing.GroupLayout.PREFERRED_SIZE, 179, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(setDefaultValuesButton, javax.swing.GroupLayout.PREFERRED_SIZE, 179, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(clockLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jProgressBar1, javax.swing.GroupLayout.PREFERRED_SIZE, 179, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        buttons_panelLayout.setVerticalGroup(
+            buttons_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(buttons_panelLayout.createSequentialGroup()
+                .addGap(19, 19, 19)
+                .addComponent(setDefaultValuesButton, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(runButton, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(clockLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jProgressBar1, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+
+        thermalOxidizerDesign_panel.setBackground(new java.awt.Color(205, 198, 144));
+        thermalOxidizerDesign_panel.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(51, 51, 51)));
+
+        jLabel1.setBackground(new java.awt.Color(255, 153, 0));
+        jLabel1.setText("Diameter");
+
+        jLabel5.setBackground(new java.awt.Color(255, 153, 0));
+        jLabel5.setText("Length");
+
+        jLabel14.setBackground(new java.awt.Color(255, 153, 0));
+        jLabel14.setText("Lenth Increment");
+
+        jLabel39.setBackground(new java.awt.Color(255, 153, 0));
+        jLabel39.setText("Ring 1 Distance");
+
+        jLabel40.setBackground(new java.awt.Color(255, 153, 0));
+        jLabel40.setText("Ring 2 Distance");
+
+        thermOxDiameter.setColumns(5);
+        thermOxDiameter.setHorizontalAlignment(javax.swing.JTextField.TRAILING);
+        thermOxDiameter.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                thermOxDiameterActionPerformed(evt);
+            }
+        });
+
+        thermOxLength.setColumns(5);
+        thermOxLength.setHorizontalAlignment(javax.swing.JTextField.TRAILING);
+        thermOxLength.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                thermOxLengthActionPerformed(evt);
+            }
+        });
+
+        thermOxLengthInc.setColumns(5);
+        thermOxLengthInc.setHorizontalAlignment(javax.swing.JTextField.TRAILING);
+        thermOxLengthInc.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                thermOxLengthIncActionPerformed(evt);
+            }
+        });
+
+        ring1distanceTF.setColumns(5);
+        ring1distanceTF.setHorizontalAlignment(javax.swing.JTextField.TRAILING);
+        ring1distanceTF.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ring1distanceTFActionPerformed(evt);
+            }
+        });
+
+        ring2distanceTF.setColumns(5);
+        ring2distanceTF.setHorizontalAlignment(javax.swing.JTextField.TRAILING);
+        ring2distanceTF.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ring2distanceTFActionPerformed(evt);
+            }
+        });
+
+        jLabel53.setBackground(new java.awt.Color(192, 184, 96));
+        jLabel53.setFont(new java.awt.Font("Tahoma", 1, 15)); // NOI18N
+        jLabel53.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel53.setText("Thermal Oxidizer Design");
+
+        jLabel54.setBackground(new java.awt.Color(255, 153, 0));
+        jLabel54.setText("NH3(aq) distance");
+
+        ammoniaInjectionSiteTF.setColumns(5);
+        ammoniaInjectionSiteTF.setHorizontalAlignment(javax.swing.JTextField.TRAILING);
+        ammoniaInjectionSiteTF.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ammoniaInjectionSiteTFActionPerformed(evt);
+            }
+        });
+
+        jLabel74.setBackground(new java.awt.Color(255, 153, 0));
+        jLabel74.setFont(new java.awt.Font("Tahoma", 1, 9)); // NOI18N
+        jLabel74.setForeground(new java.awt.Color(204, 0, 0));
+        jLabel74.setText("*sq.ft-F is Square foot times degree F");
+
+        tempLossPerFoot.setColumns(5);
+        tempLossPerFoot.setHorizontalAlignment(javax.swing.JTextField.TRAILING);
+
+        jLabel75.setBackground(new java.awt.Color(255, 153, 0));
+        jLabel75.setText("Heat loss coefficient");
+
+        jLabel34.setText("ft");
+
+        jLabel42.setText("ft");
+
+        jLabel48.setText("ft");
+
+        jLabel72.setText("ft");
+
+        jLabel76.setText("ft");
+
+        jLabel77.setText("ft");
+
+        jLabel78.setText("Btu/sq.ft-F");
+
+        thermOxDesign_ambientTemp_label.setText("Ambient Temperature");
+
+        ambientTemp_tf.setColumns(5);
+        ambientTemp_tf.setHorizontalAlignment(javax.swing.JTextField.TRAILING);
+
+        javax.swing.GroupLayout thermalOxidizerDesign_panelLayout = new javax.swing.GroupLayout(thermalOxidizerDesign_panel);
+        thermalOxidizerDesign_panel.setLayout(thermalOxidizerDesign_panelLayout);
+        thermalOxidizerDesign_panelLayout.setHorizontalGroup(
+            thermalOxidizerDesign_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(thermalOxidizerDesign_panelLayout.createSequentialGroup()
+                .addGroup(thermalOxidizerDesign_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(thermalOxidizerDesign_panelLayout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jLabel53, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(thermalOxidizerDesign_panelLayout.createSequentialGroup()
+                        .addGap(16, 16, 16)
+                        .addGroup(thermalOxidizerDesign_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel74)
+                            .addGroup(thermalOxidizerDesign_panelLayout.createSequentialGroup()
+                                .addGroup(thermalOxidizerDesign_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(thermalOxidizerDesign_panelLayout.createSequentialGroup()
+                                        .addGap(14, 14, 14)
+                                        .addGroup(thermalOxidizerDesign_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                            .addComponent(jLabel5)
+                                            .addComponent(jLabel1)
+                                            .addComponent(jLabel14)
+                                            .addComponent(jLabel39)
+                                            .addComponent(jLabel40)
+                                            .addComponent(jLabel54)))
+                                    .addComponent(jLabel75, javax.swing.GroupLayout.Alignment.TRAILING))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(thermalOxidizerDesign_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(thermalOxidizerDesign_panelLayout.createSequentialGroup()
+                                        .addGroup(thermalOxidizerDesign_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(ring1distanceTF, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addComponent(ring2distanceTF, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addComponent(thermOxLengthInc, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addComponent(thermOxLength, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addComponent(thermOxDiameter, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addComponent(ammoniaInjectionSiteTF, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addGroup(thermalOxidizerDesign_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(jLabel34)
+                                            .addComponent(jLabel42)
+                                            .addComponent(jLabel48)
+                                            .addComponent(jLabel72)
+                                            .addComponent(jLabel76)
+                                            .addComponent(jLabel77)))
+                                    .addComponent(jLabel78)
+                                    .addComponent(tempLossPerFoot, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                        .addGap(0, 0, Short.MAX_VALUE)))
+                .addContainerGap())
+            .addGroup(thermalOxidizerDesign_panelLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(thermOxDesign_ambientTemp_label)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(ambientTemp_tf, javax.swing.GroupLayout.PREFERRED_SIZE, 57, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        thermalOxidizerDesign_panelLayout.setVerticalGroup(
+            thermalOxidizerDesign_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, thermalOxidizerDesign_panelLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel53)
+                .addGap(18, 18, 18)
+                .addGroup(thermalOxidizerDesign_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel1)
+                    .addComponent(thermOxDiameter, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel34))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(thermalOxidizerDesign_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(thermOxLength, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel5)
+                    .addComponent(jLabel42))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(thermalOxidizerDesign_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel14)
+                    .addComponent(thermOxLengthInc, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel48))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(thermalOxidizerDesign_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(ring1distanceTF, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel39)
+                    .addComponent(jLabel72))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(thermalOxidizerDesign_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(ring2distanceTF, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel40)
+                    .addComponent(jLabel76))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(thermalOxidizerDesign_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(ammoniaInjectionSiteTF, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel54)
+                    .addComponent(jLabel77))
+                .addGap(18, 18, 18)
+                .addComponent(jLabel78)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(thermalOxidizerDesign_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(tempLossPerFoot, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel75))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel74)
+                .addGap(18, 18, 18)
+                .addGroup(thermalOxidizerDesign_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(thermOxDesign_ambientTemp_label)
+                    .addComponent(ambientTemp_tf, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(35, Short.MAX_VALUE))
+        );
+
+        javax.swing.GroupLayout tab1_panelLayout = new javax.swing.GroupLayout(tab1_panel);
+        tab1_panel.setLayout(tab1_panelLayout);
+        tab1_panelLayout.setHorizontalGroup(
+            tab1_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(tab1_panelLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(synGas_panel, javax.swing.GroupLayout.PREFERRED_SIZE, 199, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(air_panel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(flueGas_panel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(ammonia_panel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(tab1_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(thermalOxidizerDesign_panel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(buttons_panel, javax.swing.GroupLayout.DEFAULT_SIZE, 215, Short.MAX_VALUE))
+                .addContainerGap())
+        );
+        tab1_panelLayout.setVerticalGroup(
+            tab1_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(tab1_panelLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(tab1_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(air_panel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(synGas_panel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(flueGas_panel, javax.swing.GroupLayout.DEFAULT_SIZE, 624, Short.MAX_VALUE)
+                    .addGroup(tab1_panelLayout.createSequentialGroup()
+                        .addComponent(thermalOxidizerDesign_panel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(19, 19, 19)
+                        .addComponent(buttons_panel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addComponent(ammonia_panel, javax.swing.GroupLayout.DEFAULT_SIZE, 624, Short.MAX_VALUE))
+                .addGap(17, 17, 17))
+        );
+
+        jTabbedPane.addTab("Input", tab1_panel);
+
+        tab2_panel.setBackground(new java.awt.Color(215, 200, 121));
+        tab2_panel.setPreferredSize(null);
+
+        outlet_concentration_table.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        outlet_concentration_table.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null}
+            },
+            new String [] {
+                "Species", "Concentration (ppm)"
+            }
+        ) {
+            Class[] types = new Class [] {
+                java.lang.String.class, java.lang.String.class
+            };
+            boolean[] canEdit = new boolean [] {
+                false, false
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        outlet_concentration_table.setColumnSelectionAllowed(true);
+        outlet_concentration_table.setRowSelectionAllowed(true);
+
+        temp_profile_panel.setBackground(new java.awt.Color(205, 198, 144));
+        temp_profile_panel.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+
+        javax.swing.GroupLayout temp_profile_panelLayout = new javax.swing.GroupLayout(temp_profile_panel);
+        temp_profile_panel.setLayout(temp_profile_panelLayout);
+        temp_profile_panelLayout.setHorizontalGroup(
+            temp_profile_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 852, Short.MAX_VALUE)
+        );
+        temp_profile_panelLayout.setVerticalGroup(
+            temp_profile_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 600, Short.MAX_VALUE)
+        );
+
+        profile_tabPane.addTab("Temp Profile", temp_profile_panel);
+
+        co_profile_panel.setBackground(new java.awt.Color(205, 198, 144));
+        co_profile_panel.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+
+        javax.swing.GroupLayout co_profile_panelLayout = new javax.swing.GroupLayout(co_profile_panel);
+        co_profile_panel.setLayout(co_profile_panelLayout);
+        co_profile_panelLayout.setHorizontalGroup(
+            co_profile_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 852, Short.MAX_VALUE)
+        );
+        co_profile_panelLayout.setVerticalGroup(
+            co_profile_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 600, Short.MAX_VALUE)
+        );
+
+        profile_tabPane.addTab("CO Profile", co_profile_panel);
+
+        nox_profile_panel.setBackground(new java.awt.Color(205, 198, 144));
+        nox_profile_panel.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+
+        javax.swing.GroupLayout nox_profile_panelLayout = new javax.swing.GroupLayout(nox_profile_panel);
+        nox_profile_panel.setLayout(nox_profile_panelLayout);
+        nox_profile_panelLayout.setHorizontalGroup(
+            nox_profile_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 852, Short.MAX_VALUE)
+        );
+        nox_profile_panelLayout.setVerticalGroup(
+            nox_profile_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 600, Short.MAX_VALUE)
+        );
+
+        profile_tabPane.addTab("NOx Profile", nox_profile_panel);
+
+        openOutputFolder_button.setBackground(new java.awt.Color(57, 57, 57));
+        openOutputFolder_button.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        openOutputFolder_button.setForeground(new java.awt.Color(255, 255, 255));
+        openOutputFolder_button.setText("Open Output Folder");
+        openOutputFolder_button.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        openOutputFolder_button.setEnabled(false);
+        openOutputFolder_button.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                openOutputFolder_buttonActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout tab2_panelLayout = new javax.swing.GroupLayout(tab2_panel);
+        tab2_panel.setLayout(tab2_panelLayout);
+        tab2_panelLayout.setHorizontalGroup(
+            tab2_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(tab2_panelLayout.createSequentialGroup()
+                .addGroup(tab2_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(tab2_panelLayout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(outlet_concentration_table, javax.swing.GroupLayout.PREFERRED_SIZE, 307, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(tab2_panelLayout.createSequentialGroup()
+                        .addGap(53, 53, 53)
+                        .addComponent(openOutputFolder_button, javax.swing.GroupLayout.PREFERRED_SIZE, 207, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(profile_tabPane)
+                .addContainerGap())
+        );
+        tab2_panelLayout.setVerticalGroup(
+            tab2_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(tab2_panelLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(tab2_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(profile_tabPane, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                    .addGroup(tab2_panelLayout.createSequentialGroup()
+                        .addComponent(outlet_concentration_table, javax.swing.GroupLayout.PREFERRED_SIZE, 501, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(39, 39, 39)
+                        .addComponent(openOutputFolder_button, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE)))
+                .addContainerGap())
+        );
+
+        outlet_concentration_table.getColumnModel().getSelectionModel().setSelectionMode(javax.swing.ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
+        outlet_concentration_table.getColumnModel().getColumn(0).setResizable(false);
+        outlet_concentration_table.getColumnModel().getColumn(0).setPreferredWidth(40);
+        outlet_concentration_table.getColumnModel().getColumn(1).setResizable(false);
+        DefaultTableCellRenderer render = new DefaultTableCellRenderer();
+        render.setHorizontalAlignment(SwingConstants.CENTER);
+        outlet_concentration_table.getColumnModel().getColumn(0).setCellRenderer(render);
+        outlet_concentration_table.getColumnModel().getColumn(1).setCellRenderer(render);
+
+        outlet_concentration_table.setValueAt("Species", 0, 0);
+        outlet_concentration_table.setValueAt("Outlet Concentration", 0, 1);
+
+        jTabbedPane.addTab("Output", tab2_panel);
+
+        jScrollPane.setViewportView(jTabbedPane);
+        jTabbedPane.setEnabledAt(1, true);
+
+        getContentPane().add(jScrollPane, java.awt.BorderLayout.CENTER);
+        jScrollPane.getVerticalScrollBar().setUnitIncrement(10);
+
+        file_menu.setText("File");
+
+        openFile_menuItem.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_O, java.awt.event.InputEvent.CTRL_MASK));
+        openFile_menuItem.setText("Open Input File");
+        openFile_menuItem.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                openFile_menuItemActionPerformed(evt);
+            }
+        });
+        file_menu.add(openFile_menuItem);
+
+        saveInputFile_menuItem.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_S, java.awt.event.InputEvent.CTRL_MASK));
+        saveInputFile_menuItem.setText("Save Input to File As");
+        saveInputFile_menuItem.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                saveInputFile_menuItemActionPerformed(evt);
+            }
+        });
+        file_menu.add(saveInputFile_menuItem);
+
+        saveOutputFile_menuItem.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_S, java.awt.event.InputEvent.SHIFT_MASK | java.awt.event.InputEvent.CTRL_MASK));
+        saveOutputFile_menuItem.setText("Save Excel Output File As");
+        saveOutputFile_menuItem.setEnabled(false);
+        saveOutputFile_menuItem.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                saveOutputFile_menuItemActionPerformed(evt);
+            }
+        });
+        file_menu.add(saveOutputFile_menuItem);
+
+        exit_menuItem.setText("Exit");
+        exit_menuItem.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                exit_menuItemActionPerformed(evt);
+            }
+        });
+        file_menu.add(exit_menuItem);
+
+        jMenuBar.add(file_menu);
+
+        edit_menu.setText("Edit");
+
+        setDefaultValues_menuItem.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_D, java.awt.event.InputEvent.CTRL_MASK));
+        setDefaultValues_menuItem.setText("Set default values");
+        setDefaultValues_menuItem.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                setDefaultValues_menuItemActionPerformed(evt);
+            }
+        });
+        edit_menu.add(setDefaultValues_menuItem);
+
+        clearFields_menuItemm.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_D, java.awt.event.InputEvent.SHIFT_MASK | java.awt.event.InputEvent.CTRL_MASK));
+        clearFields_menuItemm.setText("Clear all fields");
+        clearFields_menuItemm.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                clearFields_menuItemmActionPerformed(evt);
+            }
+        });
+        edit_menu.add(clearFields_menuItemm);
+
+        jMenuBar.add(edit_menu);
+
+        run_menu.setText("Run");
+
+        run_menuItem.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_R, java.awt.event.InputEvent.CTRL_MASK));
+        run_menuItem.setText("Run");
+        run_menuItem.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                run_menuItemActionPerformed(evt);
+            }
+        });
+        run_menu.add(run_menuItem);
+
+        cancelRun_menuItem.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_C, java.awt.event.InputEvent.SHIFT_MASK | java.awt.event.InputEvent.CTRL_MASK));
+        cancelRun_menuItem.setText("Cancel run");
+        cancelRun_menuItem.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cancelRun_menuItemActionPerformed(evt);
+            }
+        });
+        run_menu.add(cancelRun_menuItem);
+
+        jMenuBar.add(run_menu);
+
+        about_menu.setText("About");
+        about_menu.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                about_menuActionPerformed(evt);
+            }
+        });
+
+        about_menuItem.setText("About");
+        about_menuItem.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                about_menuItemActionPerformed(evt);
+            }
+        });
+        about_menu.add(about_menuItem);
+
+        jMenuBar.add(about_menu);
+
+        setJMenuBar(jMenuBar);
+
+        pack();
+    }// </editor-fold>//GEN-END:initComponents
+
+    //<editor-fold defaultstate="collapsed" desc="JTextField events (DO NOT MODIFIY)">
+    private void runButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_runButtonActionPerformed
+        runThermalOxidizer();
+    }//GEN-LAST:event_runButtonActionPerformed
+
+    private void setDefaultValuesButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_setDefaultValuesButtonActionPerformed
+        setDefaultValues();
+    }//GEN-LAST:event_setDefaultValuesButtonActionPerformed
+
+    private void air_H2ObyVolume_tfActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_air_H2ObyVolume_tfActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_air_H2ObyVolume_tfActionPerformed
+
+    private void air_AR_tfActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_air_AR_tfActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_air_AR_tfActionPerformed
+
+    private void syn_N2_tfActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_syn_N2_tfActionPerformed
+        syn_N2_tf.transferFocus();
+    }//GEN-LAST:event_syn_N2_tfActionPerformed
+
+    private void syn_AR_tfActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_syn_AR_tfActionPerformed
+        syn_AR_tf.transferFocus();
+    }//GEN-LAST:event_syn_AR_tfActionPerformed
+
+    private void syn_O2_tfActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_syn_O2_tfActionPerformed
+        syn_O2_tf.transferFocus();
+    }//GEN-LAST:event_syn_O2_tfActionPerformed
+
+    private void syn_H2O_tfActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_syn_H2O_tfActionPerformed
+        syn_H2O_tf.transferFocus();
+    }//GEN-LAST:event_syn_H2O_tfActionPerformed
+
+    private void syn_C6H6_tfActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_syn_C6H6_tfActionPerformed
+        syn_C6H6_tf.transferFocus();
+    }//GEN-LAST:event_syn_C6H6_tfActionPerformed
+
+    private void syn_CH4_tfActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_syn_CH4_tfActionPerformed
+        syn_CH4_tf.transferFocus();
+    }//GEN-LAST:event_syn_CH4_tfActionPerformed
+
+    private void syn_NH3_tfActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_syn_NH3_tfActionPerformed
+        syn_NH3_tf.transferFocus();
+    }//GEN-LAST:event_syn_NH3_tfActionPerformed
+
+    private void syn_H2S_tfActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_syn_H2S_tfActionPerformed
+        syn_H2S_tf.transferFocus();
+    }//GEN-LAST:event_syn_H2S_tfActionPerformed
+
+    private void syn_H2_tfActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_syn_H2_tfActionPerformed
+        syn_H2_tf.transferFocus();
+    }//GEN-LAST:event_syn_H2_tfActionPerformed
+
+    private void syn_CO_tfActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_syn_CO_tfActionPerformed
+        syn_CO_tf.transferFocus();
+    }//GEN-LAST:event_syn_CO_tfActionPerformed
+
+    private void syn_CO2_tfActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_syn_CO2_tfActionPerformed
+        syn_CO2_tf.transferFocus();
+    }//GEN-LAST:event_syn_CO2_tfActionPerformed
+
+    private void syn_HCL_tfActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_syn_HCL_tfActionPerformed
+        syn_HCL_tf.transferFocus();
+    }//GEN-LAST:event_syn_HCL_tfActionPerformed
+
+    private void syn_VolFlowRate_tfActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_syn_VolFlowRate_tfActionPerformed
+        syn_VolFlowRate_tf.transferFocus();
+    }//GEN-LAST:event_syn_VolFlowRate_tfActionPerformed
+
+    private void syn_tempF_tfActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_syn_tempF_tfActionPerformed
+        syn_tempF_tf.transferFocus();
+    }//GEN-LAST:event_syn_tempF_tfActionPerformed
+
+    private void air_H2ObyMass_tfActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_air_H2ObyMass_tfActionPerformed
+        air_H2ObyMass_tf.transferFocus();
+    }//GEN-LAST:event_air_H2ObyMass_tfActionPerformed
+
+    private void air_massFlowRate_ring1_tfActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_air_massFlowRate_ring1_tfActionPerformed
+        air_massFlowRate_ring1_tf.transferFocus();
+    }//GEN-LAST:event_air_massFlowRate_ring1_tfActionPerformed
+
+    private void air_massFlowRate_ring2_tfActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_air_massFlowRate_ring2_tfActionPerformed
+        air_massFlowRate_ring2_tf.transferFocus();
+    }//GEN-LAST:event_air_massFlowRate_ring2_tfActionPerformed
+
+    private void air_tempF_tfActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_air_tempF_tfActionPerformed
+        air_tempF_tf.transferFocus();
+    }//GEN-LAST:event_air_tempF_tfActionPerformed
+
+    private void flueGas_N2_tfActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_flueGas_N2_tfActionPerformed
+        flueGas_N2_tf.transferFocus();
+    }//GEN-LAST:event_flueGas_N2_tfActionPerformed
+
+    private void flueGas_AR_tfActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_flueGas_AR_tfActionPerformed
+        flueGas_AR_tf.transferFocus();
+    }//GEN-LAST:event_flueGas_AR_tfActionPerformed
+
+    private void flueGas_O2_tfActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_flueGas_O2_tfActionPerformed
+        flueGas_O2_tf.transferFocus();
+    }//GEN-LAST:event_flueGas_O2_tfActionPerformed
+
+    private void flueGas_H2O_tfActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_flueGas_H2O_tfActionPerformed
+        flueGas_H2O_tf.transferFocus();
+    }//GEN-LAST:event_flueGas_H2O_tfActionPerformed
+
+    private void flueGas_CO2_tfActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_flueGas_CO2_tfActionPerformed
+        flueGas_CO2_tf.transferFocus();
+    }//GEN-LAST:event_flueGas_CO2_tfActionPerformed
+
+    private void flueGas_massFlowRate_ring1_tfActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_flueGas_massFlowRate_ring1_tfActionPerformed
+        flueGas_massFlowRate_ring1_tf.transferFocus();
+    }//GEN-LAST:event_flueGas_massFlowRate_ring1_tfActionPerformed
+
+    private void flueGas_massFlowRate_ring2_tfActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_flueGas_massFlowRate_ring2_tfActionPerformed
+        flueGas_massFlowRate_ring2_tf.transferFocus();
+    }//GEN-LAST:event_flueGas_massFlowRate_ring2_tfActionPerformed
+
+    private void flueGas_tempF_tfActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_flueGas_tempF_tfActionPerformed
+        flueGas_tempF_tf.transferFocus();
+    }//GEN-LAST:event_flueGas_tempF_tfActionPerformed
+
+    private void ammoniaInject_H2O_tfActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ammoniaInject_H2O_tfActionPerformed
+        ammoniaInject_H2O_tf.transferFocus();
+    }//GEN-LAST:event_ammoniaInject_H2O_tfActionPerformed
+
+    private void ammoniaInject_NH3_tfActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ammoniaInject_NH3_tfActionPerformed
+        ammoniaInject_NH3_tf.transferFocus();
+    }//GEN-LAST:event_ammoniaInject_NH3_tfActionPerformed
+
+    private void ammoniaInject_massFlowRate_tfActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ammoniaInject_massFlowRate_tfActionPerformed
+        ammoniaInject_massFlowRate_tf.transferFocus();
+    }//GEN-LAST:event_ammoniaInject_massFlowRate_tfActionPerformed
+
+    private void ammoniaInject_tempF_tfActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ammoniaInject_tempF_tfActionPerformed
+        ammoniaInject_tempF_tf.transferFocus();
+    }//GEN-LAST:event_ammoniaInject_tempF_tfActionPerformed
+
+    private void thermOxDiameterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_thermOxDiameterActionPerformed
+        thermOxDiameter.transferFocus();
+    }//GEN-LAST:event_thermOxDiameterActionPerformed
+
+    private void thermOxLengthActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_thermOxLengthActionPerformed
+        thermOxLength.transferFocus();
+    }//GEN-LAST:event_thermOxLengthActionPerformed
+
+    private void thermOxLengthIncActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_thermOxLengthIncActionPerformed
+        thermOxLengthInc.transferFocus();
+    }//GEN-LAST:event_thermOxLengthIncActionPerformed
+
+    private void ring1distanceTFActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ring1distanceTFActionPerformed
+        ring1distanceTF.transferFocus();
+    }//GEN-LAST:event_ring1distanceTFActionPerformed
+
+    private void ring2distanceTFActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ring2distanceTFActionPerformed
+        ring2distanceTF.transferFocus();
+    }//GEN-LAST:event_ring2distanceTFActionPerformed
+
+    private void openFile_menuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_openFile_menuItemActionPerformed
+         readFromInputFile();         
+    }//GEN-LAST:event_openFile_menuItemActionPerformed
+
+    private void ammoniaInjectionSiteTFActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ammoniaInjectionSiteTFActionPerformed
+        ammoniaInjectionSiteTF.transferFocus();
+    }//GEN-LAST:event_ammoniaInjectionSiteTFActionPerformed
+
+    private void openOutputFolder_buttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_openOutputFolder_buttonActionPerformed
+        try {
+           
+            String outputFolderDirectory = System.getProperty("user.dir") + "\\" + runDirectory;
+            System.out.println(outputFolderDirectory);
+            
+            Runtime.getRuntime().exec("explorer.exe " + outputFolderDirectory);
+        } catch (IOException ex) {
+            Logger.getLogger(ApplicationGUI.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_openOutputFolder_buttonActionPerformed
+
+    private void saveInputFile_menuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveInputFile_menuItemActionPerformed
+        final JFileChooser fc = new JFileChooser();
+        //FileNameExtensionFilter filter = new FileNameExtensionFilter("text files", "txt", "text");
+        //fc.setFileFilter(filter);
+        
+        if(fc.showSaveDialog(this) == JFileChooser.APPROVE_OPTION){ 
+             System.out.println(fc.getSelectedFile());
+             saveInputsToTextFile(true, fc.getSelectedFile()+"", "");
+        } 
+        
+    }//GEN-LAST:event_saveInputFile_menuItemActionPerformed
+
+    private void exit_menuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_exit_menuItemActionPerformed
+        System.exit(0);
+    }//GEN-LAST:event_exit_menuItemActionPerformed
+
+    private void saveOutputFile_menuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveOutputFile_menuItemActionPerformed
+       
+        //check to see if thermal oxidizer is null, this should never be true sincce option
+        //is disabled till a run is completed
+        if(thermalOxidizer == null){
+            return;
+        }
+        
+        final JFileChooser fc = new JFileChooser();
+        //FileNameExtensionFilter filter = new FileNameExtensionFilter("text files", "txt", "text");
+        //fc.setFileFilter(filter);
+        
+        if(fc.showSaveDialog(this) == JFileChooser.APPROVE_OPTION){ 
+             System.out.println(fc.getSelectedFile());
+             thermalOxidizer.saveExcelFile(true, fc.getSelectedFile()+"");
+        } 
+    }//GEN-LAST:event_saveOutputFile_menuItemActionPerformed
+
+    private void clearFields_menuItemmActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_clearFields_menuItemmActionPerformed
+        clearFields();
+    }//GEN-LAST:event_clearFields_menuItemmActionPerformed
+
+    private void cancelRun_menuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelRun_menuItemActionPerformed
+        cancelRun();
+    }//GEN-LAST:event_cancelRun_menuItemActionPerformed
+
+    private void setDefaultValues_menuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_setDefaultValues_menuItemActionPerformed
+        setDefaultValues();
+    }//GEN-LAST:event_setDefaultValues_menuItemActionPerformed
+
+    private void run_menuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_run_menuItemActionPerformed
+        runThermalOxidizer();
+    }//GEN-LAST:event_run_menuItemActionPerformed
+
+    private void about_menuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_about_menuActionPerformed
+        
+    }//GEN-LAST:event_about_menuActionPerformed
+
+    private void about_menuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_about_menuItemActionPerformed
+        AboutDialog dia = new AboutDialog(this, true);
+    }//GEN-LAST:event_about_menuItemActionPerformed
+    //</editor-fold> 
+    
+    //<editor-fold defaultstate="collapsed" desc="GUI Variables (DO NOT MODIFY)">
+    // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JMenu about_menu;
+    private javax.swing.JMenuItem about_menuItem;
+    private javax.swing.JLabel airAR_label;
+    private javax.swing.JLabel airH2O_label;
+    private javax.swing.JLabel airO2_label;
+    private javax.swing.JPanel airPanel_subPanel1;
+    private javax.swing.JLabel airSpecies_label;
+    private javax.swing.JLabel airVolumeFractionTotal_label;
+    private javax.swing.JTextField air_AR_tf;
+    private javax.swing.JTextField air_H2ObyMass_tf;
+    private javax.swing.JTextField air_H2ObyVolume_tf;
+    private javax.swing.JLabel air_N2_label;
+    private javax.swing.JTextField air_N2_tf;
+    private javax.swing.JTextField air_O2_tf;
+    private javax.swing.JLabel air_VolumeFraction_label;
+    private javax.swing.JLabel air_massFlowRateTotal_label;
+    private javax.swing.JLabel air_massFlowRate_ring1_label;
+    private javax.swing.JTextField air_massFlowRate_ring1_percentage_tf;
+    private javax.swing.JTextField air_massFlowRate_ring1_tf;
+    private javax.swing.JLabel air_massFlowRate_ring2_label;
+    private javax.swing.JTextField air_massFlowRate_ring2_percentage_tf;
+    private javax.swing.JTextField air_massFlowRate_ring2_tf;
+    private javax.swing.JTextField air_massFlowRate_total_percentage_tf;
+    private javax.swing.JTextField air_massFlowRate_total_tf;
+    private javax.swing.JPanel air_panel;
+    private javax.swing.JLabel air_species_label;
+    private javax.swing.JLabel air_tempF_label;
+    private javax.swing.JTextField air_tempF_tf;
+    private javax.swing.JLabel air_title_label;
+    private javax.swing.JTextField air_totalVolumeFraction_tf;
+    private javax.swing.JTextField ambientTemp_tf;
+    private javax.swing.JLabel ammoniaInject_H2O_label;
+    private javax.swing.JTextField ammoniaInject_H2O_tf;
+    private javax.swing.JLabel ammoniaInject_NH3_label;
+    private javax.swing.JTextField ammoniaInject_NH3_tf;
+    private javax.swing.JTextField ammoniaInject_massFlowRate_tf;
+    private javax.swing.JLabel ammoniaInject_massFlow_label;
+    private javax.swing.JLabel ammoniaInject_tempF_label;
+    private javax.swing.JTextField ammoniaInject_tempF_tf;
+    private javax.swing.JLabel ammoniaInject_total_label;
+    private javax.swing.JTextField ammoniaInject_total_tf;
+    private javax.swing.JTextField ammoniaInjectionSiteTF;
+    private javax.swing.JPanel ammonia_panel;
+    private javax.swing.JPanel ammonia_subPanel1;
+    private javax.swing.JLabel ammonia_title_label;
+    private javax.swing.JPanel buttons_panel;
+    private javax.swing.JMenuItem cancelRun_menuItem;
+    private javax.swing.JMenuItem clearFields_menuItemm;
+    private main.ClockLabel clockLabel1;
+    private javax.swing.JPanel co_profile_panel;
+    private javax.swing.JMenu edit_menu;
+    private javax.swing.JMenuItem exit_menuItem;
+    private javax.swing.JMenu file_menu;
+    private javax.swing.JPanel flueGasPanel_subPanel1;
+    private javax.swing.JPanel flueGasPanel_subPanel2;
+    private javax.swing.JLabel flueGas_AR_label;
+    private javax.swing.JTextField flueGas_AR_tf;
+    private javax.swing.JLabel flueGas_CO2_label;
+    private javax.swing.JTextField flueGas_CO2_tf;
+    private javax.swing.JLabel flueGas_H2O_label;
+    private javax.swing.JTextField flueGas_H2O_tf;
+    private javax.swing.JLabel flueGas_N2_label;
+    private javax.swing.JTextField flueGas_N2_tf;
+    private javax.swing.JLabel flueGas_O2_label;
+    private javax.swing.JTextField flueGas_O2_tf;
+    private javax.swing.JTextField flueGas_massFlowRate_ring1_percentage_tf;
+    private javax.swing.JTextField flueGas_massFlowRate_ring1_tf;
+    private javax.swing.JTextField flueGas_massFlowRate_ring2_percentage_tf;
+    private javax.swing.JTextField flueGas_massFlowRate_ring2_tf;
+    private javax.swing.JTextField flueGas_massFlowRate_total_percentage_tf;
+    private javax.swing.JTextField flueGas_massFlowRate_total_tf;
+    private javax.swing.JPanel flueGas_panel;
+    private javax.swing.JLabel flueGas_species_label;
+    private javax.swing.JLabel flueGas_tempF_label;
+    private javax.swing.JTextField flueGas_tempF_tf;
+    private javax.swing.JLabel flueGas_title_label;
+    private javax.swing.JLabel flueGas_total_label;
+    private javax.swing.JTextField flueGas_total_tf;
+    private javax.swing.JLabel flueGas_volumeFraction_label;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel11;
+    private javax.swing.JLabel jLabel12;
+    private javax.swing.JLabel jLabel14;
+    private javax.swing.JLabel jLabel15;
+    private javax.swing.JLabel jLabel16;
+    private javax.swing.JLabel jLabel17;
+    private javax.swing.JLabel jLabel34;
+    private javax.swing.JLabel jLabel39;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel40;
+    private javax.swing.JLabel jLabel42;
+    private javax.swing.JLabel jLabel48;
+    private javax.swing.JLabel jLabel49;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel50;
+    private javax.swing.JLabel jLabel52;
+    private javax.swing.JLabel jLabel53;
+    private javax.swing.JLabel jLabel54;
+    private javax.swing.JLabel jLabel58;
+    private javax.swing.JLabel jLabel68;
+    private javax.swing.JLabel jLabel69;
+    private javax.swing.JLabel jLabel70;
+    private javax.swing.JLabel jLabel72;
+    private javax.swing.JLabel jLabel74;
+    private javax.swing.JLabel jLabel75;
+    private javax.swing.JLabel jLabel76;
+    private javax.swing.JLabel jLabel77;
+    private javax.swing.JLabel jLabel78;
+    private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabel9;
+    private javax.swing.JMenuBar jMenuBar;
+    private javax.swing.JPanel jPanel12;
+    private javax.swing.JPanel jPanel13;
+    private javax.swing.JProgressBar jProgressBar1;
+    private javax.swing.JScrollPane jScrollPane;
+    private javax.swing.JTabbedPane jTabbedPane;
+    private javax.swing.JPanel nox_profile_panel;
+    private javax.swing.JMenuItem openFile_menuItem;
+    private javax.swing.JButton openOutputFolder_button;
+    private javax.swing.JTable outlet_concentration_table;
+    private javax.swing.JTabbedPane profile_tabPane;
+    private javax.swing.JTextField ring1distanceTF;
+    private javax.swing.JTextField ring2distanceTF;
+    private javax.swing.JButton runButton;
+    private javax.swing.JMenu run_menu;
+    private javax.swing.JMenuItem run_menuItem;
+    private javax.swing.JMenuItem saveInputFile_menuItem;
+    private javax.swing.JMenuItem saveOutputFile_menuItem;
+    private javax.swing.JButton setDefaultValuesButton;
+    private javax.swing.JMenuItem setDefaultValues_menuItem;
+    private javax.swing.JLabel synAR_label;
+    private javax.swing.JLabel synC6H6_label;
+    private javax.swing.JLabel synCH4_label;
+    private javax.swing.JLabel synCO2_label;
+    private javax.swing.JLabel synCO_label;
+    private javax.swing.JPanel synGasPanel_subPanel1;
+    private javax.swing.JPanel synGasPanel_subPanel2;
+    private javax.swing.JPanel synGas_panel;
+    private javax.swing.JLabel synGas_title_label;
+    private javax.swing.JLabel synH20_label;
+    private javax.swing.JLabel synH2S_label;
+    private javax.swing.JLabel synH2_label;
+    private javax.swing.JLabel synHCL_label;
+    private javax.swing.JLabel synN2_label;
+    private javax.swing.JLabel synNH3_label;
+    private javax.swing.JLabel synO2_label;
+    private javax.swing.JLabel synTemp_label;
+    private javax.swing.JLabel synVolFlowRate_label;
+    private javax.swing.JLabel synVolFlowRate_units_label;
+    private javax.swing.JLabel synVolumeFraction_label;
+    private javax.swing.JTextField syn_AR_tf;
+    private javax.swing.JTextField syn_C6H6_tf;
+    private javax.swing.JTextField syn_CH4_tf;
+    private javax.swing.JTextField syn_CO2_tf;
+    private javax.swing.JTextField syn_CO_tf;
+    private javax.swing.JTextField syn_H2O_tf;
+    private javax.swing.JTextField syn_H2S_tf;
+    private javax.swing.JTextField syn_H2_tf;
+    private javax.swing.JTextField syn_HCL_tf;
+    private javax.swing.JTextField syn_N2_tf;
+    private javax.swing.JTextField syn_NH3_tf;
+    private javax.swing.JTextField syn_O2_tf;
+    private javax.swing.JTextField syn_VolFlowRate_tf;
+    private javax.swing.JTextField syn_tempF_tf;
+    private javax.swing.JTextField syn_totalFraction_tf;
+    private javax.swing.JLabel syn_total_label;
+    private javax.swing.JPanel tab1_panel;
+    private javax.swing.JPanel tab2_panel;
+    private javax.swing.JTextField tempLossPerFoot;
+    private javax.swing.JPanel temp_profile_panel;
+    private javax.swing.JLabel thermOxDesign_ambientTemp_label;
+    private javax.swing.JTextField thermOxDiameter;
+    private javax.swing.JTextField thermOxLength;
+    private javax.swing.JTextField thermOxLengthInc;
+    private javax.swing.JPanel thermalOxidizerDesign_panel;
+    // End of variables declaration//GEN-END:variables
+
+    //</editor-fold>
+    
+    private void myInit() {
+
+        // configure the Action with the accelerator (aka: short cut)
+        setDefault.putValue(Action.ACCELERATOR_KEY, KeyStroke.getKeyStroke(KeyEvent.VK_D, InputEvent.SHIFT_MASK));
+        runTO.putValue(Action.ACCELERATOR_KEY, KeyStroke.getKeyStroke(KeyEvent.VK_R, InputEvent.SHIFT_MASK));
+
+        // manually register the accelerator in the button's component input map
+        setDefaultValuesButton.getActionMap().put("setDefaultAction", setDefault);
+        setDefaultValuesButton.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(
+                (KeyStroke) setDefault.getValue(Action.ACCELERATOR_KEY), "setDefaultAction");
+
+        runButton.getActionMap().put("runAction", runTO);
+        runButton.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(
+                (KeyStroke) runTO.getValue(Action.ACCELERATOR_KEY), "runAction");
+        
+        synGasSpeciesTextfieldsArray[0] = syn_N2_tf;
+        synGasSpeciesTextfieldsArray[1] = syn_AR_tf;
+        synGasSpeciesTextfieldsArray[2] = syn_O2_tf;
+        synGasSpeciesTextfieldsArray[3] = syn_H2O_tf;
+        synGasSpeciesTextfieldsArray[4] = syn_C6H6_tf;
+        synGasSpeciesTextfieldsArray[5] = syn_CH4_tf;
+        synGasSpeciesTextfieldsArray[6] = syn_NH3_tf;
+        synGasSpeciesTextfieldsArray[7] = syn_H2S_tf;
+        synGasSpeciesTextfieldsArray[8] = syn_H2_tf;
+        synGasSpeciesTextfieldsArray[9] = syn_CO_tf;
+        synGasSpeciesTextfieldsArray[10] = syn_CO2_tf;
+        synGasSpeciesTextfieldsArray[11] = syn_HCL_tf;
+        
+        synGasVolFlowRateTextfieldsArray[0] = syn_VolFlowRate_tf;
+        synGasVolFlowRateTextfieldsArray[1] = syn_tempF_tf;
+        
+        airSpeciesTextfieldsArray[0] = air_N2_tf;
+        airSpeciesTextfieldsArray[1] = air_AR_tf;
+        airSpeciesTextfieldsArray[2] = air_O2_tf;
+        airSpeciesTextfieldsArray[3] = air_H2ObyVolume_tf;
+
+        airMassFlowRateTextfieldsArray[0] = air_massFlowRate_ring1_tf;
+        airMassFlowRateTextfieldsArray[1] = air_massFlowRate_ring2_tf;
+        airMassFlowRateTextfieldsArray[2] = air_tempF_tf;
+        
+        flueGasSpeciesTextfieldsArray[0] = flueGas_N2_tf;
+        flueGasSpeciesTextfieldsArray[1] = flueGas_AR_tf;
+        flueGasSpeciesTextfieldsArray[2] = flueGas_O2_tf;
+        flueGasSpeciesTextfieldsArray[3] = flueGas_H2O_tf;
+        flueGasSpeciesTextfieldsArray[4] = flueGas_CO2_tf;
+        
+        flueGasMassFlowRateTextfieldsArray[0] = flueGas_massFlowRate_ring1_tf;  
+        flueGasMassFlowRateTextfieldsArray[1] = flueGas_massFlowRate_ring2_tf;
+        flueGasMassFlowRateTextfieldsArray[2] = flueGas_tempF_tf;
+        
+        ammoniaSpeciesTextfieldsArray[0] = ammoniaInject_H2O_tf;
+        ammoniaSpeciesTextfieldsArray[1] = ammoniaInject_NH3_tf;
+        
+        ammoniaMassFlowRateTextfieldsArray[0] = ammoniaInject_massFlowRate_tf;  
+        ammoniaMassFlowRateTextfieldsArray[1] = ammoniaInject_tempF_tf;  
+        
+        thermalOxidizerDesignTextfieldsArray[0] = thermOxDiameter;
+        thermalOxidizerDesignTextfieldsArray[1] = thermOxLength;
+        thermalOxidizerDesignTextfieldsArray[2] = thermOxLengthInc;
+        thermalOxidizerDesignTextfieldsArray[3] = ring1distanceTF;
+        thermalOxidizerDesignTextfieldsArray[4] = ring2distanceTF;
+        thermalOxidizerDesignTextfieldsArray[5] = ammoniaInjectionSiteTF;
+        thermalOxidizerDesignTextfieldsArray[6] = tempLossPerFoot;
+        thermalOxidizerDesignTextfieldsArray[7] = ambientTemp_tf;
+        
+        int allTFArrayIndex = 0;
+                
+        for(int a=0; a < synGasSpeciesTextfieldsArray.length; a++){
+            allTextFieldsArray[allTFArrayIndex++] = synGasSpeciesTextfieldsArray[a];
+        }
+              
+        allTextFieldsArray[allTFArrayIndex++] = syn_totalFraction_tf;
+
+        for(int b=0; b < synGasVolFlowRateTextfieldsArray.length; b++){
+            allTextFieldsArray[allTFArrayIndex++] = synGasVolFlowRateTextfieldsArray[b];
+        }
+
+        for(int c=0; c < airSpeciesTextfieldsArray.length; c++){
+            if(c == airSpeciesTextfieldsArray.length-1){
+                allTextFieldsArray[allTFArrayIndex++] =  air_H2ObyVolume_tf;
+            }
+            allTextFieldsArray[allTFArrayIndex++] =  airSpeciesTextfieldsArray[c];
+        }
+            
+        allTextFieldsArray[allTFArrayIndex++] =  air_totalVolumeFraction_tf;
+        allTextFieldsArray[allTFArrayIndex++] =  airMassFlowRateTextfieldsArray[0];
+        allTextFieldsArray[allTFArrayIndex++] =  air_massFlowRate_ring1_percentage_tf;
+        allTextFieldsArray[allTFArrayIndex++] =  airMassFlowRateTextfieldsArray[1];
+        allTextFieldsArray[allTFArrayIndex++] =  air_massFlowRate_ring2_percentage_tf;
+        allTextFieldsArray[allTFArrayIndex++] =  air_massFlowRate_total_tf;
+        allTextFieldsArray[allTFArrayIndex++] =  air_massFlowRate_total_percentage_tf;
+        allTextFieldsArray[allTFArrayIndex++] =  airMassFlowRateTextfieldsArray[2];
+
+        for(int d=0; d < flueGasSpeciesTextfieldsArray.length; d++){
+            allTextFieldsArray[allTFArrayIndex++] =  flueGasSpeciesTextfieldsArray[d];
+        }
+            
+        allTextFieldsArray[allTFArrayIndex++] =  flueGas_total_tf;
+        allTextFieldsArray[allTFArrayIndex++] =  flueGasMassFlowRateTextfieldsArray[0];
+        allTextFieldsArray[allTFArrayIndex++] =  flueGas_massFlowRate_ring1_percentage_tf;
+        allTextFieldsArray[allTFArrayIndex++] =  flueGasMassFlowRateTextfieldsArray[1];
+        allTextFieldsArray[allTFArrayIndex++] =  flueGas_massFlowRate_ring2_percentage_tf;
+        allTextFieldsArray[allTFArrayIndex++] =  flueGas_massFlowRate_total_tf;
+        allTextFieldsArray[allTFArrayIndex++] =  flueGas_massFlowRate_total_percentage_tf;
+        allTextFieldsArray[allTFArrayIndex++] =  flueGasMassFlowRateTextfieldsArray[2];
+            
+        for(int e=0; e < ammoniaSpeciesTextfieldsArray.length; e++){
+            allTextFieldsArray[allTFArrayIndex++] =  ammoniaSpeciesTextfieldsArray[e];
+        }
+
+        allTextFieldsArray[allTFArrayIndex++] =  ammoniaInject_total_tf;
+
+        for(int f=0; f < ammoniaMassFlowRateTextfieldsArray.length; f++){
+            allTextFieldsArray[allTFArrayIndex++] =  ammoniaMassFlowRateTextfieldsArray[f];
+        }
+
+        for(int g=0; g < thermalOxidizerDesignTextfieldsArray.length; g++){
+            allTextFieldsArray[allTFArrayIndex++] =  thermalOxidizerDesignTextfieldsArray[g];
+    }
+        
+}
+    
+    @SuppressWarnings("unchecked")
+    private HashMap textFieldValuesToHash() {
+
+        textFieldHash = new HashMap();
+
+        textFieldHash.put("ARair", air_AR_tf.getText());
+        textFieldHash.put("ARsyn", syn_AR_tf.getText());
+        textFieldHash.put("C6H6syn", syn_C6H6_tf.getText());
+        textFieldHash.put("CH4syn", syn_CH4_tf.getText());
+        textFieldHash.put("CO2syn", syn_CO2_tf.getText());
+        textFieldHash.put("COsyn", syn_CO_tf.getText());
+        textFieldHash.put("H2OairByMass", air_H2ObyMass_tf.getText());
+        textFieldHash.put("H2OairByVolume", air_H2ObyVolume_tf.getText());
+        textFieldHash.put("H2Osyn", syn_H2O_tf.getText());
+        textFieldHash.put("H2Ssyn", syn_H2S_tf.getText());
+        textFieldHash.put("H2syn", syn_H2_tf.getText());
+        textFieldHash.put("HCLsyn", syn_HCL_tf.getText());
+        textFieldHash.put("N2air", air_N2_tf.getText());
+        textFieldHash.put("N2syn", syn_N2_tf.getText());
+        textFieldHash.put("NH3syn", syn_NH3_tf.getText());
+        textFieldHash.put("O2air", air_O2_tf.getText());
+        textFieldHash.put("O2syn", syn_O2_tf.getText());
+        textFieldHash.put("TotalMassAirFlow", air_massFlowRate_total_tf.getText());
+        textFieldHash.put("TotalMassFlueGas", flueGas_massFlowRate_total_tf.getText());
+        textFieldHash.put("airTempF", air_tempF_tf.getText());
+        textFieldHash.put("ammoniaInjectH2O", ammoniaInject_H2O_tf.getText());
+        textFieldHash.put("ammoniaInjectMassFlow", ammoniaInject_massFlowRate_tf.getText());
+        textFieldHash.put("ammoniaInjectNH3", ammoniaInject_NH3_tf.getText());
+        textFieldHash.put("ammoniaInjectTempF", ammoniaInject_tempF_tf.getText());
+        textFieldHash.put("ammoniaInjectionSiteTF", ammoniaInjectionSiteTF.getText());
+        textFieldHash.put("flueGasAr", flueGas_AR_tf.getText());
+        textFieldHash.put("flueGasCO2", flueGas_CO2_tf.getText());
+        textFieldHash.put("flueGasH2O", flueGas_H2O_tf.getText());
+        textFieldHash.put("flueGasN2", flueGas_N2_tf.getText());
+        textFieldHash.put("flueGasO2", flueGas_O2_tf.getText());
+        textFieldHash.put("flueTempF", flueGas_tempF_tf.getText());
+        textFieldHash.put("jTextField16", air_totalVolumeFraction_tf.getText());
+        textFieldHash.put("jTextField43", flueGas_total_tf.getText());
+        textFieldHash.put("jTextField7", ammoniaInject_total_tf.getText());
+        textFieldHash.put("massAirFlue1", flueGas_massFlowRate_ring1_tf.getText());
+        textFieldHash.put("massAirFlue2", flueGas_massFlowRate_ring2_tf.getText());
+        textFieldHash.put("massAirRing1", air_massFlowRate_ring1_tf.getText());
+        textFieldHash.put("massAirRing2", air_massFlowRate_ring2_tf.getText());
+        textFieldHash.put("ring1distanceTF", ring1distanceTF.getText());
+        textFieldHash.put("ring2distanceTF", ring2distanceTF.getText());
+        textFieldHash.put("synTempF", syn_tempF_tf.getText());
+        textFieldHash.put("synTotalTF", syn_totalFraction_tf.getText());
+        textFieldHash.put("syngasMassFlow", syn_VolFlowRate_tf.getText());
+        textFieldHash.put("tempLossPerFoot", tempLossPerFoot.getText());
+        textFieldHash.put("thermOxDiameter", thermOxDiameter.getText());
+        textFieldHash.put("thermOxLength", thermOxLength.getText());
+        textFieldHash.put("thermOxLengthInc", thermOxLengthInc.getText());
+        textFieldHash.put("ambientTemp", ambientTemp_tf.getText());
+
+        return textFieldHash;
+
+    }
+
+    private void setDefaultValues() {
+
+        DecimalFormat df2 = new DecimalFormat("0.0000");
+
+        syn_AR_tf.setText(df2.format(DEFAULT_SYNGAS_AR));
+        syn_C6H6_tf.setText(df2.format(DEFAULT_SYNGAS_C6H6));
+        syn_CH4_tf.setText(df2.format(DEFAULT_SYNGAS_CH4));
+        syn_CO_tf.setText(df2.format(DEFAULT_SYNGAS_CO));
+        syn_CO2_tf.setText(df2.format(DEFAULT_SYNGAS_CO2));
+        syn_H2_tf.setText(df2.format(DEFAULT_SYNGAS_H2));
+        syn_H2O_tf.setText(df2.format(DEFAULT_SYNGAS_H2O));
+        syn_H2S_tf.setText(df2.format(DEFAULT_SYNGAS_H2S));
+        syn_HCL_tf.setText(df2.format(DEFAULT_SYNGAS_HCL));
+        syn_N2_tf.setText(df2.format(DEFAULT_SYNGAS_N2));
+        syn_NH3_tf.setText(df2.format(DEFAULT_SYNGAS_NH3));
+        syn_O2_tf.setText(df2.format(DEFAULT_SYNGAS_O2));
+        
+        //update total of syn gas species
+        updateFields("synGas_species");
+
+        air_N2_tf.setText("0.78");
+        air_AR_tf.setText("0.01");
+        air_O2_tf.setText("0.21");
+        air_H2ObyMass_tf.setText("0");
+        air_H2ObyVolume_tf.setText("0");
+        air_totalVolumeFraction_tf.setText("1.0");
+
+        //update total of air species
+        updateFields("air_species");
+
+        double defaultValueN2FlueGasVol = 0.5, defaultValueArFlueGasVol = 0.0,
+                defaultValueO2FlueGas = 0.1, defaultValueH2OFlueGas = 0.2,
+                defaultValueCO2FlueGas = 0.2;
+
+        flueGas_N2_tf.setText(df2.format(defaultValueN2FlueGasVol));
+        flueGas_AR_tf.setText(df2.format(defaultValueArFlueGasVol));
+        flueGas_O2_tf.setText(df2.format(defaultValueO2FlueGas));
+        flueGas_H2O_tf.setText(df2.format(defaultValueH2OFlueGas));
+        flueGas_CO2_tf.setText(df2.format(defaultValueCO2FlueGas));
+
+        //update total of flue gas 
+        updateFields("flueGas_species");
+
+        double ammoniaInjH2OMass = 0.80, ammoniaInjNH3Mass = 0.20;
+
+        ammoniaInject_H2O_tf.setText(df2.format(ammoniaInjH2OMass));
+        ammoniaInject_NH3_tf.setText(df2.format(ammoniaInjNH3Mass));
+
+        //update total of ammonia injection
+        updateFields("ammoniaInj_species");
+
+        syn_VolFlowRate_tf.setText("2040");
+        syn_tempF_tf.setText("1205");
+
+        air_massFlowRate_ring1_tf.setText("3900");
+        air_massFlowRate_ring2_tf.setText("4000");
+
+        //update the percentages for the air mass flow rate in rings 1 and 2
+        updateFields("air_ring1");
+        updateFields("air_ring2");
+
+        air_tempF_tf.setText("77");
+        flueGas_massFlowRate_ring1_tf.setText("0");
+        flueGas_massFlowRate_ring2_tf.setText("500");
+
+        //update the percentages for the flue gas mass flow rate in rings 1 and 2
+        updateFields("flueGas_ring1");
+        updateFields("flueGas_ring2");
+
+        flueGas_tempF_tf.setText("77");
+        ammoniaInject_massFlowRate_tf.setText("0");
+        ammoniaInject_tempF_tf.setText("77");
+        
+        syn_AR_tf.getInputVerifier().verify(syn_AR_tf);
+        flueGas_AR_tf.getInputVerifier().verify(flueGas_AR_tf);
+        ammoniaInject_H2O_tf.getInputVerifier().verify(ammoniaInject_H2O_tf);
+        
+        thermOxDiameter.setText("4.9");
+        thermOxLength.setText("40");
+        thermOxLengthInc.setText("1");
+        ring1distanceTF.setText("3");
+        ring2distanceTF.setText("5");
+        ammoniaInjectionSiteTF.setText("35");
+        tempLossPerFoot.setText("0.37");
+        ambientTemp_tf.setText("68");  
+        
+    }
+
+    private void runThermalOxidizer() {
+
+        if (VALID_RUN_FLAG == false) {
+            JOptionPane.showMessageDialog(this, "A total exceeds 1.0, please correct before running model.",
+                    "Total value error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        
+        if(checkValidTotals() == false){
+            JOptionPane.showMessageDialog(this, "Please fill in all fields before running model.",
+                    "Empty fields error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        
+        Object[] options = {"Yes, run model", "No"};
+        int dialogAnswer = JOptionPane.showOptionDialog(ApplicationGUI.this, 
+                                            "One or more ring mass flow rate values is equal to 0, do you wish to run model "
+                                            + "with this value(s)?",
+                                            "Ring MassFlowRate Warning",
+                                            JOptionPane.YES_NO_OPTION,
+                                            JOptionPane.WARNING_MESSAGE,
+                                            null,
+                                            options,
+                                            options[1]);
+        
+        if(dialogAnswer == 1 ){
+            return;
+        }
+
+        //create folder for ouptuts of current individual run and save input screenshot within said folder
+        String dateTime = clockLabel1.getDate();
+        String outputDirectory = createOutputFolder(dateTime);
+
+        textFieldValuesToHash();
+        
+        //openFile_menuItem.setEnabled(false);
+        runButton.setEnabled(false);
+        setDefaultValuesButton.setEnabled(false);
+
+        jProgressBar1.setValue(0);
+        jProgressBar1.setString("0%");
+        jProgressBar1.setStringPainted(true);
+
+        thermalOxidizer = new ThermalOxidizer(textFieldHash, outlet_concentration_table, temp_profile_panel, 
+                                                co_profile_panel, nox_profile_panel, outputDirectory, dateTime);
+
+        thermalOxidizer.addPropertyChangeListener(new PropertyChangeListener() {
+            @Override
+            public void propertyChange(final PropertyChangeEvent event) {
+
+                switch (event.getPropertyName()) {
+
+                    case "progress": int prog = thermalOxidizer.getProgress();
+                                     jProgressBar1.setValue(prog);
+                                     jProgressBar1.setString(prog + "%");    
+                                     break;
+
+                    case "state":  switch ((StateValue) event.getNewValue()) {
+                        
+                                       case DONE:   //openFile_menuItem.setEnabled(true);
+                                                    if(thermalOxidizer.isCancelled()){
+                                                        jProgressBar1.setValue(0);
+                                                        jProgressBar1.setString(""); 
+                                                    }
+                                                    saveOutputFile_menuItem.setEnabled(true);
+                                                    runButton.setEnabled(true);
+                                                    setDefaultValuesButton.setEnabled(true);
+
+                                                    if (jTabbedPane.getSelectedIndex() == 1) {
+                                                        jTabbedPane.setSelectedIndex(0);
+                                                        jTabbedPane.setSelectedIndex(1);
+                                                    }
+
+                                                    openOutputFolder_button.setEnabled(true);
+
+                                                    break;
+                                           
+                                    }
+                        
+                        break;
+                
+                }
+
+            }
+        });
+
+        thermalOxidizer.execute();
+
+    }
+
+    class MyAbstractValidator extends AbstractValidator {
+
+        public MyAbstractValidator(JFrame parent, JTextField c, String message) {
+            super(parent, c, message);
+        }
+
+        @Override
+        protected boolean validationCriteria(JComponent c) {
+
+            JTextField currentTF = (JTextField) c;
+            String text = currentTF.getText();
+
+            //Check if empty; if it is, then put a "0" instead of empty
+            if (text.isEmpty()) {
+                Toolkit.getDefaultToolkit().beep();
+                setMessage("Empty field is not allowed");
+                return false;
+            }
+
+            //Check if the input is a number
+            try {
+                Double.parseDouble(text);
+            } catch (NumberFormatException e) {
+                Toolkit.getDefaultToolkit().beep();
+                setMessage("Number required");
+                return false;
+            }
+
+            Matcher o = Pattern.compile("^[-].*$").matcher(text);
+            if (o.find()) {
+                Toolkit.getDefaultToolkit().beep();
+                setMessage("Negative value not allowed");
+                return false;
+            }
+
+            String currenTF_name = currentTF.getName();
+            if (currenTF_name.equals("air_species")) {
+                int compare = Double.compare(Double.parseDouble(air_H2ObyMass_tf.getText()), 1.0);
+                if (compare >= 0) {
+                    setMessage("Value cannot exceed or be equal to 1.0");
+                    return false;
+                }
+            }
+
+            //Call method updateFields() to update the sum, of the species; also, prompt the user to
+            //enter a valid input if the new value causes the sum to exceed 1.0
+            if (updateFields(currenTF_name) == 0) {
+                setMessage("Value causes total to exceed 1.0, which is not allowed");
+                setNotValid();
+
+                setTargetField(currenTF_name);
+
+                VALID_RUN_FLAG = false;  
+                return true;
+                
+            } 
+            
+            else {   
+                
+                setValid();
+                
+                if(VALID_RUN_FLAG == false){
+                    setTargetField(currenTF_name);
+                }
+                
+                //allow user to run program
+                VALID_RUN_FLAG = true;
+                
+            }
+
+            //Input is valid
+            return true;
+
+        }
+        
+        private void setTargetField(String nameOfCurrentField){
+            
+            switch (nameOfCurrentField) {
+                    case "synGas_species":
+                        setTgtField(syn_totalFraction_tf);
+                        break;
+                    case "air_species":
+                        setTgtField(air_totalVolumeFraction_tf);
+                        break;
+                    case "flueGas_species":
+                        setTgtField(flueGas_total_tf);
+                        break;
+                    case "ammoniaInj_species":
+                        setTgtField(ammoniaInject_total_tf);
+                        break;
+                    default:
+                        System.out.println("Error in validationCriteria method; " + nameOfCurrentField + " not valid variable name");
+                        //System.exit(1);
+                        break;
+                }
+            
+        }
+        
+    }
+
+    private int updateFields(String species_name) {
+
+        switch (species_name) {
+
+            case "synGas_species": return sumAndUpdate(synGasSpeciesTextfieldsArray, syn_totalFraction_tf);
+
+            case "air_species": if (Double.compare(Double.parseDouble(air_H2ObyMass_tf.getText()), 1.0) == 0) {
+                                    return 0;
+                                }
+
+                                DecimalFormat df3 = new DecimalFormat("0.00");
+
+                                /**
+                                 * This calculates the humidity mass flow to a volume percentage
+                                 */
+                                double humidityInAirMass = Double.parseDouble(air_H2ObyMass_tf.getText());
+                                double sumMolFractionTimeMWAir = N_MW * 2 * DEFAULT_AIR_N2
+                                        + O_MW * 2 * DEFAULT_AIR_O2
+                                        + AR_MW * DEFAULT_AIR_AR;
+
+                                double massN2InAir, massO2InAir, massH2OInAir, massARInAir;
+
+                                massN2InAir = (1.0 - humidityInAirMass)
+                                        * (N_MW * 2 * DEFAULT_AIR_N2) / sumMolFractionTimeMWAir;
+                                massO2InAir = (1.0 - humidityInAirMass)
+                                        * (O_MW * 2 * DEFAULT_AIR_O2) / sumMolFractionTimeMWAir;
+                                massARInAir = (1.0 - humidityInAirMass)
+                                        * (AR_MW * DEFAULT_AIR_AR) / sumMolFractionTimeMWAir;
+                                massH2OInAir = humidityInAirMass;
+
+                                double  volumeN2InAir = massN2InAir / (N_MW * 2),
+                                        volumeO2InAir = massO2InAir / (O_MW * 2),
+                                        volumeArInAir = massARInAir / (AR_MW),
+                                        volumeH2OInAir = massH2OInAir / (2 * H_MW + O_MW),
+                                        sumMolsDividedByMW = volumeN2InAir + volumeO2InAir
+                                               + volumeArInAir + volumeH2OInAir,
+                                        molFractionOfN2InAir = volumeN2InAir / sumMolsDividedByMW,
+                                        molFractionOfO2InAir = volumeO2InAir / sumMolsDividedByMW,
+                                        molFractionOfArInAir = volumeArInAir / sumMolsDividedByMW,
+                                        molFractionOfH2OInAir = volumeH2OInAir / sumMolsDividedByMW;
+
+                                air_H2ObyVolume_tf.setText(df3.format(molFractionOfH2OInAir));
+                                air_N2_tf.setText(df3.format(molFractionOfN2InAir));
+                                air_AR_tf.setText(df3.format(molFractionOfArInAir));
+                                air_O2_tf.setText(df3.format(molFractionOfO2InAir));
+
+                                return sumAndUpdate(airSpeciesTextfieldsArray, air_totalVolumeFraction_tf);
+                
+
+            case "flueGas_species":  return sumAndUpdate(flueGasSpeciesTextfieldsArray, flueGas_total_tf);
+
+            case "ammoniaInj_species": return sumAndUpdate(ammoniaSpeciesTextfieldsArray, ammoniaInject_total_tf);
+
+            case "air_ring1":
+                
+                    calculatePercentageAndUpdate(air_massFlowRate_ring1_tf, air_massFlowRate_ring2_tf, 
+                                                 air_massFlowRate_ring1_percentage_tf, air_massFlowRate_ring2_percentage_tf, 
+                                                 air_massFlowRate_total_tf, air_massFlowRate_total_percentage_tf);
+                    return 1;
+
+            case "air_ring2":
+                
+                    calculatePercentageAndUpdate(air_massFlowRate_ring2_tf, air_massFlowRate_ring1_tf, 
+                                                 air_massFlowRate_ring2_percentage_tf, air_massFlowRate_ring1_percentage_tf, 
+                                                 air_massFlowRate_total_tf, air_massFlowRate_total_percentage_tf);
+                    return 1;
+
+            case "flueGas_ring1":
+               
+                    calculatePercentageAndUpdate(flueGas_massFlowRate_ring1_tf, flueGas_massFlowRate_ring2_tf, 
+                                                 flueGas_massFlowRate_ring1_percentage_tf, flueGas_massFlowRate_ring2_percentage_tf, 
+                                                 flueGas_massFlowRate_total_tf, flueGas_massFlowRate_total_percentage_tf);
+                    return 1;
+
+            case "flueGas_ring2":  
+                
+                    calculatePercentageAndUpdate(flueGas_massFlowRate_ring2_tf, flueGas_massFlowRate_ring1_tf, 
+                                                 flueGas_massFlowRate_ring2_percentage_tf, flueGas_massFlowRate_ring1_percentage_tf, 
+                                                 flueGas_massFlowRate_total_tf, flueGas_massFlowRate_total_percentage_tf);
+                    return 1;
+
+            default: break;
+
+        }
+
+        return 0;
+
+    }
+    
+    private int sumAndUpdate(JTextField[] array, JTextField totalFieldModified){
+        double sum = 0.0;
+                for (int i = 0; i < array.length; i++) {
+                    sum += Double.parseDouble(array[i].getText());
+                }
+                sum = (double) Math.round(sum * 100000) / 100000;
+                totalFieldModified.setText(sum + "");
+                if (Double.compare(sum, 1.0) != 0) {
+                    return 0;
+                }
+                return 1;
+    }
+    
+    private void calculatePercentageAndUpdate(JTextField fieldChanged, JTextField fieldUnchanged, JTextField perFieldChanged, 
+                                     JTextField perFieldUnchanged, JTextField totalFieldModified, JTextField totalPerFieldModified){
+        
+        //get new value that user input
+        double newValue = Double.parseDouble(fieldChanged.getText());
+        
+        //if new value is 0 then we set the percentage of that ring to 0 and return
+        if(Double.compare(newValue, 0.0) == 0){
+            perFieldChanged.setText("0.0");
+            //return;
+        }
+        
+        //calucalte the new total for ring1 and 2 by adding them
+        double massFlowTotal = Double.parseDouble(fieldChanged.getText()) + Double.parseDouble(fieldUnchanged.getText());
+                
+        //if the sum is 0, then the total field is set to 0 and we return
+        if(Double.compare(massFlowTotal, 0.0) == 0){
+            totalFieldModified.setText("0");
+            totalPerFieldModified.setText("0");
+            return;
+        }
+
+        //othwerise set it to it's non-zero value
+        massFlowTotal = (double) Math.round(massFlowTotal * 1000) / 1000;
+        totalFieldModified.setText(massFlowTotal + "");
+        
+        //calculate the percentage of the ring value that was changed and set the percentage field to this value
+        double newChangedFieldPer = 100 * newValue / massFlowTotal;
+        newChangedFieldPer = (double) Math.round(newChangedFieldPer * 1000) / 1000;
+        perFieldChanged.setText(newChangedFieldPer + "");
+        
+        //use that new percentage to calculate the percentage of the ring value that was unchanged
+        double newUnchangedFieldPer = 100.0 - newChangedFieldPer;
+        newUnchangedFieldPer = (double) Math.round(newUnchangedFieldPer * 1000) / 1000;
+        perFieldUnchanged.setText(newUnchangedFieldPer + ""); 
+        
+        //calculate the new total percentage (SHOULD ALWAYS BE 100.0)
+        double newTotalPer = newChangedFieldPer + newUnchangedFieldPer;
+        newTotalPer = (double) Math.round(newTotalPer * 1000) / 1000;
+        totalPerFieldModified.setText(newTotalPer + "");
+        
+    }
+    
+    public String createOutputFolder(String currentDateTime){
+        
+        String dir = "Model Outputs\\" + currentDateTime;
+        
+        File runOuputFolder = new File(dir);
+        runOuputFolder.mkdirs();
+        
+        saveInputScreenshot(dir, currentDateTime);
+        saveInputsToTextFile(false, dir, currentDateTime);
+        
+        runDirectory = dir;
+        
+        return dir;
+        
+    }   
+    
+    private void saveInputScreenshot(String dir, String currentDateTime){
+        
+        BufferedImage image = new BufferedImage(tab1_panel.getWidth(), tab1_panel.getHeight(), BufferedImage.TYPE_INT_RGB);
+        tab1_panel.paintAll(image.getGraphics());
+        try {
+            ImageIO.write(image, "png", new File(dir + "/" + currentDateTime + " - input screenshot.png"));
+        } catch (Exception ex) {
+            ex.printStackTrace(System.out);
+        }
+    }
+    
+    private void saveInputsToTextFile(boolean userSave, String dir, String currentDateTime){
+        
+        String directory;
+        
+        if(userSave){
+            if(dir.contains(".txt")){
+                directory = dir;
+            }
+            else{
+                directory = dir + ".txt";
+            }
+        }
+        else{
+            directory = dir + "/" + currentDateTime + " - inputs.txt";
+        }
+        
+        File inputsTextFile = new File(directory);
+        
+        try {        
+            inputsTextFile.createNewFile();
+        } catch (IOException ex) {
+            Logger.getLogger(ApplicationGUI.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        FileWriter fw;
+        BufferedWriter bw;
+        
+        try {
+            
+            fw = new FileWriter(inputsTextFile.getAbsoluteFile());
+            bw = new BufferedWriter(fw);
+            
+            bw.write("Thermal Oxidizer input file");
+            bw.newLine();  
+                    
+            bw.write("*Synthesis Gas: composition");
+            bw.newLine(); 
+            
+            for(int a=0; a < synGasSpeciesTextfieldsArray.length; a++){
+                bw.write(synGasSpeciesTextfieldsArray[a].getText());
+                bw.newLine();
+            }
+            
+            bw.write("*Synthesis Gas: volumetric flow rates and temp");
+            bw.newLine(); 
+            
+            for(int b=0; b < synGasVolFlowRateTextfieldsArray.length; b++){
+                bw.write(synGasVolFlowRateTextfieldsArray[b].getText());
+                bw.newLine();
+            }
+            
+            bw.write("*Air: air humidity");
+            bw.newLine(); 
+            
+            bw.write(air_H2ObyMass_tf.getText());
+            bw.newLine();
+            
+            bw.write("*Air: mass flow rates and temp");
+            bw.newLine(); 
+            
+            bw.write(airMassFlowRateTextfieldsArray[0].getText());     bw.newLine();
+            bw.write(airMassFlowRateTextfieldsArray[1].getText());     bw.newLine();
+            bw.write(airMassFlowRateTextfieldsArray[2].getText());     bw.newLine();
+                    
+            bw.write("*Flue Gas: composition");
+            bw.newLine(); 
+            
+            for(int d=0; d < flueGasSpeciesTextfieldsArray.length; d++){
+                bw.write(flueGasSpeciesTextfieldsArray[d].getText());
+                bw.newLine();
+            }
+            
+            bw.write("*Flue Gas: mass flow rates and temp");
+            bw.newLine(); 
+            
+            bw.write(flueGasMassFlowRateTextfieldsArray[0].getText());     bw.newLine();
+            bw.write(flueGasMassFlowRateTextfieldsArray[1].getText());     bw.newLine();
+            bw.write(flueGasMassFlowRateTextfieldsArray[2].getText());     bw.newLine();
+            
+            bw.write("*Ammonia Injection: composition");
+            bw.newLine(); 
+            
+            for(int e=0; e < ammoniaSpeciesTextfieldsArray.length; e++){
+                bw.write(ammoniaSpeciesTextfieldsArray[e].getText());
+                bw.newLine();
+            }
+            
+            bw.write("*Ammonia Injection: mass flow rates and temp");
+            bw.newLine(); 
+            
+            for(int f=0; f < ammoniaMassFlowRateTextfieldsArray.length; f++){
+                bw.write(ammoniaMassFlowRateTextfieldsArray[f].getText());
+                bw.newLine();
+            }
+            
+            bw.write("*Thermal Oxidizer Design");
+            bw.newLine(); 
+            
+            for(int g=0; g < thermalOxidizerDesignTextfieldsArray.length; g++){
+                bw.write(thermalOxidizerDesignTextfieldsArray[g].getText());
+                    bw.newLine();
+            }
+            
+            bw.write("-End");
+            
+            bw.close();
+            
+        } catch (IOException ex) {
+            Logger.getLogger(ApplicationGUI.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+    }
+  
+    private boolean checkValidTotals() {
+        
+        Double syn_total_value = Double.parseDouble(syn_totalFraction_tf.getText());
+        if(Double.compare(syn_total_value, 1.0) != 0){
+            return false;
+        }
+        
+        Double air_total_value = Double.parseDouble(air_totalVolumeFraction_tf.getText());
+        if(Double.compare(air_total_value, 1.0) != 0){
+            return false;
+        }
+        
+        Double flue_total_value = Double.parseDouble(flueGas_total_tf.getText());
+        if(Double.compare(flue_total_value, 1.0) != 0){
+            return false;
+        }
+        
+        Double ammonia_total_value = Double.parseDouble(ammoniaInject_total_tf.getText());
+        if(Double.compare(ammonia_total_value, 1.0) != 0){
+            return false;
+        }
+        
+        if(syn_tempF_tf.getText().isEmpty()){
+            return false;
+        }
+        
+        if(air_tempF_tf.getText().isEmpty()){
+            return false;
+        }
+        
+        if(flueGas_tempF_tf.getText().isEmpty()){
+            return false;
+        }
+        
+        if(ammoniaInject_tempF_tf.getText().isEmpty()){
+            return false;
+        }
+        
+        for(int x=0; x < thermalOxidizerDesignTextfieldsArray.length; x++){
+            if(thermalOxidizerDesignTextfieldsArray[x].getText().isEmpty()){
+                return false;
+            }
+        }
+        
+        return true;
+        
+    }
+    
+    private void readFromInputFile(){
+        
+         final JFileChooser fc = new JFileChooser();
+         FileNameExtensionFilter filter = new FileNameExtensionFilter("text files", "txt", "text");
+         fc.setFileFilter(filter);
+         
+         if(fc.showOpenDialog(this) != JFileChooser.APPROVE_OPTION){ 
+             return;
+         }    
+             
+         String fileName = fc.getSelectedFile().getName(); 
+         String filePath = fc.getSelectedFile().getPath();  
+         
+         BufferedReader fileReader;
+         String line = null;
+         String divider;
+         
+         ArrayList<String> input_lines = new ArrayList<>();
+         
+         try{
+             
+             fileReader = new BufferedReader(new FileReader(filePath));    
+             
+             line = fileReader.readLine();
+             divider = "Thermal Oxidizer input file";
+             if( checkInputFileDivider(line, "^\\s*thermal\\s+oxidizer\\s+input\\s+file\\s*$", divider) == false )
+                 return;
+             
+             line = fileReader.readLine();
+             divider = "*Synthesis Gas: composition";
+             if( checkInputFileDivider(line, "^\\s*\\*synthesis\\s+gas:\\s+composition\\s*$", divider) == false )
+                 return;
+              
+             int line_counter = 0;
+             while(line_counter < synGasSpeciesTextfieldsArray.length){
+                 line = fileReader.readLine();
+                 Double.parseDouble(line);
+                 input_lines.add(line);
+                 line_counter++;
+             }
+             line_counter = 0;
+                          
+             line = fileReader.readLine();
+             divider = "*Synthesis Gas: volumetric flow rates and temp";
+             if( checkInputFileDivider(line, "^\\s*\\*synthesis\\s+gas:\\s+volumetric\\s+flow\\s+rates\\s+and\\s+temp\\s*$", 
+                                             divider) == false )
+                 return;
+             
+             while(line_counter < synGasVolFlowRateTextfieldsArray.length){
+                 line = fileReader.readLine();
+                 Double.parseDouble(line);
+                 input_lines.add(line);
+                 line_counter++;
+             }
+             line_counter = 0;
+             
+             line = fileReader.readLine();
+             divider = "*Air: air humidity";
+             if( checkInputFileDivider(line, "^\\s*\\*air:\\s+air\\s+humidity\\s*$", divider) == false )
+                 return;
+             
+             line = fileReader.readLine();
+             Double.parseDouble(line);
+             air_H2ObyMass_tf.setText(line);
+             input_lines.add(line);
+             
+             line = fileReader.readLine();
+             divider = "*Air: mass flow rates and temp";
+             if( checkInputFileDivider(line, "^\\s*\\*air:\\s+mass\\s+flow\\s+rates\\s+and\\s+temp\\s*$", divider) == false )
+                 return;
+             
+             line = fileReader.readLine();
+             Double.parseDouble(line);
+             input_lines.add(line);
+             
+             line = fileReader.readLine();
+             Double.parseDouble(line);
+             input_lines.add(line);
+             
+             line = fileReader.readLine();
+             Double.parseDouble(line);  
+             input_lines.add(line);             
+             
+             line = fileReader.readLine();
+             divider = "*Flue Gas: composition";
+             if( checkInputFileDivider(line, "^\\s*\\*flue\\s+gas:\\s+composition\\s*$", divider) == false )
+                 return;
+             
+             while(line_counter < flueGasSpeciesTextfieldsArray.length){
+                 line = fileReader.readLine();
+                 Double.parseDouble(line);
+                 input_lines.add(line);
+                 line_counter++;
+             }
+             line_counter = 0;
+             
+             line = fileReader.readLine();
+             divider = "*Flue Gas: mass flow rates and temp";
+             if( checkInputFileDivider(line, "^\\s*\\*flue\\s+gas:\\s+mass\\s+flow\\s+rates\\s+and\\s+temp\\s*$", divider) == false )
+                 return;
+             
+             //Read ring1, ring2, and temperature for flue gas
+             line = fileReader.readLine();
+             Double.parseDouble(line);
+             input_lines.add(line);
+             
+             line = fileReader.readLine();
+             Double.parseDouble(line);
+             input_lines.add(line);
+             
+             line = fileReader.readLine();
+             Double.parseDouble(line);
+             input_lines.add(line);
+                          
+             line = fileReader.readLine();
+             divider = "*Ammonia Injection: composition";
+             if( checkInputFileDivider(line, "^\\s*\\*ammonia\\s+injection:\\s+composition\\s*$", divider) == false )
+                 return;
+             
+             while(line_counter < ammoniaSpeciesTextfieldsArray.length){
+                 line = fileReader.readLine();
+                 Double.parseDouble(line);
+                 input_lines.add(line);
+                 line_counter++;
+             }
+             line_counter = 0;
+             
+             line = fileReader.readLine();
+             divider = "*Ammonia Injection: mass flow rates and temp";
+             if( checkInputFileDivider(line, "^\\s*\\*ammonia\\s+injection:\\s+mass\\s+flow\\s+rates\\s+and\\s+temp\\s*$", 
+                                             divider) == false )
+                 return;
+             
+             while(line_counter < ammoniaMassFlowRateTextfieldsArray.length){
+                 line = fileReader.readLine();
+                 Double.parseDouble(line);
+                 input_lines.add(line);
+                 line_counter++;
+             }
+             line_counter = 0;  
+             
+             line = fileReader.readLine();
+             divider = "*Thermal Oxidizer Design";
+             if( checkInputFileDivider(line, "^\\s*\\*thermal\\s+oxidizer\\s+design\\s*$", divider) == false)
+                     return;
+             
+             while(line_counter < thermalOxidizerDesignTextfieldsArray.length){
+                 line = fileReader.readLine();
+                 Double.parseDouble(line);
+                 input_lines.add(line);
+                 line_counter++;
+             }
+              
+             line = fileReader.readLine();
+             divider = "-End";
+             if( checkInputFileDivider(line, "^\\s*\\-end\\s*$", divider) == false )
+                return;
+             
+             if((fileReader.readLine()) != null){
+                 JOptionPane.showMessageDialog(this, "Input file is longer than expected, please ensure that\n"
+                                                        + "there are no lines after the terminating line, \"-End\"",
+                                                          "Invalid Input File", JOptionPane.ERROR_MESSAGE);   
+             }
+             
+             fileReader.close();
+             
+             int input_lines_counter = 0;
+             int arrayIndex=0;
+             while(arrayIndex < synGasSpeciesTextfieldsArray.length){
+                 synGasSpeciesTextfieldsArray[arrayIndex++].setText(input_lines.get(input_lines_counter++));
+             }
+             arrayIndex = 0;
+             
+             while(arrayIndex < synGasVolFlowRateTextfieldsArray.length){
+                 synGasVolFlowRateTextfieldsArray[arrayIndex++].setText(input_lines.get(input_lines_counter++));
+             }
+             arrayIndex = 0;
+             
+             air_H2ObyMass_tf.setText(input_lines.get(input_lines_counter++));
+             
+             while(arrayIndex < airMassFlowRateTextfieldsArray.length){
+                 airMassFlowRateTextfieldsArray[arrayIndex++].setText(input_lines.get(input_lines_counter++));
+             }
+             arrayIndex = 0;
+             
+             while(arrayIndex < flueGasSpeciesTextfieldsArray.length){
+                 flueGasSpeciesTextfieldsArray[arrayIndex++].setText(input_lines.get(input_lines_counter++));
+             }
+             arrayIndex = 0;
+             
+             while(arrayIndex < flueGasMassFlowRateTextfieldsArray.length){
+                 flueGasMassFlowRateTextfieldsArray[arrayIndex++].setText(input_lines.get(input_lines_counter++));
+             }
+             arrayIndex = 0;
+             
+             while(arrayIndex < ammoniaSpeciesTextfieldsArray.length){
+                 ammoniaSpeciesTextfieldsArray[arrayIndex++].setText(input_lines.get(input_lines_counter++));
+             }
+             arrayIndex = 0;
+             
+             while(arrayIndex < ammoniaMassFlowRateTextfieldsArray.length){
+                 ammoniaMassFlowRateTextfieldsArray[arrayIndex++].setText(input_lines.get(input_lines_counter++));
+             }
+             arrayIndex = 0;
+             
+             while(arrayIndex < thermalOxidizerDesignTextfieldsArray.length){
+                 thermalOxidizerDesignTextfieldsArray[arrayIndex++].setText(input_lines.get(input_lines_counter++));
+             }
+             
+             syn_AR_tf.getInputVerifier().verify(syn_AR_tf);
+             air_H2ObyMass_tf.getInputVerifier().verify(air_H2ObyMass_tf);
+             air_massFlowRate_ring1_tf.getInputVerifier().verify(air_massFlowRate_ring1_tf);
+             flueGas_AR_tf.getInputVerifier().verify(flueGas_AR_tf);
+             flueGas_massFlowRate_ring1_tf.getInputVerifier().verify(flueGas_massFlowRate_ring1_tf);
+             ammoniaInject_NH3_tf.getInputVerifier().verify(ammoniaInject_NH3_tf); 
+             
+         } catch(IOException ex){ 
+             Logger.getLogger(ApplicationGUI.class.getName()).log(Level.SEVERE, null, ex);
+         } catch (NullPointerException null_ex){
+             String errorMessage = "Unable to open the input file specified because it is empty or has a missing line.";
+             //if(isDivider){
+             //    errorMessage += "\nVerify that the following line is included in the file:\n" + divider;
+             //}
+             JOptionPane.showMessageDialog(this, errorMessage, "Empty or incomplete input file", JOptionPane.ERROR_MESSAGE);
+         } catch (NumberFormatException num_ex){
+             JOptionPane.showMessageDialog(this, "A line in the input file: " + line + ", is not a number.",
+                                                          "Invalid Input File", JOptionPane.ERROR_MESSAGE);            
+         } 
+         
+    }
+    
+    private boolean checkInputFileDivider(String line, String regEx, String necessaryLine){
+        
+        //System.out.println(line);
+        
+        if(line.toLowerCase().matches(regEx) == false){
+            JOptionPane.showMessageDialog(this, "The following line is incorrectly formatted in the input file"
+                                                + ": \n" + necessaryLine + "\nCheck documentation for correct formatting.",
+                                                      "Input file has missing or incorrect Line", JOptionPane.ERROR_MESSAGE);
+            return false;
+        } 
+        
+        return true;
+        
+    }
+    
+    private void clearFields(){
+        
+        for(int i=0; i<synGasSpeciesTextfieldsArray.length; i++){
+            synGasSpeciesTextfieldsArray[i].setText("0.0");
+        }
+        syn_totalFraction_tf.setText("0.0");
+        
+        for(int i=0; i<synGasVolFlowRateTextfieldsArray.length; i++){
+            synGasVolFlowRateTextfieldsArray[i].setText("");
+        }
+        air_N2_tf.setText("0.78");
+        air_AR_tf.setText("0.01");
+        air_O2_tf.setText("0.21");
+        air_H2ObyMass_tf.setText("0.0");
+        air_H2ObyVolume_tf.setText("0");
+        air_totalVolumeFraction_tf.setText("1.0");
+        
+        
+        air_massFlowRate_ring1_tf.setText("0");
+        air_massFlowRate_ring1_percentage_tf.setText("0");
+        air_massFlowRate_ring2_tf.setText("0");
+        air_massFlowRate_ring2_percentage_tf.setText("0");
+        air_massFlowRate_total_tf.setText("");
+        air_massFlowRate_total_percentage_tf.setText("");
+        air_tempF_tf.setText("");
+        
+        for(int i=0; i<flueGasSpeciesTextfieldsArray.length; i++){
+            flueGasSpeciesTextfieldsArray[i].setText("0.0");
+        }
+        flueGas_total_tf.setText("0.0");
+        
+        flueGas_massFlowRate_ring1_tf.setText("0");
+        flueGas_massFlowRate_ring1_percentage_tf.setText("0");
+        flueGas_massFlowRate_ring2_tf.setText("0");
+        flueGas_massFlowRate_ring2_percentage_tf.setText("0");
+        flueGas_massFlowRate_total_tf.setText("");
+        flueGas_massFlowRate_total_percentage_tf.setText("");
+        flueGas_tempF_tf.setText("");
+        
+        for(int i=0; i<ammoniaSpeciesTextfieldsArray.length; i++){
+            ammoniaSpeciesTextfieldsArray[i].setText("0.0");
+        }
+        ammoniaInject_total_tf.setText("0.0");
+        
+        for(int i=0; i<ammoniaMassFlowRateTextfieldsArray.length; i++){
+            ammoniaMassFlowRateTextfieldsArray[i].setText("");
+        }
+        
+        for(int i=0; i<thermalOxidizerDesignTextfieldsArray.length; i++){
+            thermalOxidizerDesignTextfieldsArray[i].setText("");
+        }
+        
+    }
+    
+    private void cancelRun(){
+        if(thermalOxidizer != null){
+            thermalOxidizer.cancel(true);
+        }
+        thermalOxidizer = null;
+    }
+    
+//end of program
+}
