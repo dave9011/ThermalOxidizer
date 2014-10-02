@@ -90,12 +90,6 @@ public class ApplicationGUI extends javax.swing.JFrame {
             setDefaultValues();
         }
     };
-    Action updateAll = new AbstractAction("updateAll") {
-        @Override
-        public void actionPerformed(ActionEvent ae) {
-            System.out.println("NEED TO ADD CODE FOR THS BUTTON");
-        }
-    };
     Action runTO = new AbstractAction("runTO") {
         @Override
         public void actionPerformed(ActionEvent ae) {
