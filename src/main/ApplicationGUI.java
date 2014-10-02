@@ -105,8 +105,6 @@ public class ApplicationGUI extends javax.swing.JFrame {
     public ApplicationGUI() {
         initComponents();
         myInit();
-        //jTabbedPane1.setEnabledAt(1, false);
-        //System.out.println(new SimpleDateFormat("yyyyMMdd_HHmmss").format(Calendar.getInstance().getTime()));
     }
 
     /**
@@ -2246,7 +2244,6 @@ public class ApplicationGUI extends javax.swing.JFrame {
         try {
            
             String outputFolderDirectory = System.getProperty("user.dir") + "\\" + runDirectory;
-            System.out.println(outputFolderDirectory);
             
             Runtime.getRuntime().exec("explorer.exe " + outputFolderDirectory);
         } catch (IOException ex) {
@@ -2260,7 +2257,6 @@ public class ApplicationGUI extends javax.swing.JFrame {
         //fc.setFileFilter(filter);
         
         if(fc.showSaveDialog(this) == JFileChooser.APPROVE_OPTION){ 
-             System.out.println(fc.getSelectedFile());
              saveInputsToTextFile(true, fc.getSelectedFile()+"", "");
         } 
         
@@ -2283,7 +2279,6 @@ public class ApplicationGUI extends javax.swing.JFrame {
         //fc.setFileFilter(filter);
         
         if(fc.showSaveDialog(this) == JFileChooser.APPROVE_OPTION){ 
-             System.out.println(fc.getSelectedFile());
              thermalOxidizer.saveExcelFile(true, fc.getSelectedFile()+"");
         } 
     }//GEN-LAST:event_saveOutputFile_menuItemActionPerformed
@@ -3517,8 +3512,6 @@ public class ApplicationGUI extends javax.swing.JFrame {
     }
     
     private boolean checkInputFileDivider(String line, String regEx, String necessaryLine){
-        
-        //System.out.println(line);
         
         if(line.toLowerCase().matches(regEx) == false){
             JOptionPane.showMessageDialog(this, "The following line is incorrectly formatted in the input file"
