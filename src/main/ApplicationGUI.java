@@ -15,6 +15,7 @@ import java.beans.PropertyChangeListener;
 import java.io.*;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -2527,14 +2528,11 @@ public class ApplicationGUI extends javax.swing.JFrame {
     }
 
     private void initAirTextFieldsArrayList() {
-        airSpeciesTextFieldsList.add(air_N2_tf);
-        airSpeciesTextFieldsList.add(air_AR_tf);
-        airSpeciesTextFieldsList.add(air_O2_tf);
-        airSpeciesTextFieldsList.add(air_H2ObyVolume_tf);
-        
-        airMassFlowRateTextFieldsArrayList.add(air_massFlowRate_ring1_tf);
-        airMassFlowRateTextFieldsArrayList.add(air_massFlowRate_ring2_tf);
-        airMassFlowRateTextFieldsArrayList.add(air_tempF_tf);
+        JTextField[] fields = {air_N2_tf, air_AR_tf, air_O2_tf, air_H2ObyVolume_tf};
+        airSpeciesTextFieldsList.addAll(Arrays.asList(fields));
+
+        JTextField[] fields2 = {air_massFlowRate_ring1_tf, air_massFlowRate_ring2_tf, air_tempF_tf};
+        airMassFlowRateTextFieldsArrayList.addAll(Arrays.asList(fields2));
     }
     
     private void initAmmoniaTextFieldsArrayList() {
@@ -2546,44 +2544,24 @@ public class ApplicationGUI extends javax.swing.JFrame {
     }
     
     private void initDesignTextFieldsArrayList() {
-        thermalOxidizerDesignTextFieldsArrayList.add(thermOxDiameter);
-        thermalOxidizerDesignTextFieldsArrayList.add(thermOxLength);
-        thermalOxidizerDesignTextFieldsArrayList.add(thermOxLengthInc);
-        thermalOxidizerDesignTextFieldsArrayList.add(ring1distanceTF);
-        thermalOxidizerDesignTextFieldsArrayList.add(ring2distanceTF);
-        thermalOxidizerDesignTextFieldsArrayList.add(ammoniaInjectionSiteTF);
-        thermalOxidizerDesignTextFieldsArrayList.add(tempLossPerFoot);
-        thermalOxidizerDesignTextFieldsArrayList.add(ambientTemp_tf);
+        JTextField[] fields = {thermOxDiameter, thermOxLength, thermOxLengthInc, ring1distanceTF, ring2distanceTF, ammoniaInjectionSiteTF, tempLossPerFoot, ambientTemp_tf};
+        thermalOxidizerDesignTextFieldsArrayList.addAll(Arrays.asList(fields));
     }
 
     private void initFlueGasTextFieldsArrayList() {
-        flueGasSpeciesTextFieldsList.add(flueGas_N2_tf);
-        flueGasSpeciesTextFieldsList.add(flueGas_AR_tf);
-        flueGasSpeciesTextFieldsList.add(flueGas_O2_tf);
-        flueGasSpeciesTextFieldsList.add(flueGas_H2O_tf);
-        flueGasSpeciesTextFieldsList.add(flueGas_CO2_tf);
-        
-        flueGasMassFlowRateTextFieldsArrayList.add(flueGas_massFlowRate_ring1_tf);
-        flueGasMassFlowRateTextFieldsArrayList.add(flueGas_massFlowRate_ring2_tf);
-        flueGasMassFlowRateTextFieldsArrayList.add(flueGas_tempF_tf);
+        JTextField[] fields = {flueGas_N2_tf, flueGas_AR_tf, flueGas_O2_tf, flueGas_H2O_tf, flueGas_CO2_tf};
+        flueGasSpeciesTextFieldsList.addAll(Arrays.asList(fields));
+
+        JTextField[] fields2 = {flueGas_massFlowRate_ring1_tf, flueGas_massFlowRate_ring2_tf, flueGas_tempF_tf};
+        flueGasMassFlowRateTextFieldsArrayList.addAll(Arrays.asList(fields2));
     }
 
     private void initSynthesisGasTextFieldsArrayList() {
-        synGasSpeciesTextFieldsList.add(syn_N2_tf);
-        synGasSpeciesTextFieldsList.add(syn_AR_tf);
-        synGasSpeciesTextFieldsList.add(syn_O2_tf);
-        synGasSpeciesTextFieldsList.add(syn_H2O_tf);
-        synGasSpeciesTextFieldsList.add(syn_C6H6_tf);
-        synGasSpeciesTextFieldsList.add(syn_CH4_tf);
-        synGasSpeciesTextFieldsList.add(syn_NH3_tf);
-        synGasSpeciesTextFieldsList.add(syn_H2S_tf);
-        synGasSpeciesTextFieldsList.add(syn_H2_tf);
-        synGasSpeciesTextFieldsList.add(syn_CO_tf);
-        synGasSpeciesTextFieldsList.add(syn_CO2_tf);
-        synGasSpeciesTextFieldsList.add(syn_HCL_tf);
-        
-        synGasVolFlowRateTextFieldsArrayList.add(syn_VolFlowRate_tf);
-        synGasVolFlowRateTextFieldsArrayList.add(syn_tempF_tf);
+        JTextField[] fields = {syn_N2_tf, syn_AR_tf, syn_O2_tf, syn_H2O_tf, syn_C6H6_tf, syn_CH4_tf, syn_NH3_tf, syn_H2S_tf, syn_H2_tf, syn_CO_tf, syn_CO2_tf, syn_HCL_tf};
+        synGasSpeciesTextFieldsList.addAll(Arrays.asList(fields));
+
+        JTextField[] fields2 = {syn_VolFlowRate_tf, syn_tempF_tf};
+        synGasVolFlowRateTextFieldsArrayList.addAll(Arrays.asList(fields2));
     }
     
     @SuppressWarnings("unchecked")
