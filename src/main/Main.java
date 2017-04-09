@@ -13,13 +13,11 @@ public class Main {
             public void run() {
                 
                 try{
-                    Thread.sleep(3000);  //2.7sec
+                    Thread.sleep(3000);
                 } catch(Exception ex){
                 }
                 
                 final ApplicationGUI frame = new ApplicationGUI();
-                //frame.setSize(1400, 650);
-                //frame.setExtendedState(frame.getExtendedState()|JFrame.MAXIMIZED_BOTH );
                 frame.setLocationRelativeTo(null);
                 frame.setVisible(true);               
                 

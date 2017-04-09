@@ -2490,7 +2490,6 @@ public class ApplicationGUI extends javax.swing.JFrame {
     //</editor-fold>
     
     private void myInit() {
-
         // configure the Action with the accelerator (aka: short cut)
         setDefault.putValue(Action.ACCELERATOR_KEY, KeyStroke.getKeyStroke(KeyEvent.VK_D, InputEvent.SHIFT_MASK));
         runTO.putValue(Action.ACCELERATOR_KEY, KeyStroke.getKeyStroke(KeyEvent.VK_R, InputEvent.SHIFT_MASK));
@@ -2504,55 +2503,19 @@ public class ApplicationGUI extends javax.swing.JFrame {
         runButton.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(
                 (KeyStroke) runTO.getValue(Action.ACCELERATOR_KEY), "runAction");
         
-        synGasSpeciesTextfieldsArray[0] = syn_N2_tf;
-        synGasSpeciesTextfieldsArray[1] = syn_AR_tf;
-        synGasSpeciesTextfieldsArray[2] = syn_O2_tf;
-        synGasSpeciesTextfieldsArray[3] = syn_H2O_tf;
-        synGasSpeciesTextfieldsArray[4] = syn_C6H6_tf;
-        synGasSpeciesTextfieldsArray[5] = syn_CH4_tf;
-        synGasSpeciesTextfieldsArray[6] = syn_NH3_tf;
-        synGasSpeciesTextfieldsArray[7] = syn_H2S_tf;
-        synGasSpeciesTextfieldsArray[8] = syn_H2_tf;
-        synGasSpeciesTextfieldsArray[9] = syn_CO_tf;
-        synGasSpeciesTextfieldsArray[10] = syn_CO2_tf;
-        synGasSpeciesTextfieldsArray[11] = syn_HCL_tf;
-        
-        synGasVolFlowRateTextfieldsArray[0] = syn_VolFlowRate_tf;
-        synGasVolFlowRateTextfieldsArray[1] = syn_tempF_tf;
-        
-        airSpeciesTextfieldsArray[0] = air_N2_tf;
-        airSpeciesTextfieldsArray[1] = air_AR_tf;
-        airSpeciesTextfieldsArray[2] = air_O2_tf;
-        airSpeciesTextfieldsArray[3] = air_H2ObyVolume_tf;
+        initTextfieldArrays();
+    }
 
-        airMassFlowRateTextfieldsArray[0] = air_massFlowRate_ring1_tf;
-        airMassFlowRateTextfieldsArray[1] = air_massFlowRate_ring2_tf;
-        airMassFlowRateTextfieldsArray[2] = air_tempF_tf;
+    // Initialize the arrays used to track our JTextFields
+    protected void initTextfieldArrays() {
+        // Init text field array for each species
+        initSynthesisGasTextfieldsArray();
+        initAirTextfieldsArray();
+        initFlueGasTextfieldsArray();
+        initAmmoniaTextfieldsArray();
         
-        flueGasSpeciesTextfieldsArray[0] = flueGas_N2_tf;
-        flueGasSpeciesTextfieldsArray[1] = flueGas_AR_tf;
-        flueGasSpeciesTextfieldsArray[2] = flueGas_O2_tf;
-        flueGasSpeciesTextfieldsArray[3] = flueGas_H2O_tf;
-        flueGasSpeciesTextfieldsArray[4] = flueGas_CO2_tf;
-        
-        flueGasMassFlowRateTextfieldsArray[0] = flueGas_massFlowRate_ring1_tf;  
-        flueGasMassFlowRateTextfieldsArray[1] = flueGas_massFlowRate_ring2_tf;
-        flueGasMassFlowRateTextfieldsArray[2] = flueGas_tempF_tf;
-        
-        ammoniaSpeciesTextfieldsArray[0] = ammoniaInject_H2O_tf;
-        ammoniaSpeciesTextfieldsArray[1] = ammoniaInject_NH3_tf;
-        
-        ammoniaMassFlowRateTextfieldsArray[0] = ammoniaInject_massFlowRate_tf;  
-        ammoniaMassFlowRateTextfieldsArray[1] = ammoniaInject_tempF_tf;  
-        
-        thermalOxidizerDesignTextfieldsArray[0] = thermOxDiameter;
-        thermalOxidizerDesignTextfieldsArray[1] = thermOxLength;
-        thermalOxidizerDesignTextfieldsArray[2] = thermOxLengthInc;
-        thermalOxidizerDesignTextfieldsArray[3] = ring1distanceTF;
-        thermalOxidizerDesignTextfieldsArray[4] = ring2distanceTF;
-        thermalOxidizerDesignTextfieldsArray[5] = ammoniaInjectionSiteTF;
-        thermalOxidizerDesignTextfieldsArray[6] = tempLossPerFoot;
-        thermalOxidizerDesignTextfieldsArray[7] = ambientTemp_tf;
+        // Init text field array for the Thermal Oxidizer's design
+        initDesignTextfieldsArray();
         
         int allTFArrayIndex = 0;
                 
@@ -2607,9 +2570,68 @@ public class ApplicationGUI extends javax.swing.JFrame {
 
         for(int g=0; g < thermalOxidizerDesignTextfieldsArray.length; g++){
             allTextFieldsArray[allTFArrayIndex++] =  thermalOxidizerDesignTextfieldsArray[g];
+        }
     }
+
+    protected void initAirTextfieldsArray() {
+        airSpeciesTextfieldsArray[0] = air_N2_tf;
+        airSpeciesTextfieldsArray[1] = air_AR_tf;
+        airSpeciesTextfieldsArray[2] = air_O2_tf;
+        airSpeciesTextfieldsArray[3] = air_H2ObyVolume_tf;
         
-}
+        airMassFlowRateTextfieldsArray[0] = air_massFlowRate_ring1_tf;
+        airMassFlowRateTextfieldsArray[1] = air_massFlowRate_ring2_tf;
+        airMassFlowRateTextfieldsArray[2] = air_tempF_tf;
+    }
+    
+    protected void initAmmoniaTextfieldsArray() {
+        ammoniaSpeciesTextfieldsArray[0] = ammoniaInject_H2O_tf;
+        ammoniaSpeciesTextfieldsArray[1] = ammoniaInject_NH3_tf;
+        
+        ammoniaMassFlowRateTextfieldsArray[0] = ammoniaInject_massFlowRate_tf;
+        ammoniaMassFlowRateTextfieldsArray[1] = ammoniaInject_tempF_tf;
+    }
+    
+    protected void initDesignTextfieldsArray() {
+        thermalOxidizerDesignTextfieldsArray[0] = thermOxDiameter;
+        thermalOxidizerDesignTextfieldsArray[1] = thermOxLength;
+        thermalOxidizerDesignTextfieldsArray[2] = thermOxLengthInc;
+        thermalOxidizerDesignTextfieldsArray[3] = ring1distanceTF;
+        thermalOxidizerDesignTextfieldsArray[4] = ring2distanceTF;
+        thermalOxidizerDesignTextfieldsArray[5] = ammoniaInjectionSiteTF;
+        thermalOxidizerDesignTextfieldsArray[6] = tempLossPerFoot;
+        thermalOxidizerDesignTextfieldsArray[7] = ambientTemp_tf;
+    }
+
+    protected void initFlueGasTextfieldsArray() {
+        flueGasSpeciesTextfieldsArray[0] = flueGas_N2_tf;
+        flueGasSpeciesTextfieldsArray[1] = flueGas_AR_tf;
+        flueGasSpeciesTextfieldsArray[2] = flueGas_O2_tf;
+        flueGasSpeciesTextfieldsArray[3] = flueGas_H2O_tf;
+        flueGasSpeciesTextfieldsArray[4] = flueGas_CO2_tf;
+        
+        flueGasMassFlowRateTextfieldsArray[0] = flueGas_massFlowRate_ring1_tf;
+        flueGasMassFlowRateTextfieldsArray[1] = flueGas_massFlowRate_ring2_tf;
+        flueGasMassFlowRateTextfieldsArray[2] = flueGas_tempF_tf;
+    }
+
+    protected void initSynthesisGasTextfieldsArray() {
+        synGasSpeciesTextfieldsArray[0] = syn_N2_tf;
+        synGasSpeciesTextfieldsArray[1] = syn_AR_tf;
+        synGasSpeciesTextfieldsArray[2] = syn_O2_tf;
+        synGasSpeciesTextfieldsArray[3] = syn_H2O_tf;
+        synGasSpeciesTextfieldsArray[4] = syn_C6H6_tf;
+        synGasSpeciesTextfieldsArray[5] = syn_CH4_tf;
+        synGasSpeciesTextfieldsArray[6] = syn_NH3_tf;
+        synGasSpeciesTextfieldsArray[7] = syn_H2S_tf;
+        synGasSpeciesTextfieldsArray[8] = syn_H2_tf;
+        synGasSpeciesTextfieldsArray[9] = syn_CO_tf;
+        synGasSpeciesTextfieldsArray[10] = syn_CO2_tf;
+        synGasSpeciesTextfieldsArray[11] = syn_HCL_tf;
+        
+        synGasVolFlowRateTextfieldsArray[0] = syn_VolFlowRate_tf;
+        synGasVolFlowRateTextfieldsArray[1] = syn_tempF_tf;
+    }
     
     @SuppressWarnings("unchecked")
     private HashMap textFieldValuesToHash() {
