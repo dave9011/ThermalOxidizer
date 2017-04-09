@@ -3224,41 +3224,22 @@ public class ApplicationGUI extends javax.swing.JFrame {
     }
   
     private boolean checkValidTotals() {
-        
-        Double syn_total_value = Double.parseDouble(syn_totalFraction_tf.getText());
-        if(Double.compare(syn_total_value, 1.0) != 0){
-            return false;
+        JTextField[] totalFields = {syn_totalFraction_tf, air_totalVolumeFraction_tf, flueGas_total_tf, ammoniaInject_total_tf};
+
+        for (JTextField textField : totalFields) {
+            Double totalValue = Double.parseDouble(textField.getText());
+
+            if(Double.compare(totalValue, 1.0) != 0){
+                return false;
+            }
         }
-        
-        Double air_total_value = Double.parseDouble(air_totalVolumeFraction_tf.getText());
-        if(Double.compare(air_total_value, 1.0) != 0){
-            return false;
-        }
-        
-        Double flue_total_value = Double.parseDouble(flueGas_total_tf.getText());
-        if(Double.compare(flue_total_value, 1.0) != 0){
-            return false;
-        }
-        
-        Double ammonia_total_value = Double.parseDouble(ammoniaInject_total_tf.getText());
-        if(Double.compare(ammonia_total_value, 1.0) != 0){
-            return false;
-        }
-        
-        if(syn_tempF_tf.getText().isEmpty()){
-            return false;
-        }
-        
-        if(air_tempF_tf.getText().isEmpty()){
-            return false;
-        }
-        
-        if(flueGas_tempF_tf.getText().isEmpty()){
-            return false;
-        }
-        
-        if(ammoniaInject_tempF_tf.getText().isEmpty()){
-            return false;
+
+        JTextField[] temperatureFields = {syn_tempF_tf, air_tempF_tf, flueGas_tempF_tf, ammoniaInject_tempF_tf};
+
+        for (JTextField textField : temperatureFields) {
+            if(textField.getText().isEmpty()){
+                return false;
+            }
         }
 
         for (JTextField textField : thermalOxidizerDesignTextFieldsArrayList) {
@@ -3268,7 +3249,6 @@ public class ApplicationGUI extends javax.swing.JFrame {
         }
         
         return true;
-        
     }
     
     private void readFromInputFile(){
@@ -3519,7 +3499,6 @@ public class ApplicationGUI extends javax.swing.JFrame {
 
         syn_totalFraction_tf.setText("0.0");
 
-        // Clear air fields
         air_N2_tf.setText("0.78");
         air_AR_tf.setText("0.01");
         air_O2_tf.setText("0.21");
