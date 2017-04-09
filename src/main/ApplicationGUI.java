@@ -3059,11 +3059,7 @@ public class ApplicationGUI extends javax.swing.JFrame {
         String directory;
         
         if (userSave) {
-            if (dir.contains(".txt")) {
-                directory = dir;
-            } else {
-                directory = dir + ".txt";
-            }
+            directory = dir.contains(".txt") ? dir : (dir + ".txt");
         } else{
             directory = dir + "/" + currentDateTime + " - inputs.txt";
         }
@@ -3160,7 +3156,9 @@ public class ApplicationGUI extends javax.swing.JFrame {
     
     private void readFromInputFile(){
          final JFileChooser fc = new JFileChooser();
+
          FileNameExtensionFilter filter = new FileNameExtensionFilter("text files", "txt", "text");
+
          fc.setFileFilter(filter);
          
          if(fc.showOpenDialog(this) != JFileChooser.APPROVE_OPTION){ 
@@ -3173,130 +3171,90 @@ public class ApplicationGUI extends javax.swing.JFrame {
          String line = null;
          String divider;
          
-         ArrayList<String> input_lines = new ArrayList<>();
+         ArrayList<String> inputLines = new ArrayList<>();
          
          try{
              fileReader = new BufferedReader(new FileReader(filePath));    
              
-             line = fileReader.readLine();
              divider = "Thermal Oxidizer input file";
-             if (!checkInputFileDivider(line, "^\\s*thermal\\s+oxidizer\\s+input\\s+file\\s*$", divider))
+             if (!checkInputFileDivider(fileReader.readLine(), "^\\s*thermal\\s+oxidizer\\s+input\\s+file\\s*$", divider)) {
                  return;
-             
-             line = fileReader.readLine();
+             }
+
              divider = "*Synthesis Gas: composition";
-             if (!checkInputFileDivider(line, "^\\s*\\*synthesis\\s+gas:\\s+composition\\s*$", divider))
+             if (!checkInputFileDivider(fileReader.readLine(), "^\\s*\\*synthesis\\s+gas:\\s+composition\\s*$", divider)) {
                  return;
-              
-             int line_counter = 0;
-             while (line_counter < synGasSpeciesTextFieldsList.size()) {
-                 line = fileReader.readLine();
-                 input_lines.add(line);
-                 line_counter++;
              }
-             line_counter = 0;
+
+             inputLines.addAll(readNextNLines(fileReader, synGasSpeciesTextFieldsList.size()));
                           
-             line = fileReader.readLine();
              divider = "*Synthesis Gas: volumetric flow rates and temp";
-             if(!checkInputFileDivider(line, "^\\s*\\*synthesis\\s+gas:\\s+volumetric\\s+flow\\s+rates\\s+and\\s+temp\\s*$", divider))
+             if(!checkInputFileDivider(fileReader.readLine(), "^\\s*\\*synthesis\\s+gas:\\s+volumetric\\s+flow\\s+rates\\s+and\\s+temp\\s*$", divider)) {
                  return;
-             
-             while (line_counter < synGasVolFlowRateTextFieldsArrayList.size()) {
-                 line = fileReader.readLine();
-                 input_lines.add(line);
-                 line_counter++;
              }
-             line_counter = 0;
+
+             inputLines.addAll(readNextNLines(fileReader, synGasVolFlowRateTextFieldsArrayList.size()));
              
-             line = fileReader.readLine();
              divider = "*Air: air humidity";
-             if(!checkInputFileDivider(line, "^\\s*\\*air:\\s+air\\s+humidity\\s*$", divider))
+             if(!checkInputFileDivider(fileReader.readLine(), "^\\s*\\*air:\\s+air\\s+humidity\\s*$", divider)) {
                  return;
+             }
              
              line = fileReader.readLine();
              air_H2ObyMass_tf.setText(line);
-             input_lines.add(line);
+             inputLines.add(line);
              
-             line = fileReader.readLine();
              divider = "*Air: mass flow rates and temp";
-             if (!checkInputFileDivider(line, "^\\s*\\*air:\\s+mass\\s+flow\\s+rates\\s+and\\s+temp\\s*$", divider))
+             if (!checkInputFileDivider(fileReader.readLine(), "^\\s*\\*air:\\s+mass\\s+flow\\s+rates\\s+and\\s+temp\\s*$", divider)) {
                  return;
-             
-             line = fileReader.readLine();
-             input_lines.add(line);
-             
-             line = fileReader.readLine();
-             input_lines.add(line);
-             
-             line = fileReader.readLine();
-             input_lines.add(line);
-             
-             line = fileReader.readLine();
-             divider = "*Flue Gas: composition";
-             if(!checkInputFileDivider(line, "^\\s*\\*flue\\s+gas:\\s+composition\\s*$", divider))
-                 return;
-             
-             while (line_counter < flueGasSpeciesTextFieldsList.size()) {
-                 line = fileReader.readLine();
-                 input_lines.add(line);
-                 line_counter++;
              }
-             line_counter = 0;
+
+             inputLines.add(fileReader.readLine());
+             inputLines.add(fileReader.readLine());
+             inputLines.add(fileReader.readLine());
              
-             line = fileReader.readLine();
-             divider = "*Flue Gas: mass flow rates and temp";
-             if (!checkInputFileDivider(line, "^\\s*\\*flue\\s+gas:\\s+mass\\s+flow\\s+rates\\s+and\\s+temp\\s*$", divider))
+             divider = "*Flue Gas: composition";
+             if(!checkInputFileDivider(fileReader.readLine(), "^\\s*\\*flue\\s+gas:\\s+composition\\s*$", divider)) {
                  return;
+             }
+
+             inputLines.addAll(readNextNLines(fileReader, flueGasSpeciesTextFieldsList.size()));
+             
+             divider = "*Flue Gas: mass flow rates and temp";
+             if (!checkInputFileDivider(fileReader.readLine(), "^\\s*\\*flue\\s+gas:\\s+mass\\s+flow\\s+rates\\s+and\\s+temp\\s*$", divider)) {
+                 return;
+             }
              
              //Read ring1, ring2, and temperature for flue gas
-             line = fileReader.readLine();
-             input_lines.add(line);
-             
-             line = fileReader.readLine();
-             input_lines.add(line);
-             
-             line = fileReader.readLine();
-             input_lines.add(line);
-                          
-             line = fileReader.readLine();
-             divider = "*Ammonia Injection: composition";
-             if (!checkInputFileDivider(line, "^\\s*\\*ammonia\\s+injection:\\s+composition\\s*$", divider))
-                 return;
-             
-             while (line_counter < ammoniaSpeciesTextFieldsList.size()) {
-                 line = fileReader.readLine();
-                 input_lines.add(line);
-                 line_counter++;
-             }
-             line_counter = 0;
-             
-             line = fileReader.readLine();
-             divider = "*Ammonia Injection: mass flow rates and temp";
-             if(!checkInputFileDivider(line, "^\\s*\\*ammonia\\s+injection:\\s+mass\\s+flow\\s+rates\\s+and\\s+temp\\s*$", divider))
-                 return;
-             
-             while (line_counter < ammoniaMassFlowRateTextFieldsArrayList.size()) {
-                 line = fileReader.readLine();
-                 input_lines.add(line);
-                 line_counter++;
-             }
-             line_counter = 0;  
-             
-             line = fileReader.readLine();
-             divider = "*Thermal Oxidizer Design";
-             if(!checkInputFileDivider(line, "^\\s*\\*thermal\\s+oxidizer\\s+design\\s*$", divider))
-                     return;
+             inputLines.add(fileReader.readLine());
+             inputLines.add(fileReader.readLine());
+             inputLines.add(fileReader.readLine());
 
-             while (line_counter < thermalOxidizerDesignTextFieldsArrayList.size()) {
-                 line = fileReader.readLine();
-                 input_lines.add(line);
-                 line_counter++;
+             divider = "*Ammonia Injection: composition";
+             if (!checkInputFileDivider(fileReader.readLine(), "^\\s*\\*ammonia\\s+injection:\\s+composition\\s*$", divider)) {
+                 return;
              }
-              
-             line = fileReader.readLine();
+
+             inputLines.addAll(readNextNLines(fileReader, ammoniaSpeciesTextFieldsList.size()));
+
+             divider = "*Ammonia Injection: mass flow rates and temp";
+             if(!checkInputFileDivider(fileReader.readLine(), "^\\s*\\*ammonia\\s+injection:\\s+mass\\s+flow\\s+rates\\s+and\\s+temp\\s*$", divider)) {
+                 return;
+             }
+
+             inputLines.addAll(readNextNLines(fileReader, ammoniaMassFlowRateTextFieldsArrayList.size()));
+
+             divider = "*Thermal Oxidizer Design";
+             if(!checkInputFileDivider(fileReader.readLine(), "^\\s*\\*thermal\\s+oxidizer\\s+design\\s*$", divider)) {
+                 return;
+             }
+
+             inputLines.addAll(readNextNLines(fileReader, thermalOxidizerDesignTextFieldsArrayList.size()));
+
              divider = "-End";
-             if (!checkInputFileDivider(line, "^\\s*\\-end\\s*$", divider))
-                return;
+             if (!checkInputFileDivider(fileReader.readLine(), "^\\s*\\-end\\s*$", divider)) {
+                 return;
+             }
              
              if ((fileReader.readLine()) != null) {
                  JOptionPane.showMessageDialog(this, "Input file is longer than expected, please ensure that\n"
@@ -3309,37 +3267,37 @@ public class ApplicationGUI extends javax.swing.JFrame {
              int input_lines_counter = 0;
 
              for (JTextField textField : synGasSpeciesTextFieldsList) {
-                 textField.setText(input_lines.get(input_lines_counter++));
+                 textField.setText(inputLines.get(input_lines_counter++));
              }
 
              for (JTextField textField : synGasVolFlowRateTextFieldsArrayList) {
-                 textField.setText(input_lines.get(input_lines_counter++));
+                 textField.setText(inputLines.get(input_lines_counter++));
              }
              
-             air_H2ObyMass_tf.setText(input_lines.get(input_lines_counter++));
+             air_H2ObyMass_tf.setText(inputLines.get(input_lines_counter++));
 
              for (JTextField textField : airMassFlowRateTextFieldsArrayList) {
-                 textField.setText(input_lines.get(input_lines_counter++));
+                 textField.setText(inputLines.get(input_lines_counter++));
              }
 
              for (JTextField textField : flueGasSpeciesTextFieldsList) {
-                 textField.setText(input_lines.get(input_lines_counter++));
+                 textField.setText(inputLines.get(input_lines_counter++));
              }
 
              for (JTextField textField : flueGasMassFlowRateTextFieldsArrayList) {
-                 textField.setText(input_lines.get(input_lines_counter++));
+                 textField.setText(inputLines.get(input_lines_counter++));
              }
 
              for (JTextField textField : ammoniaSpeciesTextFieldsList) {
-                 textField.setText(input_lines.get(input_lines_counter++));
+                 textField.setText(inputLines.get(input_lines_counter++));
              }
 
              for (JTextField textField : ammoniaMassFlowRateTextFieldsArrayList) {
-                 textField.setText(input_lines.get(input_lines_counter++));
+                 textField.setText(inputLines.get(input_lines_counter++));
              }
 
              for (JTextField textField : thermalOxidizerDesignTextFieldsArrayList) {
-                 textField.setText(input_lines.get(input_lines_counter++));
+                 textField.setText(inputLines.get(input_lines_counter++));
              }
              
              syn_AR_tf.getInputVerifier().verify(syn_AR_tf);
@@ -3352,9 +3310,7 @@ public class ApplicationGUI extends javax.swing.JFrame {
              Logger.getLogger(ApplicationGUI.class.getName()).log(Level.SEVERE, null, ex);
          } catch (NullPointerException null_ex){
              String errorMessage = "Unable to open the input file specified because it is empty or has a missing line.";
-             //if(isDivider){
-             //    errorMessage += "\nVerify that the following line is included in the file:\n" + divider;
-             //}
+
              JOptionPane.showMessageDialog(this, errorMessage, "Empty or incomplete input file", JOptionPane.ERROR_MESSAGE);
          } catch (NumberFormatException num_ex){
              JOptionPane.showMessageDialog(this, "A line in the input file: " + line + ", is not a number.",
@@ -3362,7 +3318,19 @@ public class ApplicationGUI extends javax.swing.JFrame {
          } 
          
     }
-    
+
+    private ArrayList<String> readNextNLines(BufferedReader fileReader, int numLinesToRead) throws IOException {
+        ArrayList<String> lines = new ArrayList<>();
+        int lineCount = 0;
+
+        while (lineCount < numLinesToRead) {
+            lines.add(fileReader.readLine());
+            lineCount++;
+        }
+
+        return lines;
+    }
+
     private boolean checkInputFileDivider (String line, String regEx, String necessaryLine) {
         if(!line.toLowerCase().matches(regEx)){
             JOptionPane.showMessageDialog(this, "The following line is incorrectly formatted in the input file"
