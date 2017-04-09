@@ -14,6 +14,7 @@ import java.io.IOException;
 import java.lang.Math.*;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -39,7 +40,6 @@ public class ApplicationGUI extends javax.swing.JFrame {
     private final int NUMBER_FLUEGAS_MFR_FIELDS = 3;         
     private final int NUMBER_AMMONIA_MFR_FIELDS = 2;
     private final int NUMBER_TO_DESIGN_FIELDS = 8;
-    private final int TOTAL_NUMBER_TEXTFIELDS = 54;
             
     private final double DEFAULT_SYNGAS_N2 = 0.5401,
                          DEFAULT_SYNGAS_O2 = 0.00,
@@ -79,7 +79,7 @@ public class ApplicationGUI extends javax.swing.JFrame {
     
     private JTextField[] thermalOxidizerDesignTextfieldsArray = new JTextField[NUMBER_TO_DESIGN_FIELDS];
     
-    private JTextField[] allTextFieldsArray = new JTextField[TOTAL_NUMBER_TEXTFIELDS];
+    private ArrayList<JTextField> allTextFieldsArray = new ArrayList<>();
     
     // </editor-fold>
     
@@ -2516,61 +2516,47 @@ public class ApplicationGUI extends javax.swing.JFrame {
         
         // Init text field array for the Thermal Oxidizer's design
         initDesignTextfieldsArray();
-        
-        int allTFArrayIndex = 0;
-                
-        for(int a=0; a < synGasSpeciesTextfieldsArray.length; a++){
-            allTextFieldsArray[allTFArrayIndex++] = synGasSpeciesTextfieldsArray[a];
-        }
-              
-        allTextFieldsArray[allTFArrayIndex++] = syn_totalFraction_tf;
 
-        for(int b=0; b < synGasVolFlowRateTextfieldsArray.length; b++){
-            allTextFieldsArray[allTFArrayIndex++] = synGasVolFlowRateTextfieldsArray[b];
-        }
+        // ------------------ Synthesis Gas
+        allTextFieldsArray.addAll(Arrays.asList(synGasSpeciesTextfieldsArray));
+        allTextFieldsArray.add(syn_totalFraction_tf);
+        allTextFieldsArray.addAll(Arrays.asList(synGasVolFlowRateTextfieldsArray));
 
+        // ------------------ Air
         for(int c=0; c < airSpeciesTextfieldsArray.length; c++){
             if(c == airSpeciesTextfieldsArray.length-1){
-                allTextFieldsArray[allTFArrayIndex++] =  air_H2ObyVolume_tf;
+                allTextFieldsArray.add(air_H2ObyVolume_tf);
             }
-            allTextFieldsArray[allTFArrayIndex++] =  airSpeciesTextfieldsArray[c];
-        }
-            
-        allTextFieldsArray[allTFArrayIndex++] =  air_totalVolumeFraction_tf;
-        allTextFieldsArray[allTFArrayIndex++] =  airMassFlowRateTextfieldsArray[0];
-        allTextFieldsArray[allTFArrayIndex++] =  air_massFlowRate_ring1_percentage_tf;
-        allTextFieldsArray[allTFArrayIndex++] =  airMassFlowRateTextfieldsArray[1];
-        allTextFieldsArray[allTFArrayIndex++] =  air_massFlowRate_ring2_percentage_tf;
-        allTextFieldsArray[allTFArrayIndex++] =  air_massFlowRate_total_tf;
-        allTextFieldsArray[allTFArrayIndex++] =  air_massFlowRate_total_percentage_tf;
-        allTextFieldsArray[allTFArrayIndex++] =  airMassFlowRateTextfieldsArray[2];
-
-        for(int d=0; d < flueGasSpeciesTextfieldsArray.length; d++){
-            allTextFieldsArray[allTFArrayIndex++] =  flueGasSpeciesTextfieldsArray[d];
-        }
-            
-        allTextFieldsArray[allTFArrayIndex++] =  flueGas_total_tf;
-        allTextFieldsArray[allTFArrayIndex++] =  flueGasMassFlowRateTextfieldsArray[0];
-        allTextFieldsArray[allTFArrayIndex++] =  flueGas_massFlowRate_ring1_percentage_tf;
-        allTextFieldsArray[allTFArrayIndex++] =  flueGasMassFlowRateTextfieldsArray[1];
-        allTextFieldsArray[allTFArrayIndex++] =  flueGas_massFlowRate_ring2_percentage_tf;
-        allTextFieldsArray[allTFArrayIndex++] =  flueGas_massFlowRate_total_tf;
-        allTextFieldsArray[allTFArrayIndex++] =  flueGas_massFlowRate_total_percentage_tf;
-        allTextFieldsArray[allTFArrayIndex++] =  flueGasMassFlowRateTextfieldsArray[2];
-            
-        for(int e=0; e < ammoniaSpeciesTextfieldsArray.length; e++){
-            allTextFieldsArray[allTFArrayIndex++] =  ammoniaSpeciesTextfieldsArray[e];
+            allTextFieldsArray.add(airSpeciesTextfieldsArray[c]);
         }
 
-        allTextFieldsArray[allTFArrayIndex++] =  ammoniaInject_total_tf;
+        allTextFieldsArray.add(air_totalVolumeFraction_tf);
+        allTextFieldsArray.add(airMassFlowRateTextfieldsArray[0]);
+        allTextFieldsArray.add(air_massFlowRate_ring1_percentage_tf);
+        allTextFieldsArray.add(airMassFlowRateTextfieldsArray[1]);
+        allTextFieldsArray.add(air_massFlowRate_ring2_percentage_tf);
+        allTextFieldsArray.add(air_massFlowRate_total_tf);
+        allTextFieldsArray.add(air_massFlowRate_total_percentage_tf);
+        allTextFieldsArray.add(airMassFlowRateTextfieldsArray[2]);
 
-        for(int f=0; f < ammoniaMassFlowRateTextfieldsArray.length; f++){
-            allTextFieldsArray[allTFArrayIndex++] =  ammoniaMassFlowRateTextfieldsArray[f];
-        }
+        // ------------------ Flue Gas
+        allTextFieldsArray.addAll(Arrays.asList(flueGasSpeciesTextfieldsArray));
+        allTextFieldsArray.add(flueGas_total_tf);
+        allTextFieldsArray.add(flueGasMassFlowRateTextfieldsArray[0]);
+        allTextFieldsArray.add(flueGas_massFlowRate_ring1_percentage_tf);
+        allTextFieldsArray.add(flueGasMassFlowRateTextfieldsArray[1]);
+        allTextFieldsArray.add(flueGas_massFlowRate_ring2_percentage_tf);
+        allTextFieldsArray.add(flueGas_massFlowRate_total_tf);
+        allTextFieldsArray.add(flueGas_massFlowRate_total_percentage_tf);
+        allTextFieldsArray.add(flueGasMassFlowRateTextfieldsArray[2]);
 
-        for(int g=0; g < thermalOxidizerDesignTextfieldsArray.length; g++){
-            allTextFieldsArray[allTFArrayIndex++] =  thermalOxidizerDesignTextfieldsArray[g];
-        }
+        // ------------------ Ammonia
+        allTextFieldsArray.addAll(Arrays.asList(ammoniaSpeciesTextfieldsArray));
+        allTextFieldsArray.add(ammoniaInject_total_tf);
+        allTextFieldsArray.addAll(Arrays.asList(ammoniaMassFlowRateTextfieldsArray));
+
+        // ------------------ Thermal Oxidizer Design
+        allTextFieldsArray.addAll(Arrays.asList(thermalOxidizerDesignTextfieldsArray));
     }
 
     protected void initAirTextfieldsArray() {
