@@ -2542,7 +2542,7 @@ public class ApplicationGUI extends javax.swing.JFrame {
         allTextFieldsList.addAll(thermalOxidizerDesignTextFieldsArrayList);
     }
 
-    protected void initAirTextFieldsArrayList() {
+    private void initAirTextFieldsArrayList() {
         airSpeciesTextfieldsList.add(air_N2_tf);
         airSpeciesTextfieldsList.add(air_AR_tf);
         airSpeciesTextfieldsList.add(air_O2_tf);
@@ -2553,7 +2553,7 @@ public class ApplicationGUI extends javax.swing.JFrame {
         airMassFlowRateTextFieldsArrayList.add(air_tempF_tf);
     }
     
-    protected void initAmmoniaTextFieldsArrayList() {
+    private void initAmmoniaTextFieldsArrayList() {
         ammoniaSpeciesTextfieldsList.add(ammoniaInject_H2O_tf);
         ammoniaSpeciesTextfieldsList.add(ammoniaInject_NH3_tf);
         
@@ -2561,7 +2561,7 @@ public class ApplicationGUI extends javax.swing.JFrame {
         ammoniaMassFlowRateTextFieldsArrayList.add(ammoniaInject_tempF_tf);
     }
     
-    protected void initDesignTextFieldsArrayList() {
+    private void initDesignTextFieldsArrayList() {
         thermalOxidizerDesignTextFieldsArrayList.add(thermOxDiameter);
         thermalOxidizerDesignTextFieldsArrayList.add(thermOxLength);
         thermalOxidizerDesignTextFieldsArrayList.add(thermOxLengthInc);
@@ -2572,7 +2572,7 @@ public class ApplicationGUI extends javax.swing.JFrame {
         thermalOxidizerDesignTextFieldsArrayList.add(ambientTemp_tf);
     }
 
-    protected void initFlueGasTextFieldsArrayList() {
+    private void initFlueGasTextFieldsArrayList() {
         flueGasSpeciesTextfieldsList.add(flueGas_N2_tf);
         flueGasSpeciesTextfieldsList.add(flueGas_AR_tf);
         flueGasSpeciesTextfieldsList.add(flueGas_O2_tf);
@@ -2584,7 +2584,7 @@ public class ApplicationGUI extends javax.swing.JFrame {
         flueGasMassFlowRateTextFieldsArrayList.add(flueGas_tempF_tf);
     }
 
-    protected void initSynthesisGasTextFieldsArrayList() {
+    private void initSynthesisGasTextFieldsArrayList() {
         synGasSpeciesTextfieldsList.add(syn_N2_tf);
         synGasSpeciesTextfieldsList.add(syn_AR_tf);
         synGasSpeciesTextfieldsList.add(syn_O2_tf);
@@ -2747,13 +2747,13 @@ public class ApplicationGUI extends javax.swing.JFrame {
 
     private void runThermalOxidizer() {
 
-        if (VALID_RUN_FLAG == false) {
+        if (!VALID_RUN_FLAG) {
             JOptionPane.showMessageDialog(this, "A total exceeds 1.0, please correct before running model.",
                     "Total value error", JOptionPane.ERROR_MESSAGE);
             return;
         }
         
-        if(checkValidTotals() == false){
+        if(!checkValidTotals()){
             JOptionPane.showMessageDialog(this, "Please fill in all fields before running model.",
                     "Empty fields error", JOptionPane.ERROR_MESSAGE);
             return;
@@ -2896,7 +2896,7 @@ public class ApplicationGUI extends javax.swing.JFrame {
                 
                 setValid();
                 
-                if(VALID_RUN_FLAG == false){
+                if(!VALID_RUN_FLAG){
                     setTargetField(currenTF_name);
                 }
                 
@@ -3081,7 +3081,7 @@ public class ApplicationGUI extends javax.swing.JFrame {
         
     }
     
-    public String createOutputFolder(String currentDateTime){
+    private String createOutputFolder(String currentDateTime){
         
         String dir = "Model Outputs\\" + currentDateTime;
         
@@ -3261,8 +3261,7 @@ public class ApplicationGUI extends javax.swing.JFrame {
              return;
          }    
              
-         String fileName = fc.getSelectedFile().getName(); 
-         String filePath = fc.getSelectedFile().getPath();  
+         String filePath = fc.getSelectedFile().getPath();
          
          BufferedReader fileReader;
          String line = null;
@@ -3276,12 +3275,12 @@ public class ApplicationGUI extends javax.swing.JFrame {
              
              line = fileReader.readLine();
              divider = "Thermal Oxidizer input file";
-             if( checkInputFileDivider(line, "^\\s*thermal\\s+oxidizer\\s+input\\s+file\\s*$", divider) == false )
+             if(!checkInputFileDivider(line, "^\\s*thermal\\s+oxidizer\\s+input\\s+file\\s*$", divider))
                  return;
              
              line = fileReader.readLine();
              divider = "*Synthesis Gas: composition";
-             if( checkInputFileDivider(line, "^\\s*\\*synthesis\\s+gas:\\s+composition\\s*$", divider) == false )
+             if(!checkInputFileDivider(line, "^\\s*\\*synthesis\\s+gas:\\s+composition\\s*$", divider))
                  return;
               
              int line_counter = 0;
@@ -3295,8 +3294,7 @@ public class ApplicationGUI extends javax.swing.JFrame {
                           
              line = fileReader.readLine();
              divider = "*Synthesis Gas: volumetric flow rates and temp";
-             if( checkInputFileDivider(line, "^\\s*\\*synthesis\\s+gas:\\s+volumetric\\s+flow\\s+rates\\s+and\\s+temp\\s*$", 
-                                             divider) == false )
+             if(!checkInputFileDivider(line, "^\\s*\\*synthesis\\s+gas:\\s+volumetric\\s+flow\\s+rates\\s+and\\s+temp\\s*$", divider))
                  return;
              
              while(line_counter < synGasVolFlowRateTextFieldsArrayList.size()){
@@ -3309,7 +3307,7 @@ public class ApplicationGUI extends javax.swing.JFrame {
              
              line = fileReader.readLine();
              divider = "*Air: air humidity";
-             if( checkInputFileDivider(line, "^\\s*\\*air:\\s+air\\s+humidity\\s*$", divider) == false )
+             if(!checkInputFileDivider(line, "^\\s*\\*air:\\s+air\\s+humidity\\s*$", divider))
                  return;
              
              line = fileReader.readLine();
@@ -3319,7 +3317,7 @@ public class ApplicationGUI extends javax.swing.JFrame {
              
              line = fileReader.readLine();
              divider = "*Air: mass flow rates and temp";
-             if( checkInputFileDivider(line, "^\\s*\\*air:\\s+mass\\s+flow\\s+rates\\s+and\\s+temp\\s*$", divider) == false )
+             if(!checkInputFileDivider(line, "^\\s*\\*air:\\s+mass\\s+flow\\s+rates\\s+and\\s+temp\\s*$", divider))
                  return;
              
              line = fileReader.readLine();
@@ -3336,7 +3334,7 @@ public class ApplicationGUI extends javax.swing.JFrame {
              
              line = fileReader.readLine();
              divider = "*Flue Gas: composition";
-             if( checkInputFileDivider(line, "^\\s*\\*flue\\s+gas:\\s+composition\\s*$", divider) == false )
+             if(!checkInputFileDivider(line, "^\\s*\\*flue\\s+gas:\\s+composition\\s*$", divider))
                  return;
              
              while(line_counter < flueGasSpeciesTextfieldsList.size()){
@@ -3349,7 +3347,7 @@ public class ApplicationGUI extends javax.swing.JFrame {
              
              line = fileReader.readLine();
              divider = "*Flue Gas: mass flow rates and temp";
-             if( checkInputFileDivider(line, "^\\s*\\*flue\\s+gas:\\s+mass\\s+flow\\s+rates\\s+and\\s+temp\\s*$", divider) == false )
+             if(!checkInputFileDivider(line, "^\\s*\\*flue\\s+gas:\\s+mass\\s+flow\\s+rates\\s+and\\s+temp\\s*$", divider))
                  return;
              
              //Read ring1, ring2, and temperature for flue gas
@@ -3367,7 +3365,7 @@ public class ApplicationGUI extends javax.swing.JFrame {
                           
              line = fileReader.readLine();
              divider = "*Ammonia Injection: composition";
-             if( checkInputFileDivider(line, "^\\s*\\*ammonia\\s+injection:\\s+composition\\s*$", divider) == false )
+             if(!checkInputFileDivider(line, "^\\s*\\*ammonia\\s+injection:\\s+composition\\s*$", divider))
                  return;
              
              while(line_counter < ammoniaSpeciesTextfieldsList.size()){
@@ -3380,8 +3378,7 @@ public class ApplicationGUI extends javax.swing.JFrame {
              
              line = fileReader.readLine();
              divider = "*Ammonia Injection: mass flow rates and temp";
-             if( checkInputFileDivider(line, "^\\s*\\*ammonia\\s+injection:\\s+mass\\s+flow\\s+rates\\s+and\\s+temp\\s*$", 
-                                             divider) == false )
+             if(!checkInputFileDivider(line, "^\\s*\\*ammonia\\s+injection:\\s+mass\\s+flow\\s+rates\\s+and\\s+temp\\s*$", divider))
                  return;
              
              while(line_counter < ammoniaMassFlowRateTextFieldsArrayList.size()){
@@ -3394,7 +3391,7 @@ public class ApplicationGUI extends javax.swing.JFrame {
              
              line = fileReader.readLine();
              divider = "*Thermal Oxidizer Design";
-             if( checkInputFileDivider(line, "^\\s*\\*thermal\\s+oxidizer\\s+design\\s*$", divider) == false)
+             if(!checkInputFileDivider(line, "^\\s*\\*thermal\\s+oxidizer\\s+design\\s*$", divider))
                      return;
              
              while(line_counter < thermalOxidizerDesignTextFieldsArrayList.size()){
@@ -3406,7 +3403,7 @@ public class ApplicationGUI extends javax.swing.JFrame {
               
              line = fileReader.readLine();
              divider = "-End";
-             if( checkInputFileDivider(line, "^\\s*\\-end\\s*$", divider) == false )
+             if(!checkInputFileDivider(line, "^\\s*\\-end\\s*$", divider))
                 return;
              
              if((fileReader.readLine()) != null){
@@ -3477,7 +3474,7 @@ public class ApplicationGUI extends javax.swing.JFrame {
     
     private boolean checkInputFileDivider (String line, String regEx, String necessaryLine) {
         
-        if(line.toLowerCase().matches(regEx) == false){
+        if(!line.toLowerCase().matches(regEx)){
             JOptionPane.showMessageDialog(this, "The following line is incorrectly formatted in the input file"
                                                 + ": \n" + necessaryLine + "\nCheck documentation for correct formatting.",
                                                       "Input file has missing or incorrect Line", JOptionPane.ERROR_MESSAGE);
