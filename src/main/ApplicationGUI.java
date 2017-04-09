@@ -31,7 +31,6 @@ public class ApplicationGUI extends javax.swing.JFrame {
     private final int NUMBER_AIR_MFR_FIELDS = 3;
     private final int NUMBER_FLUEGAS_MFR_FIELDS = 3;         
     private final int NUMBER_AMMONIA_MFR_FIELDS = 2;
-    private final int NUMBER_TO_DESIGN_FIELDS = 8;
             
     private final double DEFAULT_SYNGAS_N2 = 0.5401,
                          DEFAULT_SYNGAS_O2 = 0.00,
@@ -69,7 +68,7 @@ public class ApplicationGUI extends javax.swing.JFrame {
     private JTextField[] flueGasMassFlowRateTextfieldsArray = new JTextField[NUMBER_FLUEGAS_MFR_FIELDS];
     private JTextField[] ammoniaMassFlowRateTextfieldsArray = new JTextField[NUMBER_AMMONIA_MFR_FIELDS];
     
-    private JTextField[] thermalOxidizerDesignTextfieldsArray = new JTextField[NUMBER_TO_DESIGN_FIELDS];
+    private ArrayList<JTextField> thermalOxidizerDesignTextFieldsArrayList = new ArrayList<>();
     
     private ArrayList<JTextField> allTextFieldsList = new ArrayList<>();
     
@@ -2495,19 +2494,16 @@ public class ApplicationGUI extends javax.swing.JFrame {
         runButton.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(
                 (KeyStroke) runTO.getValue(Action.ACCELERATOR_KEY), "runAction");
         
-        initTextfieldArrays();
+        initTextFieldArrayLists();
     }
 
     // Initialize the arrays used to track our JTextFields
-    protected void initTextfieldArrays() {
-        // Init text field array for each species
-        initSynthesisGasTextfieldsArray();
-        initAirTextfieldsArray();
-        initFlueGasTextfieldsArray();
-        initAmmoniaTextfieldsArray();
-        
-        // Init text field array for the Thermal Oxidizer's design
-        initDesignTextfieldsArray();
+    private void initTextFieldArrayLists() {
+        initSynthesisGasTextFieldsArrayList();
+        initAirTextFieldsArrayList();
+        initFlueGasTextFieldsArrayList();
+        initAmmoniaTextFieldsArrayList();
+        initDesignTextFieldsArrayList();
 
         // ------------------ Synthesis Gas
         allTextFieldsList.addAll(synGasSpeciesTextfieldsList);
@@ -2549,10 +2545,10 @@ public class ApplicationGUI extends javax.swing.JFrame {
         allTextFieldsList.addAll(Arrays.asList(ammoniaMassFlowRateTextfieldsArray));
 
         // ------------------ Thermal Oxidizer Design
-        allTextFieldsList.addAll(Arrays.asList(thermalOxidizerDesignTextfieldsArray));
+        allTextFieldsList.addAll(thermalOxidizerDesignTextFieldsArrayList);
     }
 
-    protected void initAirTextfieldsArray() {
+    protected void initAirTextFieldsArrayList() {
         airSpeciesTextfieldsList.add(air_N2_tf);
         airSpeciesTextfieldsList.add(air_AR_tf);
         airSpeciesTextfieldsList.add(air_O2_tf);
@@ -2563,7 +2559,7 @@ public class ApplicationGUI extends javax.swing.JFrame {
         airMassFlowRateTextfieldsArray[2] = air_tempF_tf;
     }
     
-    protected void initAmmoniaTextfieldsArray() {
+    protected void initAmmoniaTextFieldsArrayList() {
         ammoniaSpeciesTextfieldsList.add(ammoniaInject_H2O_tf);
         ammoniaSpeciesTextfieldsList.add(ammoniaInject_NH3_tf);
         
@@ -2571,18 +2567,18 @@ public class ApplicationGUI extends javax.swing.JFrame {
         ammoniaMassFlowRateTextfieldsArray[1] = ammoniaInject_tempF_tf;
     }
     
-    protected void initDesignTextfieldsArray() {
-        thermalOxidizerDesignTextfieldsArray[0] = thermOxDiameter;
-        thermalOxidizerDesignTextfieldsArray[1] = thermOxLength;
-        thermalOxidizerDesignTextfieldsArray[2] = thermOxLengthInc;
-        thermalOxidizerDesignTextfieldsArray[3] = ring1distanceTF;
-        thermalOxidizerDesignTextfieldsArray[4] = ring2distanceTF;
-        thermalOxidizerDesignTextfieldsArray[5] = ammoniaInjectionSiteTF;
-        thermalOxidizerDesignTextfieldsArray[6] = tempLossPerFoot;
-        thermalOxidizerDesignTextfieldsArray[7] = ambientTemp_tf;
+    protected void initDesignTextFieldsArrayList() {
+        thermalOxidizerDesignTextFieldsArrayList.add(thermOxDiameter);
+        thermalOxidizerDesignTextFieldsArrayList.add(thermOxLength);
+        thermalOxidizerDesignTextFieldsArrayList.add(thermOxLengthInc);
+        thermalOxidizerDesignTextFieldsArrayList.add(ring1distanceTF);
+        thermalOxidizerDesignTextFieldsArrayList.add(ring2distanceTF);
+        thermalOxidizerDesignTextFieldsArrayList.add(ammoniaInjectionSiteTF);
+        thermalOxidizerDesignTextFieldsArrayList.add(tempLossPerFoot);
+        thermalOxidizerDesignTextFieldsArrayList.add(ambientTemp_tf);
     }
 
-    protected void initFlueGasTextfieldsArray() {
+    protected void initFlueGasTextFieldsArrayList() {
         flueGasSpeciesTextfieldsList.add(flueGas_N2_tf);
         flueGasSpeciesTextfieldsList.add(flueGas_AR_tf);
         flueGasSpeciesTextfieldsList.add(flueGas_O2_tf);
@@ -2594,7 +2590,7 @@ public class ApplicationGUI extends javax.swing.JFrame {
         flueGasMassFlowRateTextfieldsArray[2] = flueGas_tempF_tf;
     }
 
-    protected void initSynthesisGasTextfieldsArray() {
+    protected void initSynthesisGasTextFieldsArrayList() {
         synGasSpeciesTextfieldsList.add(syn_N2_tf);
         synGasSpeciesTextfieldsList.add(syn_AR_tf);
         synGasSpeciesTextfieldsList.add(syn_O2_tf);
@@ -3219,7 +3215,7 @@ public class ApplicationGUI extends javax.swing.JFrame {
             bw.write("*Thermal Oxidizer Design");
             bw.newLine();
 
-            for (JTextField textField : thermalOxidizerDesignTextfieldsArray) {
+            for (JTextField textField : thermalOxidizerDesignTextFieldsArrayList) {
                 bw.write(textField.getText());
                 bw.newLine();
             }
@@ -3272,7 +3268,7 @@ public class ApplicationGUI extends javax.swing.JFrame {
             return false;
         }
 
-        for (JTextField textField : thermalOxidizerDesignTextfieldsArray) {
+        for (JTextField textField : thermalOxidizerDesignTextFieldsArrayList) {
             if (textField.getText().isEmpty()) {
                 return false;
             }
@@ -3428,7 +3424,7 @@ public class ApplicationGUI extends javax.swing.JFrame {
              if( checkInputFileDivider(line, "^\\s*\\*thermal\\s+oxidizer\\s+design\\s*$", divider) == false)
                      return;
              
-             while(line_counter < thermalOxidizerDesignTextfieldsArray.length){
+             while(line_counter < thermalOxidizerDesignTextFieldsArrayList.size()){
                  line = fileReader.readLine();
                  Double.parseDouble(line);
                  input_lines.add(line);
@@ -3480,7 +3476,7 @@ public class ApplicationGUI extends javax.swing.JFrame {
                  textField.setText(input_lines.get(input_lines_counter++));
              }
 
-             for (JTextField textField : thermalOxidizerDesignTextfieldsArray) {
+             for (JTextField textField : thermalOxidizerDesignTextFieldsArrayList) {
                  textField.setText(input_lines.get(input_lines_counter++));
              }
              
@@ -3570,7 +3566,7 @@ public class ApplicationGUI extends javax.swing.JFrame {
         }
 
         // Clear thermal oxidizer design fields
-        for (JTextField textField : thermalOxidizerDesignTextfieldsArray) {
+        for (JTextField textField : thermalOxidizerDesignTextFieldsArrayList) {
             textField.setText("");
         }
     }
