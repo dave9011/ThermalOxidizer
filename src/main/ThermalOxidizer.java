@@ -23,7 +23,6 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class ThermalOxidizer extends SwingWorker<Integer, String> {
-
     private HashMap textFieldHash;
     private JTable table;
     private JPanel tempProfile_panel;
@@ -159,15 +158,11 @@ public class ThermalOxidizer extends SwingWorker<Integer, String> {
     private Double[] finalTimesArray;
     private Double[] checkMassFractions;
     private String[] exportDataOfInterest;
-    private String[] speciesForExcelExport = {"AR", "C6H6", "CH4", "CO", "CO2", "H2", "H2O", "H2S", "HCL", "N2",
-                                                "NH3", "NO", "NO2", "O2", "SO", "SO2"};
-    
+
+    private String[] speciesForExcelExport = {"AR", "C6H6", "CH4", "CO", "CO2", "H2", "H2O", "H2S", "HCL", "N2", "NH3", "NO", "NO2", "O2", "SO", "SO2"};
     private final String[] speciesForModelOutputPPM = {"CO", "HCL", "NH3", "NO", "NO2", "SO2"};
-    
-    private final String[] speciesForModelOutputPercentage = {"CO2", "H2O", "N2", "O2"}; 
-    
-    private final String[] speciesPreAir = {"AR", "C6H6", "CH4", "CO", "CO2", "H2", "H2O", "H2S", "HCL", "N2",
-                                             "NH3", "NO", "NO2", "O2", "SO", "SO2"};
+    private final String[] speciesForModelOutputPercentage = {"CO2", "H2O", "N2", "O2"};
+    private final String[] speciesPreAir = {"AR", "C6H6", "CH4", "CO", "CO2", "H2", "H2O", "H2S", "HCL", "N2", "NH3", "NO", "NO2", "O2", "SO", "SO2"};
     
     private double ring1dist;
     private double ring2dist;
@@ -209,7 +204,6 @@ public class ThermalOxidizer extends SwingWorker<Integer, String> {
 
     // Added 07/06013 from java world
     class StreamGobbler extends Thread {
-
         InputStream is;
         String type;
         OutputStream os;
@@ -252,8 +246,7 @@ public class ThermalOxidizer extends SwingWorker<Integer, String> {
     }
 
     @Override
-    protected Integer doInBackground() throws Exception {      
-        
+    protected Integer doInBackground() throws Exception {
         initializeNecessaryFiles();
         
         updateAllFields();
@@ -450,32 +443,29 @@ public class ThermalOxidizer extends SwingWorker<Integer, String> {
         System.out.println("---Program has successfully completed");
 
         return 0;
-
     }
 
     @Override
     protected void done() {
-        
-        if(this.isCancelled()){
+        if (this.isCancelled()) {
             chemkedProcess.destroy();
             return;
         }
         
         fillTable();
-        
+
         drawTemperatureProfile();
-        
+
         drawCOProfile();
-        
+
         drawNOxProfile();
-        
     }
     
     private void initializeNecessaryFiles(){
         
         String soltmp_path = "CHEMKED\\SOLTMP.txt";
         File soltmp = new File(soltmp_path);
-        if(soltmp.exists() == false){
+        if(!soltmp.exists()){
          
             System.out.println("SOLTMP did not exist!");
             
@@ -492,7 +482,7 @@ public class ThermalOxidizer extends SwingWorker<Integer, String> {
         
         String solFilePath_path = "CHEMKED\\SolverFilePath.txt";
         File solFilePath = new File(solFilePath_path);
-        if(solFilePath.exists() == false){
+        if(!solFilePath.exists()){
          
             System.out.println("solver file path did not exist!");
             try{
@@ -507,7 +497,7 @@ public class ThermalOxidizer extends SwingWorker<Integer, String> {
      
         String tempSOLTMPpath = "CHEMKED\\temp-SOLTMP.txt";
         File tempSOLTMP = new File(tempSOLTMPpath);
-        if(tempSOLTMP.exists() == false){
+        if(!tempSOLTMP.exists()){
          
             try{
                 
@@ -528,7 +518,7 @@ public class ThermalOxidizer extends SwingWorker<Integer, String> {
         
         String bigFilePath = "CHEMKED\\BigFile.txt";
         File bigFile = new File(bigFilePath);
-        if(bigFile.exists() == false){  
+        if(!bigFile.exists()){
             
             System.out.println("Big File did not exist!");
          
@@ -570,7 +560,6 @@ public class ThermalOxidizer extends SwingWorker<Integer, String> {
     }   
 
     private void updateAllFields() {
-
         defaultValueN2AirVol = 0.78;
         defaultValueO2AirVol = 0.21;
         defaultValueArAirVol = 0.01;
@@ -588,11 +577,9 @@ public class ThermalOxidizer extends SwingWorker<Integer, String> {
         massArInAir = (1.0 - humidityInAirMass)
                 * (AR_MW * defaultValueArAirVol) / sumMolFractionTimeMWAir;
         massH2OInAir = humidityInAirMass;
-        
     }
 
     private void setSolverFilePath() {
-
         File file = new File("CHEMKED\\SOLTMP.txt");
         String absolutePath = file.getAbsolutePath();
 
@@ -605,15 +592,12 @@ public class ThermalOxidizer extends SwingWorker<Integer, String> {
         } catch (Exception ex) {
             ex.printStackTrace(System.out);
         }
-
     }
     
     private void getNumSpecies() {
-
         Scanner readNumSpecies;
 
         try {
-
             readNumSpecies = new Scanner(new FileReader("CHEMKED\\BigFile.txt"));
 
             int m = 0;
@@ -631,11 +615,9 @@ public class ThermalOxidizer extends SwingWorker<Integer, String> {
         } catch (FileNotFoundException | NumberFormatException ex) {
             ex.printStackTrace(System.out);
         }
-
     }
     
     private void getUserInputValues() {
-
         tempSyngasF = Double.parseDouble((String) textFieldHash.get("synTempF"));
         tempSyngasK = (tempSyngasF + 459.67) * 5 / 9.;
         //Get the length and diameter of the thermal oxidizer
@@ -735,16 +717,11 @@ public class ThermalOxidizer extends SwingWorker<Integer, String> {
                 + molFlowRateO2Syn * cpO2InSyngas;
         
         deltaHSyngas = sumNCpInSyngas * (tempSynF - 77);
-        
-        // End 5/20/2014
 
         //Calculate total mass flowrates for ring 1, 2, and 3
-        totalMassFlowRateAfterRing1 = syngasMassFlowRate + airMassFlowRateRing1
-                + flueGasMassFlowRateRing1;
-        totalMassFlowRateAfterRing2 = totalMassFlowRateAfterRing1
-                + airMassFlowRateRing2 + flueGasMassFlowRateRing2;
-        totalMassFlowRateAfterAmmoniaInj = totalMassFlowRateAfterRing2
-                + ammoniaInjMassFlow;
+        totalMassFlowRateAfterRing1 = syngasMassFlowRate + airMassFlowRateRing1 + flueGasMassFlowRateRing1;
+        totalMassFlowRateAfterRing2 = totalMassFlowRateAfterRing1 + airMassFlowRateRing2 + flueGasMassFlowRateRing2;
+        totalMassFlowRateAfterAmmoniaInj = totalMassFlowRateAfterRing2 + ammoniaInjMassFlow;
 
         massFlowRateN2InAirRing1 = massN2InAir * airMassFlowRateRing1;
         massFlowRateArInAirRing1 = massArInAir * airMassFlowRateRing1;
@@ -785,7 +762,6 @@ public class ThermalOxidizer extends SwingWorker<Integer, String> {
             deltaHAirRing2 = sumNCpInAirRing2 * (tempAirF - 77); // Btu/hr
 
         } else {
-            
             sumNCpInAirRing1 = 0.0;
             sumNCpInAirRing2 = 0.0;
             
@@ -832,9 +808,7 @@ public class ThermalOxidizer extends SwingWorker<Integer, String> {
         double tempFlueF = Double.parseDouble((String) textFieldHash.get("flueTempF"));
         double tempFlueK = 5 / 9 * (tempFlueF + 459.67);
 
-        double cpN2InFlueGas, cpO2InFlueGas, cpArInFlueGas,
-                cpH2OInFlueGas, cpCO2InFlueGas;
-
+        double cpN2InFlueGas, cpO2InFlueGas, cpArInFlueGas, cpH2OInFlueGas, cpCO2InFlueGas;
 
         if (tempFlueK - 298 > EPSILON) {
             cpN2InFlueGas = (ALPHA_N2 * tempFlueK + BETA_N2 / 2 * (tempFlueK * tempFlueK - 298 * 298)
@@ -865,7 +839,6 @@ public class ThermalOxidizer extends SwingWorker<Integer, String> {
             deltaHFlueGasRing2 = sumNCpInFlueGasRing2 * (tempFlueF - 77); // Btu/hr
 
         } else {
-            
             sumNCpInFlueGasRing1 = 0.0;
             sumNCpInFlueGasRing2 = 0.0;
             
@@ -887,28 +860,23 @@ public class ThermalOxidizer extends SwingWorker<Integer, String> {
                     + cpH2OAmmoniaInj * ammoniaInjH2OMass * ammoniaInjMassFlow / (H_MW * 2 + O_MW));
             deltaHAmmoniaInj = sumNCpInAmmoniaInj * (tempAmmoniaF - 77); //BTU/hr
         } else {
-            
             sumNCpInAmmoniaInj = 0.0;
             deltaHAmmoniaInj = 0;
         }
 
-
         sumDeltaHRing1B4Combustion = deltaHAirRing1 + deltaHFlueGasRing1 + deltaHSyngas;//BTU/hr
-        sumDeltaHRing2B4Combustion = sumDeltaHRing1B4Combustion + deltaHAirRing2
-                + deltaHFlueGasRing2;//BTU/hr
+
+        sumDeltaHRing2B4Combustion = sumDeltaHRing1B4Combustion + deltaHAirRing2 + deltaHFlueGasRing2;//BTU/hr
         
-        sumDeltaB4HAmmoniaInj = deltaHAmmoniaInj + sumDeltaHRing2B4Combustion;      
-        
+        sumDeltaB4HAmmoniaInj = deltaHAmmoniaInj + sumDeltaHRing2B4Combustion;
     }
     
     private void calculateVelocity() {
-
         double R = 0.7302413, insideArea; //ft3 atm R^−1 lb-mol^−1
 
         insideArea = (Math.PI * Math.pow(toDiameter, 2)) / 4.0;
 
         if (reactorLocation == deltaIncrement) {
-
             initialVolumetricFlow = (molFlowRateSyngas * R * tempSyngasK * 9 / 5.) / (1 * 60 * 60); // PV = nRT Gas Law
 
             initialVelocity = initialVolumetricFlow / insideArea;
@@ -917,11 +885,9 @@ public class ThermalOxidizer extends SwingWorker<Integer, String> {
 
             initialTime = 0.0;
             finalTime = initialDeltaTime;
-
         }
 
         if (reactorLocation > deltaIncrement && reactorLocation < ring1dist) {
-
             initialTime = finalTime;
 
             newTempK = Double.parseDouble(readTemp);
@@ -976,21 +942,17 @@ public class ThermalOxidizer extends SwingWorker<Integer, String> {
             finalTime += deltaTime;
         }
 
-
         if (excelArraysIndex < toRunsInt) {
             finalTimesArray[excelArraysIndex] = finalTime;
             excelArraysIndex++;
         }
-
     }
     
     private void initialupdateFile() {
-
         Scanner scanFile;
         Formatter formatFile;
 
         try {
-
             scanFile = new Scanner(new FileReader("CHEMKED\\BigFile.txt"));
 
             formatFile = new Formatter(new File("CHEMKED\\SOLTMP.txt"));
@@ -1003,9 +965,7 @@ public class ThermalOxidizer extends SwingWorker<Integer, String> {
             String tfText = "";
             int i = 0;
 
-            // 
             while (scanFile.hasNextLine()) {
-
                 fileLine = scanFile.nextLine(); 
 
                 if (i == 15) {
@@ -1029,7 +989,6 @@ public class ThermalOxidizer extends SwingWorker<Integer, String> {
             }
 
             while (scanFile.hasNextLine() && (speciesIndex < currentSpeciesLenth)) {
-
                 fileLine = scanFile.nextLine();
 
                 if (fileLine.contains(" " + currentSpecies[speciesIndex] + " ")) { 
@@ -1098,7 +1057,6 @@ public class ThermalOxidizer extends SwingWorker<Integer, String> {
                     //Update the file
                     formatFile.format("%s%n", fileLine);
                 }
-
             }
 
             //Print the remaining lines
@@ -1113,11 +1071,9 @@ public class ThermalOxidizer extends SwingWorker<Integer, String> {
         } catch (Exception ex) {
             ex.printStackTrace(System.out);
         }
-
     }
     
     private void grabSpeciesNames() {
-
         Scanner bigFile;
 
         try {
@@ -1157,11 +1113,9 @@ public class ThermalOxidizer extends SwingWorker<Integer, String> {
         } catch (Exception e) {
             e.printStackTrace(System.out);
         }
-
     }
     
     private void getMolecularWeights() {
-
         Scanner scanFile;
         String scanLine = null;
         String lastWord;
@@ -1171,7 +1125,6 @@ public class ThermalOxidizer extends SwingWorker<Integer, String> {
         int loopCounter = 0;
 
         try {
-
             scanFile = new Scanner(new FileReader("CHEMKED\\SOLTMP.txt"));
 
             while (scanFile.hasNextLine()) {
@@ -1182,7 +1135,6 @@ public class ThermalOxidizer extends SwingWorker<Integer, String> {
             }
 
             while (currentSpecies < (numSpecies + 1)) {
-
                 while (true) {
 
                     if (scanFile.hasNextLine()) {
@@ -1202,20 +1154,18 @@ public class ThermalOxidizer extends SwingWorker<Integer, String> {
                         }
                     }
                 }
+
                 loopCounter = 0;
                 currentSpecies++;
             }
-            scanFile.close();
 
+            scanFile.close();
         } catch (Exception e) {
             e.printStackTrace(System.out);
         }
-
-
     }
     
     private void convertMassFractionToMol(boolean injectionLocation) {
-
         mols = new Double[numSpecies];
         Double[] DoubleMW;
         Double[] DoubleNewValues;
@@ -1259,11 +1209,9 @@ public class ThermalOxidizer extends SwingWorker<Integer, String> {
             }
             m++;
         }
-
     }
     
     private void updateFile() {
-
         Scanner copyFile1;
         Formatter copyFile2;
         Scanner scanFile;
@@ -1272,7 +1220,6 @@ public class ThermalOxidizer extends SwingWorker<Integer, String> {
         String copyLine;
 
         try {
-
             copyFile1 = new Scanner(new FileReader("CHEMKED\\SOLTMP.txt"));
             copyFile2 = new Formatter(new File("CHEMKED\\temp-SOLTMP.txt"));
 
@@ -1309,6 +1256,7 @@ public class ThermalOxidizer extends SwingWorker<Integer, String> {
                 if (i == 19) {
                     fileLine = " " + finalTime + " !Final Time";
                 }
+
                 formatFile.format("%s%n", fileLine);
 
                 if (fileLine.matches(" THERMO")) {
@@ -1326,21 +1274,17 @@ public class ThermalOxidizer extends SwingWorker<Integer, String> {
 
             scanFile.close();
             formatFile.close();
-
         } catch (Exception e) {
             e.printStackTrace(System.out);
         }
-
     }
     
     private void rewriteSOLTMP(boolean injectionLocation) {
-
         Scanner copyFile1;
         Formatter copyFile2;
         String copyLine;
 
         try {
-
             copyFile1 = new Scanner(new FileReader("CHEMKED\\SOLTMP.txt"));
 
             copyFile2 = new Formatter(new File("CHEMKED\\temp-SOLTMP.txt"));
@@ -1379,7 +1323,6 @@ public class ThermalOxidizer extends SwingWorker<Integer, String> {
             int currentLine = 1;
 
             while (currentLine < (numSpecies + 1)) {
-
                 if (tempFile.hasNextLine()) {
 
                     tempFileLine = tempFile.nextLine();
@@ -1406,13 +1349,10 @@ public class ThermalOxidizer extends SwingWorker<Integer, String> {
                         newSOLTMPFile.format("%s%n", newLine);
 
                         currentLine++;
-
                     } else {
                         newSOLTMPFile.format("%s%n", tempFileLine);
                     }
-
                 }
-
             }
 
             //Print the remaining lines 
@@ -1421,7 +1361,6 @@ public class ThermalOxidizer extends SwingWorker<Integer, String> {
                 newSOLTMPFile.format("%s%n", tempFileLine);
             }
 
-
             tempFile.close();
 
             newSOLTMPFile.close();
@@ -1429,12 +1368,10 @@ public class ThermalOxidizer extends SwingWorker<Integer, String> {
         } catch (Exception e) {
             e.printStackTrace(System.out);
         }
-
     }
 
     private Process chemkedProcess;
     private void runCHEMKED(String outputFileName) throws FileNotFoundException, IOException, InterruptedException{
-        
         FileOutputStream fos = new FileOutputStream("CHEMKED\\" + outputFileName + ".txt");
 
         String[] CHEMKED = {"CHEMKED\\CHEMKED_SOLVER.exe", "CHEMKED\\SOLTMP.txt"};
@@ -1459,16 +1396,13 @@ public class ThermalOxidizer extends SwingWorker<Integer, String> {
         System.out.println("Exited with error code " + exitVal);
         fos.flush();
         fos.close();
-        
     }
 
     private void shortenSOLTMP(int currentRun) {
-
         Scanner scanFile;
         Formatter formatFile;
 
         try {
-
             scanFile = new Scanner(new FileReader("CHEMKED\\SOLTMP.txt"));
 
             formatFile = new Formatter(new File("CHEMKED\\CHEMKED_outputs\\output_" + currentRun + ".txt"));
@@ -1499,11 +1433,9 @@ public class ThermalOxidizer extends SwingWorker<Integer, String> {
         } catch (Exception ex) {
             ex.printStackTrace(System.out);
         }
-
     }
 
     private void copyCurrentRunSOLTMP(int currentRun) {
-
         Scanner scanFile;
         Formatter formatFile;
 
@@ -1524,15 +1456,12 @@ public class ThermalOxidizer extends SwingWorker<Integer, String> {
         } catch (Exception e) {
             e.printStackTrace(System.out);
         }
-
     }
     
     private void getNumOutputLines(int currentRun) {
-
         Scanner scanFile; 
 
         try {
-
             scanFile = new Scanner(new FileReader("CHEMKED\\CHEMKED_outputs\\output_" + currentRun + ".txt"));
 
             while (true) {
@@ -1552,13 +1481,9 @@ public class ThermalOxidizer extends SwingWorker<Integer, String> {
             numOutputLines = Integer.parseInt(numLinesArray[numLinesArray.length - 1]);
 
             scanFile.close();
-
-
         } catch (FileNotFoundException | NumberFormatException e) {
             e.printStackTrace(System.out);
         }
-
-
     }
     
     private void getMassFractions(int currentRun) {
@@ -1568,7 +1493,6 @@ public class ThermalOxidizer extends SwingWorker<Integer, String> {
         massFractions = new String[numSpecies];
 
         try {
-
             changeConcentrationsFile = new Scanner(new FileReader("CHEMKED\\CHEMKED_outputs\\output_" + currentRun + ".txt"));
 
             while (changeConcentrationsFile.hasNext()) {
@@ -1614,11 +1538,9 @@ public class ThermalOxidizer extends SwingWorker<Integer, String> {
         } catch (FileNotFoundException | NumberFormatException e) {
             e.printStackTrace(System.out);
         }
-
     }
     
     private void doMassBalance1() {
-
         int speciesIndex;
         int preAirIndex = 0;
 
@@ -1680,11 +1602,9 @@ public class ThermalOxidizer extends SwingWorker<Integer, String> {
         for (speciesIndex = 0; speciesIndex < numSpecies; speciesIndex++) {
             massFractions[speciesIndex] = (massValuesArray[speciesIndex] / arraySum) + "";
         }
-
     }
 
     private void doMassBalance2() {
-
         int speciesIndex;
         int preAirIndex = 0;
 
@@ -1749,11 +1669,9 @@ public class ThermalOxidizer extends SwingWorker<Integer, String> {
         for (speciesIndex = 0; speciesIndex < numSpecies; speciesIndex++) {
             massFractions[speciesIndex] = (massValuesArray[speciesIndex] / arraySum) + "";
         }
-
     }
 
     private void doMassBalance3() {
-
         int speciesIndex;
         int preAirIndex = 0;
 
@@ -1804,11 +1722,9 @@ public class ThermalOxidizer extends SwingWorker<Integer, String> {
         for (speciesIndex = 0; speciesIndex < numSpecies; speciesIndex++) {
             massFractions[speciesIndex] = (massValuesArray[speciesIndex] / arraySum) + "";
         }
-
     }
 
     private void doEnergyBalance0() {
-
         double massValue, massFlowValue;
 
         massFlowValue = syngasMassFlowRate;
@@ -1952,11 +1868,9 @@ public class ThermalOxidizer extends SwingWorker<Integer, String> {
 
         tempGuessK = (currentTempF + 459.67) * 5 / 9.;
         readTemp = tempGuessK + ""; // degrees Kelvin
-
     }
 
     private void doEnergyBalance1() {  //new (6/2/2014)
-        
         double massValue;
         int preAirIndex = 0;
        
@@ -2234,80 +2148,63 @@ public class ThermalOxidizer extends SwingWorker<Integer, String> {
         arraySum = 0.0;
         
         for (speciesIndex = 0; speciesIndex < numSpecies; speciesIndex++) {
-
             //Mutiply the current mass fraction with the mass flow rate of the synthetic gas
             massValue = (Double.parseDouble(massFractions[speciesIndex]) * (totalMassFlowRateAfterRing1));
 
             //If the current species is one we are trying to balance...
             if ((preAirIndex < speciesPreAir.length) && speciesNames[speciesIndex].matches(speciesPreAir[preAirIndex])) {
-
                 //index values for species of interest
                 //speciesPreAir = {"AR", "C6H6", "CH4", "CO", "CO2", "H2", "H2O", "H2S", "HCL", "N2", "NH3", "NO", "NO2", "O2", "SO", "SO2"};
                 //indices: AR=0, C6H6=1, CH4=2, CO=3, CO2=4, H2=5, H2O=6, H2S=7, HCL=8, N2=9, NH3=10, NO=11, NO2=12, O2=13, SO=14, SO2=15
                 switch (preAirIndex) {
-
                     case 0:
                         molFlowArSyngas = massValue / AR_MW;
                         break;
-
                     case 1:
                         molFlowC6H6Syngas = massValue / (C_MW * 6.0 + H_MW * 6);
                         break;
-
                     case 2:
                         molFlowCH4Syngas = massValue / (C_MW + H_MW * 4.0);
                         break;
-
                     case 3:
                         molFlowCOSyngas = massValue / (C_MW + O_MW);
                         break;
-
                     case 4:
                         molFlowCO2Syngas = massValue / (C_MW + O_MW * 2.0);
                         break;
-
                     case 5:
                         molFlowH2Syngas = massValue / (H_MW * 2.0);
                         break;
-
                     case 6:
                         molFlowH2OSyngas = massValue / (H_MW * 2 + O_MW);
                         break;
-
                     case 7:
                         molFlowH2SSyngas = massValue / (H_MW * 2 + S_MW);
                         break;
-
                     case 8:
                         molFlowHClSyngas = massValue / (H_MW + CL_MW);
                         break;
-
                     case 9:
                         molFlowN2Syngas = massValue / (N_MW * 2);
                         break;
-
                     case 10:
                         molFlowNH3Syngas = massValue / (N_MW + H_MW * 3);
                         break;
-
                     case 11:
                         molFlowNOSyngas = massValue / (N_MW + O_MW);
                         break;
-
                     case 13:
                         molFlowO2Syngas = massValue / (O_MW * 2);
                         break;
-
                     case 15:
                         molFlowSO2Syngas = massValue / (S_MW + 2 * O_MW);
                         break;
-
                     default:
                         break;
                 }
+
                 preAirIndex++;
             }
-
         }
     
         double delta, tempGuessNewF, tempGuessInitialF, functionOfTempGuess, derivativeOfFunction;
@@ -2316,7 +2213,6 @@ public class ThermalOxidizer extends SwingWorker<Integer, String> {
         
         // Temperature iteration before reactions
         while (true)    {
-            
             cpN2Guess = (ALPHA_N2*(tempGuessK-298) + (BETA_N2)/2*(tempGuessK*tempGuessK-298*298) + (GAMMA_N2)/3*(tempGuessK*tempGuessK*tempGuessK-298*298*298))/(tempGuessK-298);
             cpO2Guess = (ALPHA_O2*(tempGuessK-298) + (BETA_O2)/2*(tempGuessK*tempGuessK-298*298) + GAMMA_O2/3*(tempGuessK*tempGuessK*tempGuessK-298*298*298))/(tempGuessK-298);
             cpArGuess = (ALPHA_AR*(tempGuessK-298) + (BETA_AR)/2*(tempGuessK*tempGuessK-298*298) + GAMMA_AR/3*(tempGuessK*tempGuessK*tempGuessK-298*298*298))/(tempGuessK-298);
@@ -2353,10 +2249,9 @@ public class ThermalOxidizer extends SwingWorker<Integer, String> {
             if(Math.abs(delta) < EPSILON){
                 break;
             }
-             
         }
         
-        for(int y=0;y<numSpecies;y++){
+        for (int y=0;y<numSpecies;y++) {
             massFractions[y] = massFractionsB4[y]+"";
         }
         
@@ -2373,10 +2268,8 @@ public class ThermalOxidizer extends SwingWorker<Integer, String> {
         
         double tempGuessFOld = tempGuessF;
         
-        while(true){
-            
+        while (true) {
             try {
-
                 scanFile = new Scanner(new FileReader("CHEMKED\\temp-SOLTMP.txt"));
 
                 formatFile = new Formatter(new File("CHEMKED\\SOLTMP.txt"));
@@ -2407,19 +2300,15 @@ public class ThermalOxidizer extends SwingWorker<Integer, String> {
 
                 scanFile.close();
                 formatFile.close();
-
             } catch (Exception e) {
                 e.printStackTrace(System.out);
             }
-
 
             updateFile();
             rewriteSOLTMP(true);
 
             try {
-
                 runCHEMKED("debug\\error_trial");
-
             } catch (IOException | InterruptedException e) {
                 System.out.println(e.toString());
                 e.printStackTrace(System.out);
@@ -2450,7 +2339,6 @@ public class ThermalOxidizer extends SwingWorker<Integer, String> {
 
             // RXNs
             for (speciesIndex = 0; speciesIndex < numSpecies; speciesIndex++) {
-
                 //Mutiply the current mass fraction with the mass flow rate of the synthetic gas
                 massValue = (massFractionsB4[speciesIndex] * (totalMassFlowRateAfterRing1));
 
@@ -2461,12 +2349,10 @@ public class ThermalOxidizer extends SwingWorker<Integer, String> {
                     //speciesPreAir = {"AR", "C6H6", "CH4", "CO", "CO2", "H2", "H2O", "H2S", "HCL", "N2", "NH3", "NO", "NO2", "O2", "SO", "SO2"};
                     //indices: AR=0, C6H6=1, CH4=2, CO=3, CO2=4, H2=5, H2O=6, H2S=7, HCL=8, N2=9, NH3=10, NO=11, NO2=12, O2=13, SO=14, SO2=15
                     switch (preAirIndex) {
-
                         case 0: 
                             massValue = massFractionsAfter[speciesIndex] * totalMassFlowRateAfterRing1;
-                            
                             break;
-                        
+
                         case 1: // C6H6 + 4.5O2 --> 6CO + 3H2O Hrxn = 17450 Btu/lb
                             destructionRemovalEfficiency = 1 - (totalMassFlowRateAfterRing1*massFractionsAfter[speciesIndex] / (syngasMassFlowRate*massFractionsB4Balance[speciesIndex]));
                                                                                     
@@ -2476,7 +2362,6 @@ public class ThermalOxidizer extends SwingWorker<Integer, String> {
                             
                             massValue = massFractionsAfter[speciesIndex] * totalMassFlowRateAfterRing1;
                             break;
-
                         case 2: // CH4 + 2O2 --> CO2 + 2H2O Hrxn = 21560 Btu/lb
                             destructionRemovalEfficiency = 1 - (totalMassFlowRateAfterRing1*massFractionsAfter[speciesIndex] / (syngasMassFlowRate*massFractionsB4Balance[speciesIndex]));
                             
@@ -2487,60 +2372,43 @@ public class ThermalOxidizer extends SwingWorker<Integer, String> {
                             massValue = massFractionsAfter[speciesIndex] * totalMassFlowRateAfterRing1;
                             
                             break;
-
                         case 3: // CO + 0.5O2 --> CO2 Hrxn = 4346 Btu/lb
                              destructionRemovalEfficiency = 1 - (totalMassFlowRateAfterRing1*massFractionsAfter[speciesIndex] / (syngasMassFlowRate*massFractionsB4Balance[speciesIndex]));
                             
                             if(destructionRemovalEfficiency > EPSILON){
-                                                            
                                 combustibleCO = massValue * destructionRemovalEfficiency;
                                 
                                 deltaHCombustionRing1 += combustibleCO * 4346; // Btu/hr
                                 
                                 massValue = massFractionsAfter[speciesIndex] * totalMassFlowRateAfterRing1;
-                                
-                            }
-                            
-                            else{
+                            } else{
                                 massValue = massFractionsAfter[speciesIndex] * totalMassFlowRateAfterRing1;
                             }
                             
                             break;
-
                         case 4: // CO2
-                            
                             massValue = massFractionsAfter[speciesIndex] * totalMassFlowRateAfterRing1;
-                            
                             break;
-                            
                         case 5: // H2 + 0.5O2 --> H2O Hrxn = 51972 Btu/lb
-                            
                             destructionRemovalEfficiency = 1 - (totalMassFlowRateAfterRing1*massFractionsAfter[speciesIndex] / (syngasMassFlowRate*massFractionsB4Balance[speciesIndex]));
                             
-                            if(destructionRemovalEfficiency > EPSILON){
-                                                            
+                            if (destructionRemovalEfficiency > EPSILON) {
                                 combustibleH2 = massValue * destructionRemovalEfficiency;
                                 
                                 deltaHCombustionRing1 += combustibleH2 * 51972; // Btu/hr
                                 
                                 massValue = massFractionsAfter[speciesIndex] * totalMassFlowRateAfterRing1;
                                 
-                            }
-                            
-                            else{
+                            } else{
                                 massValue = massFractionsAfter[speciesIndex] * totalMassFlowRateAfterRing1;
                             }
                             
-                            break;    
-                            
+                            break;
                         case 6: // H2O
-                            
                             massValue = massFractionsAfter[speciesIndex] * totalMassFlowRateAfterRing1;
                             
                             break;
-                            
                         case 7: // H2S + 1.5O2 --> H2O + SO2 Hrxn = 5374.2 Btu/lb
-                            
                             destructionRemovalEfficiency = 1 - (totalMassFlowRateAfterRing1*massFractionsAfter[speciesIndex] / (syngasMassFlowRate*massFractionsB4Balance[speciesIndex]));
                             
                             combustibleH2S = massValue * destructionRemovalEfficiency;
@@ -2549,22 +2417,14 @@ public class ThermalOxidizer extends SwingWorker<Integer, String> {
                             
                             massValue = massFractionsAfter[speciesIndex] * totalMassFlowRateAfterRing1;
                             
-                            break;   
-                            
+                            break;
                         case 8: // HCl
-                            
                             massValue = massFractionsAfter[speciesIndex] * totalMassFlowRateAfterRing1;
-                            
                             break;
-                            
                         case 9: // N2
-                            
                             massValue = massFractionsAfter[speciesIndex] * totalMassFlowRateAfterRing1;
-                            
                             break;
-                            
                         case 10: // NH3 + 1.25O2 --> NO + 1.5H2O Hrxn = 6410
-                            
                             destructionRemovalEfficiency = 1 - (totalMassFlowRateAfterRing1*massFractionsAfter[speciesIndex] / (syngasMassFlowRate*massFractionsB4Balance[speciesIndex]));
                             
                             combustibleNH3 = massValue * destructionRemovalEfficiency;
@@ -2574,29 +2434,19 @@ public class ThermalOxidizer extends SwingWorker<Integer, String> {
                             massValue = massFractionsAfter[speciesIndex] * totalMassFlowRateAfterRing1;
                            
                             break;
-
                         case 11: // NO
-                            
                             massValue = massFractionsAfter[speciesIndex] * totalMassFlowRateAfterRing1;
-                            
                             break;
-                            
                         case 13: //O2
-                            
                             massValue = massFractionsAfter[speciesIndex] * totalMassFlowRateAfterRing1;
-                            
                             break;
-
                         case 15: // SO2
-                            
                             massValue = massFractionsAfter[speciesIndex] * totalMassFlowRateAfterRing1;
-                            
-                            break;     
-
+                            break;
                         default:
                             break;
-
                     }
+
                     preAirIndex++;
                 }
 
@@ -2623,66 +2473,52 @@ public class ThermalOxidizer extends SwingWorker<Integer, String> {
                     //speciesPreAir = {"AR", "C6H6", "CH4", "CO", "CO2", "H2", "H2O", "H2S", "HCL", "N2", "NH3", "NO", "NO2", "O2", "SO", "SO2"};
                     //indices: AR=0, C6H6=1, CH4=2, CO=3, CO2=4, H2=5, H2O=6, H2S=7, HCL=8, N2=9, NH3=10, NO=11, NO2=12, O2=13, SO=14, SO2=15
                     switch (preAirIndex) {
-
                         case 0:
                             molFlowArSyngas = massValue / AR_MW;
                             break;
-
                         case 1:
                             molFlowC6H6Syngas = massValue / (C_MW * 6.0 + H_MW * 6);
                             break;
-
                         case 2:
                             molFlowCH4Syngas = massValue / (C_MW + H_MW * 4.0);
                             break;
-
                         case 3:
                             molFlowCOSyngas = massValue / (C_MW + O_MW);
                             break;
-
                         case 4:
                             molFlowCO2Syngas = massValue / (C_MW + O_MW * 2.0);
                             break;
-
                         case 5:
                             molFlowH2Syngas = massValue / (H_MW * 2.0);
                             break;
-
                         case 6:
                             molFlowH2OSyngas = massValue / (H_MW * 2 + O_MW);
                             break;
-
                         case 7:
                             molFlowH2SSyngas = massValue / (H_MW * 2 + S_MW);
                             break;
-
                         case 8:
                             molFlowHClSyngas = massValue / (H_MW + CL_MW);
                             break;
-
                         case 9:
                             molFlowN2Syngas = massValue / (N_MW * 2);
                             break;
-
                         case 10:
                             molFlowNH3Syngas = massValue / (N_MW + H_MW * 3);
                             break;
-
                         case 11:
                             molFlowNOSyngas = massValue / (N_MW + O_MW);
                             break;
-
                         case 13:
                             molFlowO2Syngas = massValue / (O_MW * 2);
                             break;
-
                         case 15:
                             molFlowSO2Syngas = massValue / (S_MW + 2 * O_MW);
                             break;
-
                         default:
                             break;
                     }
+
                     preAirIndex++;
                 }
 
@@ -2692,8 +2528,7 @@ public class ThermalOxidizer extends SwingWorker<Integer, String> {
             tempGuessInitialF = tempGuessK*9/5. - 459.67;
 
             // Temperature iteration before reactions
-            while (true)    {
-                
+            while (true) {
                 cpN2Guess = (ALPHA_N2*(tempGuessK-298) + (BETA_N2)/2*(tempGuessK*tempGuessK-298*298) + (GAMMA_N2)/3*(tempGuessK*tempGuessK*tempGuessK-298*298*298))/(tempGuessK-298);
                 cpO2Guess = (ALPHA_O2*(tempGuessK-298) + (BETA_O2)/2*(tempGuessK*tempGuessK-298*298) + GAMMA_O2/3*(tempGuessK*tempGuessK*tempGuessK-298*298*298))/(tempGuessK-298);
                 cpArGuess = (ALPHA_AR*(tempGuessK-298) + (BETA_AR)/2*(tempGuessK*tempGuessK-298*298) + GAMMA_AR/3*(tempGuessK*tempGuessK*tempGuessK-298*298*298))/(tempGuessK-298);
@@ -2730,7 +2565,6 @@ public class ThermalOxidizer extends SwingWorker<Integer, String> {
                 if(Math.abs(delta) < EPSILON){
                     break;
                 }
-
             }
 
             for(int y=0;y<numSpecies;y++){
@@ -2754,14 +2588,12 @@ public class ThermalOxidizer extends SwingWorker<Integer, String> {
             if(Math.abs(delta)<EPSILON){
                 break;
             }
-            
         }
         
         readTemp = tempGuessK+"";
         finalTime = timeB4Final;
         
         calculateVelocity();
-        
     }
 
     private void doEnergyBalance2() {

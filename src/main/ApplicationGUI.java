@@ -2640,7 +2640,6 @@ public class ApplicationGUI extends javax.swing.JFrame {
         textFieldHash.put("ambientTemp", ambientTemp_tf.getText());
 
         return textFieldHash;
-
     }
 
     private void setDefaultValues() {
