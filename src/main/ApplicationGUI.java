@@ -3176,86 +3176,76 @@ public class ApplicationGUI extends javax.swing.JFrame {
          try{
              fileReader = new BufferedReader(new FileReader(filePath));    
              
-             divider = "Thermal Oxidizer input file";
-             if (!checkInputFileDivider(fileReader.readLine(), "^\\s*thermal\\s+oxidizer\\s+input\\s+file\\s*$", divider)) {
+             if (!checkInputFileDivider(fileReader.readLine(), "^\\s*thermal\\s+oxidizer\\s+input\\s+file\\s*$", "Thermal Oxidizer input file")) {
                  return;
              }
 
-             divider = "*Synthesis Gas: composition";
-             if (!checkInputFileDivider(fileReader.readLine(), "^\\s*\\*synthesis\\s+gas:\\s+composition\\s*$", divider)) {
+             if (!checkInputFileDivider(fileReader.readLine(), "^\\s*\\*synthesis\\s+gas:\\s+composition\\s*$", "*Synthesis Gas: composition")) {
                  return;
+             } else {
+                 inputLines.addAll(readNextNLines(fileReader, synGasSpeciesTextFieldsList.size()));
              }
-
-             inputLines.addAll(readNextNLines(fileReader, synGasSpeciesTextFieldsList.size()));
                           
-             divider = "*Synthesis Gas: volumetric flow rates and temp";
-             if(!checkInputFileDivider(fileReader.readLine(), "^\\s*\\*synthesis\\s+gas:\\s+volumetric\\s+flow\\s+rates\\s+and\\s+temp\\s*$", divider)) {
+             if (!checkInputFileDivider(fileReader.readLine(), "^\\s*\\*synthesis\\s+gas:\\s+volumetric\\s+flow\\s+rates\\s+and\\s+temp\\s*$", "*Synthesis Gas: volumetric flow rates and temp")) {
                  return;
-             }
-
-             inputLines.addAll(readNextNLines(fileReader, synGasVolFlowRateTextFieldsArrayList.size()));
-             
-             divider = "*Air: air humidity";
-             if(!checkInputFileDivider(fileReader.readLine(), "^\\s*\\*air:\\s+air\\s+humidity\\s*$", divider)) {
-                 return;
+             } else {
+                 inputLines.addAll(readNextNLines(fileReader, synGasVolFlowRateTextFieldsArrayList.size()));
              }
              
-             line = fileReader.readLine();
-             air_H2ObyMass_tf.setText(line);
-             inputLines.add(line);
-             
-             divider = "*Air: mass flow rates and temp";
-             if (!checkInputFileDivider(fileReader.readLine(), "^\\s*\\*air:\\s+mass\\s+flow\\s+rates\\s+and\\s+temp\\s*$", divider)) {
+             if(!checkInputFileDivider(fileReader.readLine(), "^\\s*\\*air:\\s+air\\s+humidity\\s*$", "*Air: air humidity")) {
                  return;
-             }
-
-             inputLines.add(fileReader.readLine());
-             inputLines.add(fileReader.readLine());
-             inputLines.add(fileReader.readLine());
-             
-             divider = "*Flue Gas: composition";
-             if(!checkInputFileDivider(fileReader.readLine(), "^\\s*\\*flue\\s+gas:\\s+composition\\s*$", divider)) {
-                 return;
-             }
-
-             inputLines.addAll(readNextNLines(fileReader, flueGasSpeciesTextFieldsList.size()));
-             
-             divider = "*Flue Gas: mass flow rates and temp";
-             if (!checkInputFileDivider(fileReader.readLine(), "^\\s*\\*flue\\s+gas:\\s+mass\\s+flow\\s+rates\\s+and\\s+temp\\s*$", divider)) {
-                 return;
+             } else {
+                 line = fileReader.readLine();
+                 air_H2ObyMass_tf.setText(line);
+                 inputLines.add(line);
              }
              
-             //Read ring1, ring2, and temperature for flue gas
-             inputLines.add(fileReader.readLine());
-             inputLines.add(fileReader.readLine());
-             inputLines.add(fileReader.readLine());
-
-             divider = "*Ammonia Injection: composition";
-             if (!checkInputFileDivider(fileReader.readLine(), "^\\s*\\*ammonia\\s+injection:\\s+composition\\s*$", divider)) {
+             if (!checkInputFileDivider(fileReader.readLine(), "^\\s*\\*air:\\s+mass\\s+flow\\s+rates\\s+and\\s+temp\\s*$", "*Air: mass flow rates and temp")) {
                  return;
-             }
-
-             inputLines.addAll(readNextNLines(fileReader, ammoniaSpeciesTextFieldsList.size()));
-
-             divider = "*Ammonia Injection: mass flow rates and temp";
-             if(!checkInputFileDivider(fileReader.readLine(), "^\\s*\\*ammonia\\s+injection:\\s+mass\\s+flow\\s+rates\\s+and\\s+temp\\s*$", divider)) {
-                 return;
-             }
-
-             inputLines.addAll(readNextNLines(fileReader, ammoniaMassFlowRateTextFieldsArrayList.size()));
-
-             divider = "*Thermal Oxidizer Design";
-             if(!checkInputFileDivider(fileReader.readLine(), "^\\s*\\*thermal\\s+oxidizer\\s+design\\s*$", divider)) {
-                 return;
-             }
-
-             inputLines.addAll(readNextNLines(fileReader, thermalOxidizerDesignTextFieldsArrayList.size()));
-
-             divider = "-End";
-             if (!checkInputFileDivider(fileReader.readLine(), "^\\s*\\-end\\s*$", divider)) {
-                 return;
+             } else {
+                 inputLines.add(fileReader.readLine());
+                 inputLines.add(fileReader.readLine());
+                 inputLines.add(fileReader.readLine());
              }
              
+             if(!checkInputFileDivider(fileReader.readLine(), "^\\s*\\*flue\\s+gas:\\s+composition\\s*$", "*Flue Gas: composition")) {
+                 return;
+             } else {
+                 inputLines.addAll(readNextNLines(fileReader, flueGasSpeciesTextFieldsList.size()));
+             }
+             
+             if (!checkInputFileDivider(fileReader.readLine(), "^\\s*\\*flue\\s+gas:\\s+mass\\s+flow\\s+rates\\s+and\\s+temp\\s*$", "*Flue Gas: mass flow rates and temp")) {
+                 return;
+             } else {
+                 //Read ring1, ring2, and temperature for flue gas
+                 inputLines.add(fileReader.readLine());
+                 inputLines.add(fileReader.readLine());
+                 inputLines.add(fileReader.readLine());
+             }
+
+             if (!checkInputFileDivider(fileReader.readLine(), "^\\s*\\*ammonia\\s+injection:\\s+composition\\s*$", "*Ammonia Injection: composition")) {
+                 return;
+             } else {
+                 inputLines.addAll(readNextNLines(fileReader, ammoniaSpeciesTextFieldsList.size()));
+             }
+
+             if(!checkInputFileDivider(fileReader.readLine(), "^\\s*\\*ammonia\\s+injection:\\s+mass\\s+flow\\s+rates\\s+and\\s+temp\\s*$", "*Ammonia Injection: mass flow rates and temp")) {
+                 return;
+             } else {
+                 inputLines.addAll(readNextNLines(fileReader, ammoniaMassFlowRateTextFieldsArrayList.size()));
+             }
+
+             if(!checkInputFileDivider(fileReader.readLine(), "^\\s*\\*thermal\\s+oxidizer\\s+design\\s*$", "*Thermal Oxidizer Design")) {
+                 return;
+             } else {
+                 inputLines.addAll(readNextNLines(fileReader, thermalOxidizerDesignTextFieldsArrayList.size()));
+             }
+
+             if (!checkInputFileDivider(fileReader.readLine(), "^\\s*\\-end\\s*$", "-End")) {
+                 return;
+             }
+
+             // Check that we actually got to the end of the file
              if ((fileReader.readLine()) != null) {
                  JOptionPane.showMessageDialog(this, "Input file is longer than expected, please ensure that\n"
                                                         + "there are no lines after the terminating line, \"-End\"",
