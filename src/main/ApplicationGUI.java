@@ -56,14 +56,11 @@ public class ApplicationGUI extends javax.swing.JFrame {
     private ArrayList<JTextField> airSpeciesTextfieldsList = new ArrayList<>();
     private ArrayList<JTextField> flueGasSpeciesTextfieldsList = new ArrayList<>();
     private ArrayList<JTextField> ammoniaSpeciesTextfieldsList = new ArrayList<>();
-    
     private ArrayList<JTextField> synGasVolFlowRateTextFieldsArrayList = new ArrayList<>();
     private ArrayList<JTextField> airMassFlowRateTextFieldsArrayList = new ArrayList<>();
     private ArrayList<JTextField> flueGasMassFlowRateTextFieldsArrayList = new ArrayList<>();
     private ArrayList<JTextField> ammoniaMassFlowRateTextFieldsArrayList = new ArrayList<>();
-    
     private ArrayList<JTextField> thermalOxidizerDesignTextFieldsArrayList = new ArrayList<>();
-    
     private ArrayList<JTextField> allTextFieldsList = new ArrayList<>();
     
     // </editor-fold>
@@ -100,7 +97,6 @@ public class ApplicationGUI extends javax.swing.JFrame {
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
-
         jScrollPane = new javax.swing.JScrollPane();
         jTabbedPane = new javax.swing.JTabbedPane();
         tab1_panel = tab1_panel = new JPanel() {
@@ -305,29 +301,17 @@ public class ApplicationGUI extends javax.swing.JFrame {
         synGasPanel_subPanel1.setOpaque(false);
 
         synN2_label.setText("N2");
-
         synAR_label.setText("AR");
-
         synO2_label.setText("O2");
-
         synH20_label.setText("H2O");
-
         synC6H6_label.setText("C6H6");
-
         synCH4_label.setText("CH4");
-
         synNH3_label.setText("NH3");
-
         synH2S_label.setText("H2S");
-
         synH2_label.setText("H2");
-
         synCO_label.setText("CO");
-
         synCO2_label.setText("CO2");
-
         synHCL_label.setText("HCL");
-
         syn_total_label.setText("Total");
 
         syn_N2_tf.setColumns(7);
@@ -2794,56 +2778,48 @@ public class ApplicationGUI extends javax.swing.JFrame {
         thermalOxidizer.addPropertyChangeListener(new PropertyChangeListener() {
             @Override
             public void propertyChange(final PropertyChangeEvent event) {
-
                 switch (event.getPropertyName()) {
+                    case "progress":
+                        int prog = thermalOxidizer.getProgress();
 
-                    case "progress": int prog = thermalOxidizer.getProgress();
-                                     jProgressBar1.setValue(prog);
-                                     jProgressBar1.setString(prog + "%");    
-                                     break;
+                        jProgressBar1.setValue(prog);
+                        jProgressBar1.setString(prog + "%");
 
-                    case "state":  switch ((StateValue) event.getNewValue()) {
-                        
-                                       case DONE:   //openFile_menuItem.setEnabled(true);
-                                                    if(thermalOxidizer.isCancelled()){
-                                                        jProgressBar1.setValue(0);
-                                                        jProgressBar1.setString(""); 
-                                                    }
-                                                    saveOutputFile_menuItem.setEnabled(true);
-                                                    runButton.setEnabled(true);
-                                                    setDefaultValuesButton.setEnabled(true);
+                        break;
+                    case "state":
+                        if (event.getNewValue() == StateValue.DONE) {
+                            if (thermalOxidizer.isCancelled()) {
+                                jProgressBar1.setValue(0);
+                                jProgressBar1.setString("");
+                            }
 
-                                                    if (jTabbedPane.getSelectedIndex() == 1) {
-                                                        jTabbedPane.setSelectedIndex(0);
-                                                        jTabbedPane.setSelectedIndex(1);
-                                                    }
+                            saveOutputFile_menuItem.setEnabled(true);
+                            runButton.setEnabled(true);
+                            setDefaultValuesButton.setEnabled(true);
 
-                                                    openOutputFolder_button.setEnabled(true);
+                            if (jTabbedPane.getSelectedIndex() == 1) {
+                                jTabbedPane.setSelectedIndex(0);
+                                jTabbedPane.setSelectedIndex(1);
+                            }
 
-                                                    break;
-                                           
-                                    }
+                            openOutputFolder_button.setEnabled(true);
+                        }
                         
                         break;
-                
                 }
-
             }
         });
 
         thermalOxidizer.execute();
-
     }
 
     class MyAbstractValidator extends AbstractValidator {
-
         public MyAbstractValidator(JFrame parent, JTextField c, String message) {
             super(parent, c, message);
         }
 
         @Override
         protected boolean validationCriteria(JComponent c) {
-
             JTextField currentTF = (JTextField) c;
             String text = currentTF.getText();
 
@@ -2889,11 +2865,7 @@ public class ApplicationGUI extends javax.swing.JFrame {
 
                 VALID_RUN_FLAG = false;  
                 return true;
-                
-            } 
-            
-            else {   
-                
+            } else {
                 setValid();
                 
                 if(!VALID_RUN_FLAG){
@@ -2902,129 +2874,110 @@ public class ApplicationGUI extends javax.swing.JFrame {
                 
                 //allow user to run program
                 VALID_RUN_FLAG = true;
-                
             }
 
-            //Input is valid
-            return true;
+            return true;    //Input is valid
+        }
 
-        }
-        
         private void setTargetField(String nameOfCurrentField){
-            
             switch (nameOfCurrentField) {
-                    case "synGas_species":
-                        setTgtField(syn_totalFraction_tf);
-                        break;
-                    case "air_species":
-                        setTgtField(air_totalVolumeFraction_tf);
-                        break;
-                    case "flueGas_species":
-                        setTgtField(flueGas_total_tf);
-                        break;
-                    case "ammoniaInj_species":
-                        setTgtField(ammoniaInject_total_tf);
-                        break;
-                    default:
-                        System.out.println("Error in validationCriteria method; " + nameOfCurrentField + " not valid variable name");
-                        //System.exit(1);
-                        break;
-                }
-            
+                case "synGas_species":
+                    setTgtField(syn_totalFraction_tf);
+                    break;
+                case "air_species":
+                    setTgtField(air_totalVolumeFraction_tf);
+                    break;
+                case "flueGas_species":
+                    setTgtField(flueGas_total_tf);
+                    break;
+                case "ammoniaInj_species":
+                    setTgtField(ammoniaInject_total_tf);
+                    break;
+                default:
+                    System.out.println("Error in validationCriteria method; " + nameOfCurrentField + " not valid variable name");
+                    break;
+            }
         }
-        
     }
 
-    private int updateFields(String species_name) {
-
+    private int updateFields (String species_name) {
         switch (species_name) {
+            case "synGas_species":
+                return sumAndUpdate(synGasSpeciesTextfieldsList, syn_totalFraction_tf);
+            case "air_species":
+                if (Double.compare(Double.parseDouble(air_H2ObyMass_tf.getText()), 1.0) == 0) {
+                    return 0;
+                }
 
-            case "synGas_species": return sumAndUpdate(synGasSpeciesTextfieldsList, syn_totalFraction_tf);
+                DecimalFormat df3 = new DecimalFormat("0.00");
 
-            case "air_species": if (Double.compare(Double.parseDouble(air_H2ObyMass_tf.getText()), 1.0) == 0) {
-                                    return 0;
-                                }
+                /**
+                 * This calculates the humidity mass flow to a volume percentage
+                 */
+                double humidityInAirMass = Double.parseDouble(air_H2ObyMass_tf.getText());
+                double sumMolFractionTimeMWAir = N_MW * 2 * DEFAULT_AIR_N2
+                        + O_MW * 2 * DEFAULT_AIR_O2
+                        + AR_MW * DEFAULT_AIR_AR;
 
-                                DecimalFormat df3 = new DecimalFormat("0.00");
+                double massN2InAir, massO2InAir, massH2OInAir, massARInAir;
 
-                                /**
-                                 * This calculates the humidity mass flow to a volume percentage
-                                 */
-                                double humidityInAirMass = Double.parseDouble(air_H2ObyMass_tf.getText());
-                                double sumMolFractionTimeMWAir = N_MW * 2 * DEFAULT_AIR_N2
-                                        + O_MW * 2 * DEFAULT_AIR_O2
-                                        + AR_MW * DEFAULT_AIR_AR;
+                massN2InAir = (1.0 - humidityInAirMass)
+                        * (N_MW * 2 * DEFAULT_AIR_N2) / sumMolFractionTimeMWAir;
+                massO2InAir = (1.0 - humidityInAirMass)
+                        * (O_MW * 2 * DEFAULT_AIR_O2) / sumMolFractionTimeMWAir;
+                massARInAir = (1.0 - humidityInAirMass)
+                        * (AR_MW * DEFAULT_AIR_AR) / sumMolFractionTimeMWAir;
+                massH2OInAir = humidityInAirMass;
 
-                                double massN2InAir, massO2InAir, massH2OInAir, massARInAir;
+                double  volumeN2InAir = massN2InAir / (N_MW * 2),
+                        volumeO2InAir = massO2InAir / (O_MW * 2),
+                        volumeArInAir = massARInAir / (AR_MW),
+                        volumeH2OInAir = massH2OInAir / (2 * H_MW + O_MW),
+                        sumMolsDividedByMW = volumeN2InAir + volumeO2InAir
+                               + volumeArInAir + volumeH2OInAir,
+                        molFractionOfN2InAir = volumeN2InAir / sumMolsDividedByMW,
+                        molFractionOfO2InAir = volumeO2InAir / sumMolsDividedByMW,
+                        molFractionOfArInAir = volumeArInAir / sumMolsDividedByMW,
+                        molFractionOfH2OInAir = volumeH2OInAir / sumMolsDividedByMW;
 
-                                massN2InAir = (1.0 - humidityInAirMass)
-                                        * (N_MW * 2 * DEFAULT_AIR_N2) / sumMolFractionTimeMWAir;
-                                massO2InAir = (1.0 - humidityInAirMass)
-                                        * (O_MW * 2 * DEFAULT_AIR_O2) / sumMolFractionTimeMWAir;
-                                massARInAir = (1.0 - humidityInAirMass)
-                                        * (AR_MW * DEFAULT_AIR_AR) / sumMolFractionTimeMWAir;
-                                massH2OInAir = humidityInAirMass;
+                air_H2ObyVolume_tf.setText(df3.format(molFractionOfH2OInAir));
+                air_N2_tf.setText(df3.format(molFractionOfN2InAir));
+                air_AR_tf.setText(df3.format(molFractionOfArInAir));
+                air_O2_tf.setText(df3.format(molFractionOfO2InAir));
 
-                                double  volumeN2InAir = massN2InAir / (N_MW * 2),
-                                        volumeO2InAir = massO2InAir / (O_MW * 2),
-                                        volumeArInAir = massARInAir / (AR_MW),
-                                        volumeH2OInAir = massH2OInAir / (2 * H_MW + O_MW),
-                                        sumMolsDividedByMW = volumeN2InAir + volumeO2InAir
-                                               + volumeArInAir + volumeH2OInAir,
-                                        molFractionOfN2InAir = volumeN2InAir / sumMolsDividedByMW,
-                                        molFractionOfO2InAir = volumeO2InAir / sumMolsDividedByMW,
-                                        molFractionOfArInAir = volumeArInAir / sumMolsDividedByMW,
-                                        molFractionOfH2OInAir = volumeH2OInAir / sumMolsDividedByMW;
-
-                                air_H2ObyVolume_tf.setText(df3.format(molFractionOfH2OInAir));
-                                air_N2_tf.setText(df3.format(molFractionOfN2InAir));
-                                air_AR_tf.setText(df3.format(molFractionOfArInAir));
-                                air_O2_tf.setText(df3.format(molFractionOfO2InAir));
-
-                                return sumAndUpdate(airSpeciesTextfieldsList, air_totalVolumeFraction_tf);
-                
-
-            case "flueGas_species":  return sumAndUpdate(flueGasSpeciesTextfieldsList, flueGas_total_tf);
-
-            case "ammoniaInj_species": return sumAndUpdate(ammoniaSpeciesTextfieldsList, ammoniaInject_total_tf);
-
+                return sumAndUpdate(airSpeciesTextfieldsList, air_totalVolumeFraction_tf);
+            case "flueGas_species":
+                return sumAndUpdate(flueGasSpeciesTextfieldsList, flueGas_total_tf);
+            case "ammoniaInj_species":
+                return sumAndUpdate(ammoniaSpeciesTextfieldsList, ammoniaInject_total_tf);
             case "air_ring1":
-                
-                    calculatePercentageAndUpdate(air_massFlowRate_ring1_tf, air_massFlowRate_ring2_tf, 
+                calculatePercentageAndUpdate(air_massFlowRate_ring1_tf, air_massFlowRate_ring2_tf,
                                                  air_massFlowRate_ring1_percentage_tf, air_massFlowRate_ring2_percentage_tf, 
                                                  air_massFlowRate_total_tf, air_massFlowRate_total_percentage_tf);
-                    return 1;
-
+                return 1;
             case "air_ring2":
-                
-                    calculatePercentageAndUpdate(air_massFlowRate_ring2_tf, air_massFlowRate_ring1_tf, 
-                                                 air_massFlowRate_ring2_percentage_tf, air_massFlowRate_ring1_percentage_tf, 
-                                                 air_massFlowRate_total_tf, air_massFlowRate_total_percentage_tf);
-                    return 1;
-
+                calculatePercentageAndUpdate(air_massFlowRate_ring2_tf, air_massFlowRate_ring1_tf,
+                                             air_massFlowRate_ring2_percentage_tf, air_massFlowRate_ring1_percentage_tf,
+                                             air_massFlowRate_total_tf, air_massFlowRate_total_percentage_tf);
+                return 1;
             case "flueGas_ring1":
-               
-                    calculatePercentageAndUpdate(flueGas_massFlowRate_ring1_tf, flueGas_massFlowRate_ring2_tf, 
-                                                 flueGas_massFlowRate_ring1_percentage_tf, flueGas_massFlowRate_ring2_percentage_tf, 
-                                                 flueGas_massFlowRate_total_tf, flueGas_massFlowRate_total_percentage_tf);
-                    return 1;
-
-            case "flueGas_ring2":  
-                
-                    calculatePercentageAndUpdate(flueGas_massFlowRate_ring2_tf, flueGas_massFlowRate_ring1_tf, 
-                                                 flueGas_massFlowRate_ring2_percentage_tf, flueGas_massFlowRate_ring1_percentage_tf, 
-                                                 flueGas_massFlowRate_total_tf, flueGas_massFlowRate_total_percentage_tf);
-                    return 1;
-
-            default: break;
-
+                calculatePercentageAndUpdate(flueGas_massFlowRate_ring1_tf, flueGas_massFlowRate_ring2_tf,
+                                             flueGas_massFlowRate_ring1_percentage_tf, flueGas_massFlowRate_ring2_percentage_tf,
+                                             flueGas_massFlowRate_total_tf, flueGas_massFlowRate_total_percentage_tf);
+                return 1;
+            case "flueGas_ring2":
+                calculatePercentageAndUpdate(flueGas_massFlowRate_ring2_tf, flueGas_massFlowRate_ring1_tf,
+                                             flueGas_massFlowRate_ring2_percentage_tf, flueGas_massFlowRate_ring1_percentage_tf,
+                                             flueGas_massFlowRate_total_tf, flueGas_massFlowRate_total_percentage_tf);
+                return 1;
+            default:
+                break;
         }
 
         return 0;
-
     }
     
-    private int sumAndUpdate(ArrayList<JTextField> textFieldList, JTextField totalFieldModified){
+    private int sumAndUpdate (ArrayList<JTextField> textFieldList, JTextField totalFieldModified) {
         double sum = 0.0;
 
         for (JTextField textField : textFieldList) {
@@ -3038,9 +2991,8 @@ public class ApplicationGUI extends javax.swing.JFrame {
         return (Double.compare(sum, 1.0) == 0) ? 1 : 0; // Return 1 if the numbers are numerically equal
     }
     
-    private void calculatePercentageAndUpdate(JTextField fieldChanged, JTextField fieldUnchanged, JTextField perFieldChanged, 
-                                     JTextField perFieldUnchanged, JTextField totalFieldModified, JTextField totalPerFieldModified){
-        
+    private void calculatePercentageAndUpdate (JTextField fieldChanged, JTextField fieldUnchanged, JTextField perFieldChanged,
+                                     JTextField perFieldUnchanged, JTextField totalFieldModified, JTextField totalPerFieldModified) {
         //get new value that user input
         double newValue = Double.parseDouble(fieldChanged.getText());
         
@@ -3078,11 +3030,9 @@ public class ApplicationGUI extends javax.swing.JFrame {
         double newTotalPer = newChangedFieldPer + newUnchangedFieldPer;
         newTotalPer = (double) Math.round(newTotalPer * 1000) / 1000;
         totalPerFieldModified.setText(newTotalPer + "");
-        
     }
     
     private String createOutputFolder(String currentDateTime){
-        
         String dir = "Model Outputs\\" + currentDateTime;
         
         File runOuputFolder = new File(dir);
@@ -3094,11 +3044,9 @@ public class ApplicationGUI extends javax.swing.JFrame {
         runDirectory = dir;
         
         return dir;
-        
     }   
     
-    private void saveInputScreenshot(String dir, String currentDateTime){
-        
+    private void saveInputScreenshot(String dir, String currentDateTime) {
         BufferedImage image = new BufferedImage(tab1_panel.getWidth(), tab1_panel.getHeight(), BufferedImage.TYPE_INT_RGB);
         tab1_panel.paintAll(image.getGraphics());
         try {
@@ -3108,19 +3056,16 @@ public class ApplicationGUI extends javax.swing.JFrame {
         }
     }
     
-    private void saveInputsToTextFile(boolean userSave, String dir, String currentDateTime){
-        
+    private void saveInputsToTextFile(boolean userSave, String dir, String currentDateTime) {
         String directory;
         
-        if(userSave){
-            if(dir.contains(".txt")){
+        if (userSave) {
+            if (dir.contains(".txt")) {
                 directory = dir;
-            }
-            else{
+            } else {
                 directory = dir + ".txt";
             }
-        }
-        else{
+        } else{
             directory = dir + "/" + currentDateTime + " - inputs.txt";
         }
         
@@ -3136,7 +3081,6 @@ public class ApplicationGUI extends javax.swing.JFrame {
         BufferedWriter bw;
         
         try {
-            
             fw = new FileWriter(inputsTextFile.getAbsoluteFile());
             bw = new BufferedWriter(fw);
             
@@ -3220,7 +3164,6 @@ public class ApplicationGUI extends javax.swing.JFrame {
         } catch (IOException ex) {
             Logger.getLogger(ApplicationGUI.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
     }
   
     private boolean checkValidTotals() {
@@ -3252,7 +3195,6 @@ public class ApplicationGUI extends javax.swing.JFrame {
     }
     
     private void readFromInputFile(){
-        
          final JFileChooser fc = new JFileChooser();
          FileNameExtensionFilter filter = new FileNameExtensionFilter("text files", "txt", "text");
          fc.setFileFilter(filter);
@@ -3274,16 +3216,16 @@ public class ApplicationGUI extends javax.swing.JFrame {
              
              line = fileReader.readLine();
              divider = "Thermal Oxidizer input file";
-             if(!checkInputFileDivider(line, "^\\s*thermal\\s+oxidizer\\s+input\\s+file\\s*$", divider))
+             if (!checkInputFileDivider(line, "^\\s*thermal\\s+oxidizer\\s+input\\s+file\\s*$", divider))
                  return;
              
              line = fileReader.readLine();
              divider = "*Synthesis Gas: composition";
-             if(!checkInputFileDivider(line, "^\\s*\\*synthesis\\s+gas:\\s+composition\\s*$", divider))
+             if (!checkInputFileDivider(line, "^\\s*\\*synthesis\\s+gas:\\s+composition\\s*$", divider))
                  return;
               
              int line_counter = 0;
-             while(line_counter < synGasSpeciesTextfieldsList.size()){
+             while (line_counter < synGasSpeciesTextfieldsList.size()) {
                  line = fileReader.readLine();
                  input_lines.add(line);
                  line_counter++;
@@ -3295,7 +3237,7 @@ public class ApplicationGUI extends javax.swing.JFrame {
              if(!checkInputFileDivider(line, "^\\s*\\*synthesis\\s+gas:\\s+volumetric\\s+flow\\s+rates\\s+and\\s+temp\\s*$", divider))
                  return;
              
-             while(line_counter < synGasVolFlowRateTextFieldsArrayList.size()){
+             while (line_counter < synGasVolFlowRateTextFieldsArrayList.size()) {
                  line = fileReader.readLine();
                  input_lines.add(line);
                  line_counter++;
@@ -3313,7 +3255,7 @@ public class ApplicationGUI extends javax.swing.JFrame {
              
              line = fileReader.readLine();
              divider = "*Air: mass flow rates and temp";
-             if(!checkInputFileDivider(line, "^\\s*\\*air:\\s+mass\\s+flow\\s+rates\\s+and\\s+temp\\s*$", divider))
+             if (!checkInputFileDivider(line, "^\\s*\\*air:\\s+mass\\s+flow\\s+rates\\s+and\\s+temp\\s*$", divider))
                  return;
              
              line = fileReader.readLine();
@@ -3330,7 +3272,7 @@ public class ApplicationGUI extends javax.swing.JFrame {
              if(!checkInputFileDivider(line, "^\\s*\\*flue\\s+gas:\\s+composition\\s*$", divider))
                  return;
              
-             while(line_counter < flueGasSpeciesTextfieldsList.size()){
+             while (line_counter < flueGasSpeciesTextfieldsList.size()) {
                  line = fileReader.readLine();
                  input_lines.add(line);
                  line_counter++;
@@ -3339,7 +3281,7 @@ public class ApplicationGUI extends javax.swing.JFrame {
              
              line = fileReader.readLine();
              divider = "*Flue Gas: mass flow rates and temp";
-             if(!checkInputFileDivider(line, "^\\s*\\*flue\\s+gas:\\s+mass\\s+flow\\s+rates\\s+and\\s+temp\\s*$", divider))
+             if (!checkInputFileDivider(line, "^\\s*\\*flue\\s+gas:\\s+mass\\s+flow\\s+rates\\s+and\\s+temp\\s*$", divider))
                  return;
              
              //Read ring1, ring2, and temperature for flue gas
@@ -3354,10 +3296,10 @@ public class ApplicationGUI extends javax.swing.JFrame {
                           
              line = fileReader.readLine();
              divider = "*Ammonia Injection: composition";
-             if(!checkInputFileDivider(line, "^\\s*\\*ammonia\\s+injection:\\s+composition\\s*$", divider))
+             if (!checkInputFileDivider(line, "^\\s*\\*ammonia\\s+injection:\\s+composition\\s*$", divider))
                  return;
              
-             while(line_counter < ammoniaSpeciesTextfieldsList.size()){
+             while (line_counter < ammoniaSpeciesTextfieldsList.size()) {
                  line = fileReader.readLine();
                  input_lines.add(line);
                  line_counter++;
@@ -3369,7 +3311,7 @@ public class ApplicationGUI extends javax.swing.JFrame {
              if(!checkInputFileDivider(line, "^\\s*\\*ammonia\\s+injection:\\s+mass\\s+flow\\s+rates\\s+and\\s+temp\\s*$", divider))
                  return;
              
-             while(line_counter < ammoniaMassFlowRateTextFieldsArrayList.size()){
+             while (line_counter < ammoniaMassFlowRateTextFieldsArrayList.size()) {
                  line = fileReader.readLine();
                  input_lines.add(line);
                  line_counter++;
@@ -3381,7 +3323,7 @@ public class ApplicationGUI extends javax.swing.JFrame {
              if(!checkInputFileDivider(line, "^\\s*\\*thermal\\s+oxidizer\\s+design\\s*$", divider))
                      return;
 
-             while(line_counter < thermalOxidizerDesignTextFieldsArrayList.size()){
+             while (line_counter < thermalOxidizerDesignTextFieldsArrayList.size()) {
                  line = fileReader.readLine();
                  input_lines.add(line);
                  line_counter++;
@@ -3389,10 +3331,10 @@ public class ApplicationGUI extends javax.swing.JFrame {
               
              line = fileReader.readLine();
              divider = "-End";
-             if(!checkInputFileDivider(line, "^\\s*\\-end\\s*$", divider))
+             if (!checkInputFileDivider(line, "^\\s*\\-end\\s*$", divider))
                 return;
              
-             if((fileReader.readLine()) != null){
+             if ((fileReader.readLine()) != null) {
                  JOptionPane.showMessageDialog(this, "Input file is longer than expected, please ensure that\n"
                                                         + "there are no lines after the terminating line, \"-End\"",
                                                           "Invalid Input File", JOptionPane.ERROR_MESSAGE);   
@@ -3458,7 +3400,6 @@ public class ApplicationGUI extends javax.swing.JFrame {
     }
     
     private boolean checkInputFileDivider (String line, String regEx, String necessaryLine) {
-        
         if(!line.toLowerCase().matches(regEx)){
             JOptionPane.showMessageDialog(this, "The following line is incorrectly formatted in the input file"
                                                 + ": \n" + necessaryLine + "\nCheck documentation for correct formatting.",
@@ -3467,7 +3408,6 @@ public class ApplicationGUI extends javax.swing.JFrame {
         } 
         
         return true;
-        
     }
     
     private void clearFields (){
