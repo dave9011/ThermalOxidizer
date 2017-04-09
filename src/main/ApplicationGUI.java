@@ -3270,7 +3270,6 @@ public class ApplicationGUI extends javax.swing.JFrame {
          ArrayList<String> input_lines = new ArrayList<>();
          
          try{
-             
              fileReader = new BufferedReader(new FileReader(filePath));    
              
              line = fileReader.readLine();
@@ -3286,7 +3285,6 @@ public class ApplicationGUI extends javax.swing.JFrame {
              int line_counter = 0;
              while(line_counter < synGasSpeciesTextfieldsList.size()){
                  line = fileReader.readLine();
-                 Double.parseDouble(line);
                  input_lines.add(line);
                  line_counter++;
              }
@@ -3299,7 +3297,6 @@ public class ApplicationGUI extends javax.swing.JFrame {
              
              while(line_counter < synGasVolFlowRateTextFieldsArrayList.size()){
                  line = fileReader.readLine();
-                 Double.parseDouble(line);
                  input_lines.add(line);
                  line_counter++;
              }
@@ -3311,7 +3308,6 @@ public class ApplicationGUI extends javax.swing.JFrame {
                  return;
              
              line = fileReader.readLine();
-             Double.parseDouble(line);
              air_H2ObyMass_tf.setText(line);
              input_lines.add(line);
              
@@ -3321,16 +3317,13 @@ public class ApplicationGUI extends javax.swing.JFrame {
                  return;
              
              line = fileReader.readLine();
-             Double.parseDouble(line);
              input_lines.add(line);
              
              line = fileReader.readLine();
-             Double.parseDouble(line);
              input_lines.add(line);
              
              line = fileReader.readLine();
-             Double.parseDouble(line);  
-             input_lines.add(line);             
+             input_lines.add(line);
              
              line = fileReader.readLine();
              divider = "*Flue Gas: composition";
@@ -3339,7 +3332,6 @@ public class ApplicationGUI extends javax.swing.JFrame {
              
              while(line_counter < flueGasSpeciesTextfieldsList.size()){
                  line = fileReader.readLine();
-                 Double.parseDouble(line);
                  input_lines.add(line);
                  line_counter++;
              }
@@ -3352,15 +3344,12 @@ public class ApplicationGUI extends javax.swing.JFrame {
              
              //Read ring1, ring2, and temperature for flue gas
              line = fileReader.readLine();
-             Double.parseDouble(line);
              input_lines.add(line);
              
              line = fileReader.readLine();
-             Double.parseDouble(line);
              input_lines.add(line);
              
              line = fileReader.readLine();
-             Double.parseDouble(line);
              input_lines.add(line);
                           
              line = fileReader.readLine();
@@ -3370,7 +3359,6 @@ public class ApplicationGUI extends javax.swing.JFrame {
              
              while(line_counter < ammoniaSpeciesTextfieldsList.size()){
                  line = fileReader.readLine();
-                 Double.parseDouble(line);
                  input_lines.add(line);
                  line_counter++;
              }
@@ -3383,7 +3371,6 @@ public class ApplicationGUI extends javax.swing.JFrame {
              
              while(line_counter < ammoniaMassFlowRateTextFieldsArrayList.size()){
                  line = fileReader.readLine();
-                 Double.parseDouble(line);
                  input_lines.add(line);
                  line_counter++;
              }
@@ -3393,10 +3380,9 @@ public class ApplicationGUI extends javax.swing.JFrame {
              divider = "*Thermal Oxidizer Design";
              if(!checkInputFileDivider(line, "^\\s*\\*thermal\\s+oxidizer\\s+design\\s*$", divider))
                      return;
-             
+
              while(line_counter < thermalOxidizerDesignTextFieldsArrayList.size()){
                  line = fileReader.readLine();
-                 Double.parseDouble(line);
                  input_lines.add(line);
                  line_counter++;
              }
@@ -3455,8 +3441,7 @@ public class ApplicationGUI extends javax.swing.JFrame {
              air_massFlowRate_ring1_tf.getInputVerifier().verify(air_massFlowRate_ring1_tf);
              flueGas_AR_tf.getInputVerifier().verify(flueGas_AR_tf);
              flueGas_massFlowRate_ring1_tf.getInputVerifier().verify(flueGas_massFlowRate_ring1_tf);
-             ammoniaInject_NH3_tf.getInputVerifier().verify(ammoniaInject_NH3_tf); 
-             
+             ammoniaInject_NH3_tf.getInputVerifier().verify(ammoniaInject_NH3_tf);
          } catch(IOException ex){ 
              Logger.getLogger(ApplicationGUI.class.getName()).log(Level.SEVERE, null, ex);
          } catch (NullPointerException null_ex){
