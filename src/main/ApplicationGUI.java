@@ -115,18 +115,18 @@ public class ApplicationGUI extends javax.swing.JFrame {
         synGas_title_label = new javax.swing.JLabel();
         synGasPanel_subPanel1 = new javax.swing.JPanel();
         syn_total_label = new javax.swing.JLabel();
-        syn_N2_tf = new ThermalOxidizerInputTextField("N2", synN2_label = new javax.swing.JLabel(), DEFAULT_SYNGAS_N2);
-        syn_AR_tf = new ThermalOxidizerInputTextField("AR", synAR_label = new javax.swing.JLabel(),DEFAULT_SYNGAS_AR);
-        syn_O2_tf = new ThermalOxidizerInputTextField("O2", synO2_label = new javax.swing.JLabel(),DEFAULT_SYNGAS_O2);
-        syn_H2O_tf = new ThermalOxidizerInputTextField("H20", synH2O_label = new javax.swing.JLabel(),DEFAULT_SYNGAS_H2O);
-        syn_C6H6_tf = new ThermalOxidizerInputTextField("C6H6", synC6H6_label = new javax.swing.JLabel(),DEFAULT_SYNGAS_C6H6);
-        syn_CH4_tf = new ThermalOxidizerInputTextField("CH4", synCH4_label = new javax.swing.JLabel(),DEFAULT_SYNGAS_CH4);
-        syn_NH3_tf = new ThermalOxidizerInputTextField("NH3", synNH3_label = new javax.swing.JLabel(),DEFAULT_SYNGAS_NH3);
-        syn_H2S_tf = new ThermalOxidizerInputTextField("H2S", synH2S_label = new javax.swing.JLabel(),DEFAULT_SYNGAS_H2S);
-        syn_H2_tf = new ThermalOxidizerInputTextField("H2", synH2_label = new javax.swing.JLabel(),DEFAULT_SYNGAS_H2);
-        syn_CO_tf = new ThermalOxidizerInputTextField("CO", synCO_label = new javax.swing.JLabel(),DEFAULT_SYNGAS_CO);
-        syn_CO2_tf = new ThermalOxidizerInputTextField("CO2", synCO2_label = new javax.swing.JLabel(),DEFAULT_SYNGAS_CO2);
-        syn_HCL_tf = new ThermalOxidizerInputTextField("HCL", synHCL_label = new javax.swing.JLabel(),DEFAULT_SYNGAS_HCL);
+        syn_N2_tf = new ThermOxInputField.Builder(DEFAULT_SYNGAS_N2).labelName("N2").jLabel(synN2_label = new javax.swing.JLabel()).build();
+        syn_AR_tf = new ThermOxInputField.Builder(DEFAULT_SYNGAS_AR).labelName("AR").jLabel(synAR_label = new javax.swing.JLabel()).build();
+        syn_O2_tf = new ThermOxInputField.Builder(DEFAULT_SYNGAS_O2).labelName("O2").jLabel(synO2_label = new javax.swing.JLabel()).build();
+        syn_H2O_tf = new ThermOxInputField.Builder(DEFAULT_SYNGAS_H2O).labelName("H20").jLabel(synH2O_label = new javax.swing.JLabel()).build();
+        syn_C6H6_tf = new ThermOxInputField.Builder(DEFAULT_SYNGAS_C6H6).labelName("C6H6").jLabel(synC6H6_label = new javax.swing.JLabel()).build();
+        syn_CH4_tf = new ThermOxInputField.Builder(DEFAULT_SYNGAS_CH4).labelName("CH4").jLabel(synCH4_label = new javax.swing.JLabel()).build();
+        syn_NH3_tf = new ThermOxInputField.Builder(DEFAULT_SYNGAS_NH3).labelName("NH3").jLabel(synNH3_label = new javax.swing.JLabel()).build();
+        syn_H2S_tf = new ThermOxInputField.Builder(DEFAULT_SYNGAS_H2S).labelName("H2S").jLabel(synH2S_label = new javax.swing.JLabel()).build();
+        syn_H2_tf = new ThermOxInputField.Builder(DEFAULT_SYNGAS_H2).labelName("H2").jLabel(synH2_label = new javax.swing.JLabel()).build();
+        syn_CO_tf = new ThermOxInputField.Builder(DEFAULT_SYNGAS_CO).labelName("CO").jLabel(synCO_label = new javax.swing.JLabel()).build();
+        syn_CO2_tf = new ThermOxInputField.Builder(DEFAULT_SYNGAS_CO2).labelName("CO2").jLabel(synCO2_label = new javax.swing.JLabel()).build();
+        syn_HCL_tf = new ThermOxInputField.Builder(DEFAULT_SYNGAS_HCL).labelName("HCL").jLabel(synHCL_label = new javax.swing.JLabel()).build();
         syn_totalFraction_tf = new javax.swing.JTextField();
         synVolumeFraction_label = new javax.swing.JLabel();
         airSpecies_label = new javax.swing.JLabel();
@@ -155,15 +155,15 @@ public class ApplicationGUI extends javax.swing.JFrame {
         air_massFlowRate_total_percentage_tf = new javax.swing.JTextField();
         air_VolumeFraction_label = new javax.swing.JLabel();
         air_species_label = new javax.swing.JLabel();
-        air_N2_tf = new ThermalOxidizerInputTextField("N2", air_N2_label = new javax.swing.JLabel(), DEFAULT_AIR_N2, false);
-        air_AR_tf = new ThermalOxidizerInputTextField("AR", airAR_label = new javax.swing.JLabel(), DEFAULT_AIR_AR, false);
-        air_O2_tf = new ThermalOxidizerInputTextField("O2", airO2_label = new javax.swing.JLabel(), DEFAULT_AIR_O2, false);
+        air_N2_tf = new ThermOxInputField.Builder(DEFAULT_AIR_N2).labelName("N2").jLabel(air_N2_label = new javax.swing.JLabel()).userEditable(false).build();
+        air_AR_tf = new ThermOxInputField.Builder(DEFAULT_AIR_AR).labelName("AR").jLabel(airAR_label = new javax.swing.JLabel()).userEditable(false).build();
+        air_O2_tf = new ThermOxInputField.Builder(DEFAULT_AIR_O2).labelName("O2").jLabel(airO2_label = new javax.swing.JLabel()).userEditable(false).build();
         airVolumeFractionTotal_label = new javax.swing.JLabel();
         air_totalVolumeFraction_tf =  new javax.swing.JTextField();
-        air_H2ObyMass_tf = new ThermalOxidizerInputTextField("H2O", airH2O_label = new javax.swing.JLabel(), 0);
+        air_H2ObyMass_tf = new ThermOxInputField.Builder(0).labelName("H2O").jLabel(airH2O_label = new javax.swing.JLabel()).build();
         jLabel8 = new javax.swing.JLabel();
         jLabel9 = new javax.swing.JLabel();
-        air_H2ObyVolume_tf = new ThermalOxidizerInputTextField("", 0, false);
+        air_H2ObyVolume_tf = new ThermOxInputField.Builder(0).userEditable(false).build();
         flueGas_panel = new javax.swing.JPanel();
         flueGas_title_label = new javax.swing.JLabel();
         flueGasPanel_subPanel1 = new javax.swing.JPanel();
@@ -2206,12 +2206,12 @@ public class ApplicationGUI extends javax.swing.JFrame {
     private javax.swing.JPanel airPanel_subPanel1;
     private javax.swing.JLabel airSpecies_label;
     private javax.swing.JLabel airVolumeFractionTotal_label;
-    private ThermalOxidizerInputTextField air_AR_tf;
-    private ThermalOxidizerInputTextField air_H2ObyMass_tf;
-    private ThermalOxidizerInputTextField air_H2ObyVolume_tf;
+    private ThermOxInputField air_AR_tf;
+    private ThermOxInputField air_H2ObyMass_tf;
+    private ThermOxInputField air_H2ObyVolume_tf;
     private javax.swing.JLabel air_N2_label;
-    private ThermalOxidizerInputTextField air_N2_tf;
-    private ThermalOxidizerInputTextField air_O2_tf;
+    private ThermOxInputField air_N2_tf;
+    private ThermOxInputField air_O2_tf;
     private javax.swing.JLabel air_VolumeFraction_label;
     private javax.swing.JLabel air_massFlowRateTotal_label;
     private javax.swing.JLabel air_massFlowRate_ring1_label;
@@ -2348,18 +2348,18 @@ public class ApplicationGUI extends javax.swing.JFrame {
     private javax.swing.JLabel synVolFlowRate_label;
     private javax.swing.JLabel synVolFlowRate_units_label;
     private javax.swing.JLabel synVolumeFraction_label;
-    private ThermalOxidizerInputTextField syn_AR_tf;
-    private ThermalOxidizerInputTextField syn_C6H6_tf;
-    private ThermalOxidizerInputTextField syn_CH4_tf;
-    private ThermalOxidizerInputTextField syn_CO2_tf;
-    private ThermalOxidizerInputTextField syn_CO_tf;
-    private ThermalOxidizerInputTextField syn_H2O_tf;
-    private ThermalOxidizerInputTextField syn_H2S_tf;
-    private ThermalOxidizerInputTextField syn_H2_tf;
-    private ThermalOxidizerInputTextField syn_HCL_tf;
-    private ThermalOxidizerInputTextField syn_N2_tf;
-    private ThermalOxidizerInputTextField syn_NH3_tf;
-    private ThermalOxidizerInputTextField syn_O2_tf;
+    private ThermOxInputField syn_AR_tf;
+    private ThermOxInputField syn_C6H6_tf;
+    private ThermOxInputField syn_CH4_tf;
+    private ThermOxInputField syn_CO2_tf;
+    private ThermOxInputField syn_CO_tf;
+    private ThermOxInputField syn_H2O_tf;
+    private ThermOxInputField syn_H2S_tf;
+    private ThermOxInputField syn_H2_tf;
+    private ThermOxInputField syn_HCL_tf;
+    private ThermOxInputField syn_N2_tf;
+    private ThermOxInputField syn_NH3_tf;
+    private ThermOxInputField syn_O2_tf;
     private javax.swing.JTextField syn_VolFlowRate_tf;
     private javax.swing.JTextField syn_tempF_tf;
     private javax.swing.JTextField syn_totalFraction_tf;
@@ -2475,7 +2475,7 @@ public class ApplicationGUI extends javax.swing.JFrame {
     }
 
     private void initSynthesisGasTextFieldsArrayList() {
-        ThermalOxidizerInputTextField[] fields = {syn_N2_tf, syn_AR_tf, syn_O2_tf, syn_H2O_tf, syn_C6H6_tf, syn_CH4_tf, syn_NH3_tf, syn_H2S_tf, syn_H2_tf, syn_CO_tf, syn_CO2_tf, syn_HCL_tf};
+        ThermOxInputField[] fields = {syn_N2_tf, syn_AR_tf, syn_O2_tf, syn_H2O_tf, syn_C6H6_tf, syn_CH4_tf, syn_NH3_tf, syn_H2S_tf, syn_H2_tf, syn_CO_tf, syn_CO2_tf, syn_HCL_tf};
         synGasSpeciesTextFieldsList.addAll(Arrays.asList(fields));
 
         JTextField[] fields2 = {syn_VolFlowRate_tf, syn_tempF_tf};
@@ -2542,7 +2542,7 @@ public class ApplicationGUI extends javax.swing.JFrame {
         DecimalFormat df2 = new DecimalFormat("0.0000");
 
         for (JTextField textField : synGasSpeciesTextFieldsList) {
-            ((ThermalOxidizerInputTextField)textField).resetValue();
+            ((ThermOxInputField)textField).resetValue();
         }
 
         //update total of syn gas species
