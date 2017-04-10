@@ -115,9 +115,8 @@ public class ApplicationGUI extends javax.swing.JFrame {
         airSpecies_label = new javax.swing.JLabel();
         synGasPanel_subPanel2 = new javax.swing.JPanel();
         synVolFlowRate_label = new javax.swing.JLabel();
-        synTemp_label = new javax.swing.JLabel();
-        syn_tempF_tf = new javax.swing.JTextField();
-        syn_VolFlowRate_tf = new javax.swing.JTextField();
+        syn_VolFlowRate_tf = new ThermOxInputField.Builder("synGasMassFlow", Constants.DEFAULT_SYN_GAS_VOL_FLOW_RATE).labelName("Vol Flow Rate").jLabel(synVolFlowRate_label = new javax.swing.JLabel()).build();
+        syn_tempF_tf = new ThermOxInputField.Builder("synTempF", Constants.DEFAULT_SYN_GAS_TEMP).labelName(Constants.TEMP_FARENHEIT_LABEL).jLabel(synTemp_label = new javax.swing.JLabel()).build();
         synVolFlowRate_units_label = new javax.swing.JLabel();
         air_panel = new javax.swing.JPanel();
         air_title_label = new javax.swing.JLabel();
@@ -488,25 +487,8 @@ public class ApplicationGUI extends javax.swing.JFrame {
         synGasPanel_subPanel2.setBackground(new java.awt.Color(189, 195, 199));
         synGasPanel_subPanel2.setOpaque(false);
 
-        synVolFlowRate_label.setText("Vol Flow Rate");
-
-        synTemp_label.setText("Temperature (\u00b0F)");
-
-        syn_tempF_tf.setColumns(6);
-        syn_tempF_tf.setHorizontalAlignment(javax.swing.JTextField.TRAILING);
-        syn_tempF_tf.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                syn_tempF_tfActionPerformed(evt);
-            }
-        });
-
         syn_VolFlowRate_tf.setColumns(6);
-        syn_VolFlowRate_tf.setHorizontalAlignment(javax.swing.JTextField.TRAILING);
-        syn_VolFlowRate_tf.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                syn_VolFlowRate_tfActionPerformed(evt);
-            }
-        });
+        syn_tempF_tf.setColumns(6);
 
         synVolFlowRate_units_label.setText("acfm");
 
@@ -2315,8 +2297,8 @@ public class ApplicationGUI extends javax.swing.JFrame {
     private ThermOxInputField syn_N2_tf;
     private ThermOxInputField syn_NH3_tf;
     private ThermOxInputField syn_O2_tf;
-    private javax.swing.JTextField syn_VolFlowRate_tf;
-    private javax.swing.JTextField syn_tempF_tf;
+    private ThermOxInputField syn_VolFlowRate_tf;
+    private ThermOxInputField syn_tempF_tf;
     private javax.swing.JTextField syn_totalFraction_tf;
     private javax.swing.JLabel syn_total_label;
     private javax.swing.JPanel tab1_panel;
@@ -2441,8 +2423,8 @@ public class ApplicationGUI extends javax.swing.JFrame {
     private HashMap textFieldValuesToHash() {
         textFieldHash = new HashMap();
 
-        ArrayList<JTextField>[] arrayLists = new ArrayList[]{synGasSpeciesTextFieldsList, airSpeciesTextFieldsList,
-                flueGasSpeciesTextFieldsList, ammoniaSpeciesTextFieldsList};
+        ArrayList<JTextField>[] arrayLists = new ArrayList[]{synGasSpeciesTextFieldsList, airSpeciesTextFieldsList, flueGasSpeciesTextFieldsList, ammoniaSpeciesTextFieldsList,
+                synGasVolFlowRateTextFieldsArrayList};
 
         for (ArrayList<JTextField> arrayList : arrayLists) {
             for (JTextField textField : arrayList) {
@@ -2474,9 +2456,7 @@ public class ApplicationGUI extends javax.swing.JFrame {
         textFieldHash.put("massAirRing2", air_massFlowRate_ring2_tf.getText());
         textFieldHash.put("ring1distanceTF", ring1distanceTF.getText());
         textFieldHash.put("ring2distanceTF", ring2distanceTF.getText());
-        textFieldHash.put("synTempF", syn_tempF_tf.getText());
         textFieldHash.put("synTotalTF", syn_totalFraction_tf.getText());
-        textFieldHash.put("synGasMassFlow", syn_VolFlowRate_tf.getText());
         textFieldHash.put("tempLossPerFoot", tempLossPerFoot.getText());
         textFieldHash.put("thermOxDiameter", thermOxDiameter.getText());
         textFieldHash.put("thermOxLength", thermOxLength.getText());
@@ -2490,11 +2470,7 @@ public class ApplicationGUI extends javax.swing.JFrame {
         DecimalFormat df2 = new DecimalFormat("0.0000");
 
         for (JTextField textField : synGasSpeciesTextFieldsList) {
-            if (textField instanceof ThermOxInputField) {
-                ((ThermOxInputField)textField).resetValue();
-            } else {
-                textField.setText("0.0");
-            }
+            ((ThermOxInputField)textField).resetValue();
         }
 
         //update total of syn gas species
@@ -2516,29 +2492,22 @@ public class ApplicationGUI extends javax.swing.JFrame {
         updateFields("air_species");
 
         for (JTextField textField : flueGasSpeciesTextFieldsList) {
-            if (textField instanceof ThermOxInputField) {
-                ((ThermOxInputField)textField).resetValue();
-            } else {
-                textField.setText("0.0");
-            }
+            ((ThermOxInputField)textField).resetValue();
         }
 
         //update total of flue gas
         updateFields("flueGas_species");
 
         for (JTextField textField : ammoniaSpeciesTextFieldsList) {
-            if (textField instanceof ThermOxInputField) {
-                ((ThermOxInputField)textField).resetValue();
-            } else {
-                textField.setText("0.0");
-            }
+            ((ThermOxInputField)textField).resetValue();
         }
 
         //update total of ammonia injection
         updateFields("ammoniaInj_species");
 
-        syn_VolFlowRate_tf.setText("2040");
-        syn_tempF_tf.setText("1205");
+        for (JTextField textField : synGasVolFlowRateTextFieldsArrayList) {
+            ((ThermOxInputField)textField).resetValue(false);
+        }
 
         air_massFlowRate_ring1_tf.setText("3900");
         air_massFlowRate_ring2_tf.setText("4000");
