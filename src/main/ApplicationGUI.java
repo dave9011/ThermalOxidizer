@@ -114,31 +114,19 @@ public class ApplicationGUI extends javax.swing.JFrame {
         synGas_panel = new javax.swing.JPanel();
         synGas_title_label = new javax.swing.JLabel();
         synGasPanel_subPanel1 = new javax.swing.JPanel();
-        synN2_label = new javax.swing.JLabel();
-        synAR_label = new javax.swing.JLabel();
-        synO2_label = new javax.swing.JLabel();
-        synH20_label = new javax.swing.JLabel();
-        synC6H6_label = new javax.swing.JLabel();
-        synCH4_label = new javax.swing.JLabel();
-        synNH3_label = new javax.swing.JLabel();
-        synH2S_label = new javax.swing.JLabel();
-        synH2_label = new javax.swing.JLabel();
-        synCO_label = new javax.swing.JLabel();
-        synCO2_label = new javax.swing.JLabel();
-        synHCL_label = new javax.swing.JLabel();
         syn_total_label = new javax.swing.JLabel();
-        syn_N2_tf = new javax.swing.JTextField();
-        syn_AR_tf = new javax.swing.JTextField();
-        syn_O2_tf = new javax.swing.JTextField();
-        syn_H2O_tf = new javax.swing.JTextField();
-        syn_C6H6_tf = new javax.swing.JTextField();
-        syn_CH4_tf = new javax.swing.JTextField();
-        syn_NH3_tf = new javax.swing.JTextField();
-        syn_H2S_tf = new javax.swing.JTextField();
-        syn_H2_tf = new javax.swing.JTextField();
-        syn_CO_tf = new javax.swing.JTextField();
-        syn_CO2_tf = new javax.swing.JTextField();
-        syn_HCL_tf = new javax.swing.JTextField();
+        syn_N2_tf = new ThermalOxidizerInputTextField("N2", synN2_label = new javax.swing.JLabel(), DEFAULT_SYNGAS_N2);
+        syn_AR_tf = new ThermalOxidizerInputTextField("AR", synAR_label = new javax.swing.JLabel(),DEFAULT_SYNGAS_AR);
+        syn_O2_tf = new ThermalOxidizerInputTextField("O2", synO2_label = new javax.swing.JLabel(),DEFAULT_SYNGAS_O2);
+        syn_H2O_tf = new ThermalOxidizerInputTextField("H20", synH2O_label = new javax.swing.JLabel(),DEFAULT_SYNGAS_H2O);
+        syn_C6H6_tf = new ThermalOxidizerInputTextField("C6H6", synC6H6_label = new javax.swing.JLabel(),DEFAULT_SYNGAS_C6H6);
+        syn_CH4_tf = new ThermalOxidizerInputTextField("CH4", synCH4_label = new javax.swing.JLabel(),DEFAULT_SYNGAS_CH4);
+        syn_NH3_tf = new ThermalOxidizerInputTextField("NH3", synNH3_label = new javax.swing.JLabel(),DEFAULT_SYNGAS_NH3);
+        syn_H2S_tf = new ThermalOxidizerInputTextField("H2S", synH2S_label = new javax.swing.JLabel(),DEFAULT_SYNGAS_H2S);
+        syn_H2_tf = new ThermalOxidizerInputTextField("H2", synH2_label = new javax.swing.JLabel(),DEFAULT_SYNGAS_H2);
+        syn_CO_tf = new ThermalOxidizerInputTextField("CO", synCO_label = new javax.swing.JLabel(),DEFAULT_SYNGAS_CO);
+        syn_CO2_tf = new ThermalOxidizerInputTextField("CO2", synCO2_label = new javax.swing.JLabel(),DEFAULT_SYNGAS_CO2);
+        syn_HCL_tf = new ThermalOxidizerInputTextField("HCL", synHCL_label = new javax.swing.JLabel(),DEFAULT_SYNGAS_HCL);
         syn_totalFraction_tf = new javax.swing.JTextField();
         synVolumeFraction_label = new javax.swing.JLabel();
         airSpecies_label = new javax.swing.JLabel();
@@ -167,19 +155,15 @@ public class ApplicationGUI extends javax.swing.JFrame {
         air_massFlowRate_total_percentage_tf = new javax.swing.JTextField();
         air_VolumeFraction_label = new javax.swing.JLabel();
         air_species_label = new javax.swing.JLabel();
-        air_N2_label = new javax.swing.JLabel();
-        air_N2_tf = new javax.swing.JTextField();
-        air_AR_tf = new javax.swing.JTextField();
-        airAR_label = new javax.swing.JLabel();
-        airO2_label = new javax.swing.JLabel();
-        air_O2_tf = new javax.swing.JTextField();
+        air_N2_tf = new ThermalOxidizerInputTextField("N2", air_N2_label = new javax.swing.JLabel(), DEFAULT_AIR_N2, false);
+        air_AR_tf = new ThermalOxidizerInputTextField("AR", airAR_label = new javax.swing.JLabel(), DEFAULT_AIR_AR, false);
+        air_O2_tf = new ThermalOxidizerInputTextField("O2", airO2_label = new javax.swing.JLabel(), DEFAULT_AIR_O2, false);
         airVolumeFractionTotal_label = new javax.swing.JLabel();
-        air_totalVolumeFraction_tf = new javax.swing.JTextField();
-        air_H2ObyMass_tf = new javax.swing.JTextField();
+        air_totalVolumeFraction_tf =  new javax.swing.JTextField();
+        air_H2ObyMass_tf = new ThermalOxidizerInputTextField("H2O", airH2O_label = new javax.swing.JLabel(), 0);
         jLabel8 = new javax.swing.JLabel();
         jLabel9 = new javax.swing.JLabel();
-        air_H2ObyVolume_tf = new javax.swing.JTextField();
-        airH2O_label = new javax.swing.JLabel();
+        air_H2ObyVolume_tf = new ThermalOxidizerInputTextField("", 0, false);
         flueGas_panel = new javax.swing.JPanel();
         flueGas_title_label = new javax.swing.JLabel();
         flueGasPanel_subPanel1 = new javax.swing.JPanel();
@@ -301,24 +285,9 @@ public class ApplicationGUI extends javax.swing.JFrame {
         synGasPanel_subPanel1.setBackground(new java.awt.Color(32, 32, 32));
         synGasPanel_subPanel1.setOpaque(false);
 
-        synN2_label.setText("N2");
-        synAR_label.setText("AR");
-        synO2_label.setText("O2");
-        synH20_label.setText("H2O");
-        synC6H6_label.setText("C6H6");
-        synCH4_label.setText("CH4");
-        synNH3_label.setText("NH3");
-        synH2S_label.setText("H2S");
-        synH2_label.setText("H2");
-        synCO_label.setText("CO");
-        synCO2_label.setText("CO2");
-        synHCL_label.setText("HCL");
         syn_total_label.setText("Total");
 
         syn_N2_tf.setColumns(7);
-        syn_N2_tf.setHorizontalAlignment(javax.swing.JTextField.TRAILING);
-        syn_N2_tf.setText("0.0");
-        syn_N2_tf.setCursor(new java.awt.Cursor(java.awt.Cursor.TEXT_CURSOR));
         syn_N2_tf.setInputVerifier(new MyAbstractValidator(this, syn_N2_tf, ""));
         syn_N2_tf.setName("synGas_species"); // NOI18N
         syn_N2_tf.addActionListener(new java.awt.event.ActionListener() {
@@ -328,8 +297,6 @@ public class ApplicationGUI extends javax.swing.JFrame {
         });
 
         syn_AR_tf.setColumns(7);
-        syn_AR_tf.setHorizontalAlignment(javax.swing.JTextField.TRAILING);
-        syn_AR_tf.setText("0.0");
         syn_AR_tf.setInputVerifier(new MyAbstractValidator(this, syn_AR_tf, ""));
         syn_AR_tf.setName("synGas_species"); // NOI18N
         syn_AR_tf.addActionListener(new java.awt.event.ActionListener() {
@@ -339,8 +306,6 @@ public class ApplicationGUI extends javax.swing.JFrame {
         });
 
         syn_O2_tf.setColumns(7);
-        syn_O2_tf.setHorizontalAlignment(javax.swing.JTextField.TRAILING);
-        syn_O2_tf.setText("0.0");
         syn_O2_tf.setInputVerifier(new MyAbstractValidator(this, syn_O2_tf, ""));
         syn_O2_tf.setName("synGas_species"); // NOI18N
         syn_O2_tf.addActionListener(new java.awt.event.ActionListener() {
@@ -350,8 +315,6 @@ public class ApplicationGUI extends javax.swing.JFrame {
         });
 
         syn_H2O_tf.setColumns(7);
-        syn_H2O_tf.setHorizontalAlignment(javax.swing.JTextField.TRAILING);
-        syn_H2O_tf.setText("0.0");
         syn_H2O_tf.setInputVerifier(new MyAbstractValidator(this, syn_H2O_tf, ""));
         syn_H2O_tf.setName("synGas_species"); // NOI18N
         syn_H2O_tf.addActionListener(new java.awt.event.ActionListener() {
@@ -361,8 +324,6 @@ public class ApplicationGUI extends javax.swing.JFrame {
         });
 
         syn_C6H6_tf.setColumns(7);
-        syn_C6H6_tf.setHorizontalAlignment(javax.swing.JTextField.TRAILING);
-        syn_C6H6_tf.setText("0.0");
         syn_C6H6_tf.setInputVerifier(new MyAbstractValidator(this, syn_C6H6_tf, ""));
         syn_C6H6_tf.setName("synGas_species"); // NOI18N
         syn_C6H6_tf.addActionListener(new java.awt.event.ActionListener() {
@@ -372,8 +333,6 @@ public class ApplicationGUI extends javax.swing.JFrame {
         });
 
         syn_CH4_tf.setColumns(7);
-        syn_CH4_tf.setHorizontalAlignment(javax.swing.JTextField.TRAILING);
-        syn_CH4_tf.setText("0.0");
         syn_CH4_tf.setInputVerifier(new MyAbstractValidator(this, syn_CH4_tf, ""));
         syn_CH4_tf.setName("synGas_species"); // NOI18N
         syn_CH4_tf.addActionListener(new java.awt.event.ActionListener() {
@@ -383,8 +342,6 @@ public class ApplicationGUI extends javax.swing.JFrame {
         });
 
         syn_NH3_tf.setColumns(7);
-        syn_NH3_tf.setHorizontalAlignment(javax.swing.JTextField.TRAILING);
-        syn_NH3_tf.setText("0.0");
         syn_NH3_tf.setInputVerifier(new MyAbstractValidator(this, syn_NH3_tf, ""));
         syn_NH3_tf.setName("synGas_species"); // NOI18N
         syn_NH3_tf.addActionListener(new java.awt.event.ActionListener() {
@@ -394,8 +351,6 @@ public class ApplicationGUI extends javax.swing.JFrame {
         });
 
         syn_H2S_tf.setColumns(7);
-        syn_H2S_tf.setHorizontalAlignment(javax.swing.JTextField.TRAILING);
-        syn_H2S_tf.setText("0.0");
         syn_H2S_tf.setInputVerifier(new MyAbstractValidator(this, syn_H2S_tf, ""));
         syn_H2S_tf.setName("synGas_species"); // NOI18N
         syn_H2S_tf.addActionListener(new java.awt.event.ActionListener() {
@@ -405,8 +360,6 @@ public class ApplicationGUI extends javax.swing.JFrame {
         });
 
         syn_H2_tf.setColumns(7);
-        syn_H2_tf.setHorizontalAlignment(javax.swing.JTextField.TRAILING);
-        syn_H2_tf.setText("0.0");
         syn_H2_tf.setInputVerifier(new MyAbstractValidator(this, syn_H2_tf, ""));
         syn_H2_tf.setName("synGas_species"); // NOI18N
         syn_H2_tf.addActionListener(new java.awt.event.ActionListener() {
@@ -416,8 +369,6 @@ public class ApplicationGUI extends javax.swing.JFrame {
         });
 
         syn_CO_tf.setColumns(7);
-        syn_CO_tf.setHorizontalAlignment(javax.swing.JTextField.TRAILING);
-        syn_CO_tf.setText("0.0");
         syn_CO_tf.setInputVerifier(new MyAbstractValidator(this, syn_CO_tf, ""));
         syn_CO_tf.setName("synGas_species"); // NOI18N
         syn_CO_tf.addActionListener(new java.awt.event.ActionListener() {
@@ -427,8 +378,6 @@ public class ApplicationGUI extends javax.swing.JFrame {
         });
 
         syn_CO2_tf.setColumns(7);
-        syn_CO2_tf.setHorizontalAlignment(javax.swing.JTextField.TRAILING);
-        syn_CO2_tf.setText("0.0");
         syn_CO2_tf.setInputVerifier(new MyAbstractValidator(this, syn_CO2_tf, ""));
         syn_CO2_tf.setName("synGas_species"); // NOI18N
         syn_CO2_tf.addActionListener(new java.awt.event.ActionListener() {
@@ -438,8 +387,6 @@ public class ApplicationGUI extends javax.swing.JFrame {
         });
 
         syn_HCL_tf.setColumns(7);
-        syn_HCL_tf.setHorizontalAlignment(javax.swing.JTextField.TRAILING);
-        syn_HCL_tf.setText("0.0");
         syn_HCL_tf.setInputVerifier(new MyAbstractValidator(this, syn_HCL_tf, ""));
         syn_HCL_tf.setName("synGas_species"); // NOI18N
         syn_HCL_tf.addActionListener(new java.awt.event.ActionListener() {
@@ -475,7 +422,7 @@ public class ApplicationGUI extends javax.swing.JFrame {
                             .addComponent(synN2_label, javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(synAR_label, javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(synO2_label, javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(synH20_label, javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(synH2O_label, javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(synC6H6_label, javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(synCH4_label, javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(synNH3_label, javax.swing.GroupLayout.Alignment.TRAILING)
@@ -522,7 +469,7 @@ public class ApplicationGUI extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(synGasPanel_subPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(syn_H2O_tf, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(synH20_label))
+                    .addComponent(synH2O_label))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(synGasPanel_subPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(syn_C6H6_tf, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -803,39 +750,16 @@ public class ApplicationGUI extends javax.swing.JFrame {
 
         air_species_label.setText("Species");
 
-        air_N2_label.setText("N2");
-
-        air_N2_tf.setEditable(false);
-        air_N2_tf.setBackground(new java.awt.Color(230, 230, 230));
         air_N2_tf.setColumns(7);
         air_N2_tf.setHorizontalAlignment(javax.swing.JTextField.TRAILING);
-        air_N2_tf.setText("0.78");
-        air_N2_tf.setFocusable(false);
         air_N2_tf.setName("air_species"); // NOI18N
 
-        air_AR_tf.setEditable(false);
-        air_AR_tf.setBackground(new java.awt.Color(230, 230, 230));
         air_AR_tf.setColumns(7);
         air_AR_tf.setHorizontalAlignment(javax.swing.JTextField.TRAILING);
-        air_AR_tf.setText("0.01");
-        air_AR_tf.setFocusable(false);
         air_AR_tf.setName("air_species"); // NOI18N
-        air_AR_tf.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                air_AR_tfActionPerformed(evt);
-            }
-        });
 
-        airAR_label.setText("AR");
-
-        airO2_label.setText("O2");
-
-        air_O2_tf.setEditable(false);
-        air_O2_tf.setBackground(new java.awt.Color(230, 230, 230));
         air_O2_tf.setColumns(7);
         air_O2_tf.setHorizontalAlignment(javax.swing.JTextField.TRAILING);
-        air_O2_tf.setText("0.21");
-        air_O2_tf.setFocusable(false);
         air_O2_tf.setName("air_species"); // NOI18N
 
         airVolumeFractionTotal_label.setText("Total");
@@ -862,20 +786,14 @@ public class ApplicationGUI extends javax.swing.JFrame {
 
         jLabel9.setText("Fraction by Volume");
 
-        air_H2ObyVolume_tf.setEditable(false);
-        air_H2ObyVolume_tf.setBackground(new java.awt.Color(230, 230, 230));
         air_H2ObyVolume_tf.setColumns(7);
         air_H2ObyVolume_tf.setHorizontalAlignment(javax.swing.JTextField.TRAILING);
-        air_H2ObyVolume_tf.setText("0");
-        air_H2ObyVolume_tf.setFocusable(false);
         air_H2ObyVolume_tf.setName(""); // NOI18N
         air_H2ObyVolume_tf.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 air_H2ObyVolume_tfActionPerformed(evt);
             }
         });
-
-        airH2O_label.setText("H2O");
 
         javax.swing.GroupLayout air_panelLayout = new javax.swing.GroupLayout(air_panel);
         air_panel.setLayout(air_panelLayout);
@@ -2288,12 +2206,12 @@ public class ApplicationGUI extends javax.swing.JFrame {
     private javax.swing.JPanel airPanel_subPanel1;
     private javax.swing.JLabel airSpecies_label;
     private javax.swing.JLabel airVolumeFractionTotal_label;
-    private javax.swing.JTextField air_AR_tf;
-    private javax.swing.JTextField air_H2ObyMass_tf;
-    private javax.swing.JTextField air_H2ObyVolume_tf;
+    private ThermalOxidizerInputTextField air_AR_tf;
+    private ThermalOxidizerInputTextField air_H2ObyMass_tf;
+    private ThermalOxidizerInputTextField air_H2ObyVolume_tf;
     private javax.swing.JLabel air_N2_label;
-    private javax.swing.JTextField air_N2_tf;
-    private javax.swing.JTextField air_O2_tf;
+    private ThermalOxidizerInputTextField air_N2_tf;
+    private ThermalOxidizerInputTextField air_O2_tf;
     private javax.swing.JLabel air_VolumeFraction_label;
     private javax.swing.JLabel air_massFlowRateTotal_label;
     private javax.swing.JLabel air_massFlowRate_ring1_label;
@@ -2419,7 +2337,7 @@ public class ApplicationGUI extends javax.swing.JFrame {
     private javax.swing.JPanel synGasPanel_subPanel2;
     private javax.swing.JPanel synGas_panel;
     private javax.swing.JLabel synGas_title_label;
-    private javax.swing.JLabel synH20_label;
+    private javax.swing.JLabel synH2O_label;
     private javax.swing.JLabel synH2S_label;
     private javax.swing.JLabel synH2_label;
     private javax.swing.JLabel synHCL_label;
@@ -2430,18 +2348,18 @@ public class ApplicationGUI extends javax.swing.JFrame {
     private javax.swing.JLabel synVolFlowRate_label;
     private javax.swing.JLabel synVolFlowRate_units_label;
     private javax.swing.JLabel synVolumeFraction_label;
-    private javax.swing.JTextField syn_AR_tf;
-    private javax.swing.JTextField syn_C6H6_tf;
-    private javax.swing.JTextField syn_CH4_tf;
-    private javax.swing.JTextField syn_CO2_tf;
-    private javax.swing.JTextField syn_CO_tf;
-    private javax.swing.JTextField syn_H2O_tf;
-    private javax.swing.JTextField syn_H2S_tf;
-    private javax.swing.JTextField syn_H2_tf;
-    private javax.swing.JTextField syn_HCL_tf;
-    private javax.swing.JTextField syn_N2_tf;
-    private javax.swing.JTextField syn_NH3_tf;
-    private javax.swing.JTextField syn_O2_tf;
+    private ThermalOxidizerInputTextField syn_AR_tf;
+    private ThermalOxidizerInputTextField syn_C6H6_tf;
+    private ThermalOxidizerInputTextField syn_CH4_tf;
+    private ThermalOxidizerInputTextField syn_CO2_tf;
+    private ThermalOxidizerInputTextField syn_CO_tf;
+    private ThermalOxidizerInputTextField syn_H2O_tf;
+    private ThermalOxidizerInputTextField syn_H2S_tf;
+    private ThermalOxidizerInputTextField syn_H2_tf;
+    private ThermalOxidizerInputTextField syn_HCL_tf;
+    private ThermalOxidizerInputTextField syn_N2_tf;
+    private ThermalOxidizerInputTextField syn_NH3_tf;
+    private ThermalOxidizerInputTextField syn_O2_tf;
     private javax.swing.JTextField syn_VolFlowRate_tf;
     private javax.swing.JTextField syn_tempF_tf;
     private javax.swing.JTextField syn_totalFraction_tf;
@@ -2557,7 +2475,7 @@ public class ApplicationGUI extends javax.swing.JFrame {
     }
 
     private void initSynthesisGasTextFieldsArrayList() {
-        JTextField[] fields = {syn_N2_tf, syn_AR_tf, syn_O2_tf, syn_H2O_tf, syn_C6H6_tf, syn_CH4_tf, syn_NH3_tf, syn_H2S_tf, syn_H2_tf, syn_CO_tf, syn_CO2_tf, syn_HCL_tf};
+        ThermalOxidizerInputTextField[] fields = {syn_N2_tf, syn_AR_tf, syn_O2_tf, syn_H2O_tf, syn_C6H6_tf, syn_CH4_tf, syn_NH3_tf, syn_H2S_tf, syn_H2_tf, syn_CO_tf, syn_CO2_tf, syn_HCL_tf};
         synGasSpeciesTextFieldsList.addAll(Arrays.asList(fields));
 
         JTextField[] fields2 = {syn_VolFlowRate_tf, syn_tempF_tf};
@@ -2623,27 +2541,18 @@ public class ApplicationGUI extends javax.swing.JFrame {
     private void setDefaultValues() {
         DecimalFormat df2 = new DecimalFormat("0.0000");
 
-        syn_AR_tf.setText(df2.format(DEFAULT_SYNGAS_AR));
-        syn_C6H6_tf.setText(df2.format(DEFAULT_SYNGAS_C6H6));
-        syn_CH4_tf.setText(df2.format(DEFAULT_SYNGAS_CH4));
-        syn_CO_tf.setText(df2.format(DEFAULT_SYNGAS_CO));
-        syn_CO2_tf.setText(df2.format(DEFAULT_SYNGAS_CO2));
-        syn_H2_tf.setText(df2.format(DEFAULT_SYNGAS_H2));
-        syn_H2O_tf.setText(df2.format(DEFAULT_SYNGAS_H2O));
-        syn_H2S_tf.setText(df2.format(DEFAULT_SYNGAS_H2S));
-        syn_HCL_tf.setText(df2.format(DEFAULT_SYNGAS_HCL));
-        syn_N2_tf.setText(df2.format(DEFAULT_SYNGAS_N2));
-        syn_NH3_tf.setText(df2.format(DEFAULT_SYNGAS_NH3));
-        syn_O2_tf.setText(df2.format(DEFAULT_SYNGAS_O2));
-        
+        for (JTextField textField : synGasSpeciesTextFieldsList) {
+            ((ThermalOxidizerInputTextField)textField).resetValue();
+        }
+
         //update total of syn gas species
         updateFields("synGas_species");
 
-        air_N2_tf.setText("0.78");
-        air_AR_tf.setText("0.01");
-        air_O2_tf.setText("0.21");
-        air_H2ObyMass_tf.setText("0");
-        air_H2ObyVolume_tf.setText("0");
+        air_N2_tf.resetValue();
+        air_AR_tf.resetValue();
+        air_O2_tf.resetValue();
+        air_H2ObyMass_tf.resetValue(false);
+        air_H2ObyVolume_tf.resetValue();
         air_totalVolumeFraction_tf.setText("1.0");
 
         //update total of air species
