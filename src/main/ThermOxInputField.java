@@ -6,18 +6,21 @@ import java.text.DecimalFormat;
 public class ThermOxInputField extends JTextField {
     static final DecimalFormat DECIMAL_FORMATTER_DEFAULT = new DecimalFormat("0.0000");
 
+    private String key;    // required
     private String labelName;   // optional
     private JLabel jLabel;  // optional
     private double defaultPresetValue;  // required
     private boolean isUserEditable = true;  // optional
 
     public static class Builder {
+        private String key;
         private String labelName;
         private JLabel jLabel;
         private double defaultPresetValue;
         private boolean isUserEditable = true;
 
-        public Builder(double defaultPresetValue) {
+        public Builder(String key, double defaultPresetValue) {
+            this.key = key;
             this.defaultPresetValue = defaultPresetValue;
         }
 
@@ -42,6 +45,7 @@ public class ThermOxInputField extends JTextField {
     }
 
     private ThermOxInputField(Builder builder) {
+        this.key = builder.key;
         this.labelName = builder.labelName;
         this.jLabel = builder.jLabel;
         this.defaultPresetValue = builder.defaultPresetValue;
@@ -64,6 +68,10 @@ public class ThermOxInputField extends JTextField {
 
     public double getDefaultPresetValue() {
         return this.defaultPresetValue;
+    }
+
+    public String getKey() {
+        return this.key;
     }
 
     public String getLabelName() {
