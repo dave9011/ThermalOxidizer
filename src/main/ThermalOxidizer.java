@@ -40,7 +40,6 @@ public class ThermalOxidizer extends SwingWorker<Integer, String> {
         this.noxProfilePanel = noxProfile_panel;
         this.outputDirectory = outputDirectory;
         this.dateTime = dateTime;
-        
     }
     
     //<editor-fold desc="Variables">
@@ -340,16 +339,13 @@ public class ThermalOxidizer extends SwingWorker<Integer, String> {
             }
             
             try {
-                
                 runCHEMKED("debug\\error" + currentRunNum);
-
             } catch( InterruptedException interrupted_ex) {
                 System.out.println("CHEMKED PROCESS WAS INTERRUPTED");
             } catch (IOException io_ex) {
                 System.out.println(io_ex.toString());
                 io_ex.printStackTrace(System.out);
-            } 
-            
+            }
 
             //Copy the last part of the SOLTMP (the resulting mass fractions) 
             //into a shorter file "Output_i", where currentRunNum is the current run
@@ -367,9 +363,7 @@ public class ThermalOxidizer extends SwingWorker<Integer, String> {
             convertMassFractionToMol(false);   
 
             if(reactorLocation > deltaIncrement){
-            
                 try {
-
                     scanFile = new Scanner(new FileReader("CHEMKED\\temp-SOLTMP.txt"));
 
                     formatFile = new Formatter(new File("CHEMKED\\SOLTMP.txt"));
@@ -400,7 +394,6 @@ public class ThermalOxidizer extends SwingWorker<Integer, String> {
 
                     scanFile.close();
                     formatFile.close();
-
                 } catch (Exception e) {
                     e.printStackTrace(System.out);
                 }
@@ -426,6 +419,7 @@ public class ThermalOxidizer extends SwingWorker<Integer, String> {
 
         }
 
+        // TODO: remove hard coded 40!!
         for (int outputNum = 1; outputNum <= 40; outputNum++) {
             grabFinalOutputs(outputNum);
         }
