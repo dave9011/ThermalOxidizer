@@ -41,7 +41,13 @@ public class ApplicationGUI extends javax.swing.JFrame {
                          DEFAULT_SYNGAS_NH3 = 0.0248,
                          DEFAULT_AIR_N2 = 0.78,
                          DEFAULT_AIR_O2 = 0.21,
-                         DEFAULT_AIR_AR = 0.01;
+                         DEFAULT_AIR_AR = 0.01,
+                         DEFAULT_FLUE_GAS_N2 = 0.5000,
+                         DEFAULT_FLUE_GAS_AR = 0,
+                         DEFAULT_FLUE_GAS_O2 = 0.1000,
+                         DEFAULT_FLUE_GAS_H2O = 0.2000,
+                         DEFAULT_FLUE_GAS_CO2 = 0.2000;
+
     private final double N_MW = 14.007;
     private final double O_MW = 15.999;
     private final double AR_MW = 39.948;
@@ -184,18 +190,13 @@ public class ApplicationGUI extends javax.swing.JFrame {
         flueGasPanel_subPanel2 = new javax.swing.JPanel();
         flueGas_total_tf = new javax.swing.JTextField();
         flueGas_total_label = new javax.swing.JLabel();
-        flueGas_CO2_label = new javax.swing.JLabel();
-        flueGas_CO2_tf = new javax.swing.JTextField();
-        flueGas_H2O_tf = new javax.swing.JTextField();
-        flueGas_H2O_label = new javax.swing.JLabel();
-        flueGas_O2_label = new javax.swing.JLabel();
-        flueGas_O2_tf = new javax.swing.JTextField();
         flueGas_species_label = new javax.swing.JLabel();
         flueGas_volumeFraction_label = new javax.swing.JLabel();
-        flueGas_N2_tf = new javax.swing.JTextField();
-        flueGas_N2_label = new javax.swing.JLabel();
-        flueGas_AR_label = new javax.swing.JLabel();
-        flueGas_AR_tf = new javax.swing.JTextField();
+        flueGas_N2_tf = new ThermOxInputField.Builder(DEFAULT_FLUE_GAS_N2).labelName("N2").jLabel(flueGas_N2_label = new javax.swing.JLabel()).build();
+        flueGas_AR_tf = new ThermOxInputField.Builder(DEFAULT_FLUE_GAS_AR).labelName("AR").jLabel(flueGas_AR_label = new javax.swing.JLabel()).build();
+        flueGas_O2_tf = new ThermOxInputField.Builder(DEFAULT_FLUE_GAS_O2).labelName("O2").jLabel(flueGas_O2_label = new javax.swing.JLabel()).build();
+        flueGas_H2O_tf = new ThermOxInputField.Builder(DEFAULT_FLUE_GAS_H2O).labelName("H2O").jLabel(flueGas_H2O_label = new javax.swing.JLabel()).build();
+        flueGas_CO2_tf = new ThermOxInputField.Builder(DEFAULT_FLUE_GAS_CO2).labelName("CO2").jLabel(flueGas_CO2_label = new javax.swing.JLabel()).build();
         ammonia_panel = new javax.swing.JPanel();
         ammonia_subPanel1 = new javax.swing.JPanel();
         ammonia_title_label = new javax.swing.JLabel();
@@ -1086,15 +1087,8 @@ public class ApplicationGUI extends javax.swing.JFrame {
         flueGas_volumeFraction_label.setText("Volume Fraction");
 
         flueGas_N2_tf.setColumns(7);
-        flueGas_N2_tf.setHorizontalAlignment(javax.swing.JTextField.TRAILING);
-        flueGas_N2_tf.setText("0.0");
         flueGas_N2_tf.setInputVerifier(new MyAbstractValidator(this, flueGas_N2_tf, ""));
         flueGas_N2_tf.setName("flueGas_species"); // NOI18N
-        flueGas_N2_tf.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                flueGas_N2_tfActionPerformed(evt);
-            }
-        });
 
         flueGas_N2_label.setBackground(new java.awt.Color(255, 153, 0));
         flueGas_N2_label.setText("N2");
@@ -2254,15 +2248,15 @@ public class ApplicationGUI extends javax.swing.JFrame {
     private javax.swing.JPanel flueGasPanel_subPanel1;
     private javax.swing.JPanel flueGasPanel_subPanel2;
     private javax.swing.JLabel flueGas_AR_label;
-    private javax.swing.JTextField flueGas_AR_tf;
+    private ThermOxInputField flueGas_AR_tf;
     private javax.swing.JLabel flueGas_CO2_label;
-    private javax.swing.JTextField flueGas_CO2_tf;
+    private ThermOxInputField flueGas_CO2_tf;
     private javax.swing.JLabel flueGas_H2O_label;
-    private javax.swing.JTextField flueGas_H2O_tf;
+    private ThermOxInputField flueGas_H2O_tf;
     private javax.swing.JLabel flueGas_N2_label;
-    private javax.swing.JTextField flueGas_N2_tf;
+    private ThermOxInputField flueGas_N2_tf;
     private javax.swing.JLabel flueGas_O2_label;
-    private javax.swing.JTextField flueGas_O2_tf;
+    private ThermOxInputField flueGas_O2_tf;
     private javax.swing.JTextField flueGas_massFlowRate_ring1_percentage_tf;
     private javax.swing.JTextField flueGas_massFlowRate_ring1_tf;
     private javax.swing.JTextField flueGas_massFlowRate_ring2_percentage_tf;
@@ -2467,7 +2461,7 @@ public class ApplicationGUI extends javax.swing.JFrame {
     }
 
     private void initFlueGasTextFieldsArrayList() {
-        JTextField[] fields = {flueGas_N2_tf, flueGas_AR_tf, flueGas_O2_tf, flueGas_H2O_tf, flueGas_CO2_tf};
+        ThermOxInputField[] fields = {flueGas_N2_tf, flueGas_AR_tf, flueGas_O2_tf, flueGas_H2O_tf, flueGas_CO2_tf};
         flueGasSpeciesTextFieldsList.addAll(Arrays.asList(fields));
 
         JTextField[] fields2 = {flueGas_massFlowRate_ring1_tf, flueGas_massFlowRate_ring2_tf, flueGas_tempF_tf};
@@ -2542,33 +2536,40 @@ public class ApplicationGUI extends javax.swing.JFrame {
         DecimalFormat df2 = new DecimalFormat("0.0000");
 
         for (JTextField textField : synGasSpeciesTextFieldsList) {
-            ((ThermOxInputField)textField).resetValue();
+            if (textField instanceof ThermOxInputField) {
+                ((ThermOxInputField)textField).resetValue();
+            } else {
+                textField.setText("0.0");
+            }
         }
 
         //update total of syn gas species
         updateFields("synGas_species");
 
-        air_N2_tf.resetValue();
-        air_AR_tf.resetValue();
-        air_O2_tf.resetValue();
+        for (JTextField textField : airSpeciesTextFieldsList) {
+            if (textField instanceof ThermOxInputField) {
+                ((ThermOxInputField)textField).resetValue();
+            } else {
+                textField.setText("0.0");
+            }
+        }
+
+        // DO NOT REMOVE THIS LINE: field 'air_H2ObyMass_tf' is not in airSpeciesTextFieldsList
         air_H2ObyMass_tf.resetValue(false);
-        air_H2ObyVolume_tf.resetValue();
         air_totalVolumeFraction_tf.setText("1.0");
 
         //update total of air species
         updateFields("air_species");
 
-        double defaultValueN2FlueGasVol = 0.5, defaultValueArFlueGasVol = 0.0,
-                defaultValueO2FlueGas = 0.1, defaultValueH2OFlueGas = 0.2,
-                defaultValueCO2FlueGas = 0.2;
+        for (JTextField textField : flueGasSpeciesTextFieldsList) {
+            if (textField instanceof ThermOxInputField) {
+                ((ThermOxInputField)textField).resetValue();
+            } else {
+                textField.setText("0.0");
+            }
+        }
 
-        flueGas_N2_tf.setText(df2.format(defaultValueN2FlueGasVol));
-        flueGas_AR_tf.setText(df2.format(defaultValueArFlueGasVol));
-        flueGas_O2_tf.setText(df2.format(defaultValueO2FlueGas));
-        flueGas_H2O_tf.setText(df2.format(defaultValueH2OFlueGas));
-        flueGas_CO2_tf.setText(df2.format(defaultValueCO2FlueGas));
-
-        //update total of flue gas 
+        //update total of flue gas
         updateFields("flueGas_species");
 
         double ammoniaInjH2OMass = 0.80, ammoniaInjNH3Mass = 0.20;
@@ -2862,7 +2863,7 @@ public class ApplicationGUI extends javax.swing.JFrame {
 
         return 0;
     }
-    
+
     private int sumAndUpdate (ArrayList<JTextField> textFieldList, JTextField totalFieldModified) {
         double sum = 0.0;
 
