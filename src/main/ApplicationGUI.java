@@ -1199,29 +1199,15 @@ public class ApplicationGUI extends javax.swing.JFrame {
         jLabel50.setText("Mass Fraction");
 
         ammoniaInject_H2O_tf.setColumns(7);
-        ammoniaInject_H2O_tf.setHorizontalAlignment(javax.swing.JTextField.TRAILING);
-        ammoniaInject_H2O_tf.setText("0.0");
         ammoniaInject_H2O_tf.setInputVerifier(new MyAbstractValidator(this, ammoniaInject_H2O_tf, ""));
         ammoniaInject_H2O_tf.setName("ammoniaInj_species"); // NOI18N
-        ammoniaInject_H2O_tf.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                ammoniaInject_H2O_tfActionPerformed(evt);
-            }
-        });
 
         ammoniaInject_NH3_label.setBackground(new java.awt.Color(255, 153, 0));
         ammoniaInject_NH3_label.setText("NH3");
 
         ammoniaInject_NH3_tf.setColumns(7);
-        ammoniaInject_NH3_tf.setHorizontalAlignment(javax.swing.JTextField.TRAILING);
-        ammoniaInject_NH3_tf.setText("0.0");
         ammoniaInject_NH3_tf.setInputVerifier(new MyAbstractValidator(this, ammoniaInject_NH3_tf, ""));
         ammoniaInject_NH3_tf.setName("ammoniaInj_species"); // NOI18N
-        ammoniaInject_NH3_tf.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                ammoniaInject_NH3_tfActionPerformed(evt);
-            }
-        });
 
         ammoniaInject_total_tf.setEditable(false);
         ammoniaInject_total_tf.setBackground(new java.awt.Color(230, 230, 230));
@@ -2199,9 +2185,9 @@ public class ApplicationGUI extends javax.swing.JFrame {
     private javax.swing.JTextField air_totalVolumeFraction_tf;
     private javax.swing.JTextField ambientTemp_tf;
     private javax.swing.JLabel ammoniaInject_H2O_label;
-    private javax.swing.JTextField ammoniaInject_H2O_tf;
+    private ThermOxInputField ammoniaInject_H2O_tf;
     private javax.swing.JLabel ammoniaInject_NH3_label;
-    private javax.swing.JTextField ammoniaInject_NH3_tf;
+    private ThermOxInputField ammoniaInject_NH3_tf;
     private javax.swing.JTextField ammoniaInject_massFlowRate_tf;
     private javax.swing.JLabel ammoniaInject_massFlow_label;
     private javax.swing.JLabel ammoniaInject_tempF_label;
@@ -2547,8 +2533,13 @@ public class ApplicationGUI extends javax.swing.JFrame {
         //update total of flue gas
         updateFields("flueGas_species");
 
-        ammoniaInject_H2O_tf.setText(df2.format(Constants.DEFAULT_AMMONIA_H2O_MASS));
-        ammoniaInject_NH3_tf.setText(df2.format(Constants.DEFAULT_AMMONIA_NH3_MASS));
+        for (JTextField textField : ammoniaSpeciesTextFieldsList) {
+            if (textField instanceof ThermOxInputField) {
+                ((ThermOxInputField)textField).resetValue();
+            } else {
+                textField.setText("0.0");
+            }
+        }
 
         //update total of ammonia injection
         updateFields("ammoniaInj_species");
@@ -2590,7 +2581,6 @@ public class ApplicationGUI extends javax.swing.JFrame {
     }
 
     private void runThermalOxidizer() {
-
         if (!VALID_RUN_FLAG) {
             JOptionPane.showMessageDialog(this, "A total exceeds 1.0, please correct before running model.",
                     "Total value error", JOptionPane.ERROR_MESSAGE);
