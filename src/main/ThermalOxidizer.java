@@ -636,7 +636,7 @@ public class ThermalOxidizer extends SwingWorker<Integer, String> {
         toRunsInt = (int) toRuns;
         toLengthInt = (int) toLength;
         //Obtain all pertinent massflow rates
-        syngasMassFlowRate = Double.parseDouble((String) textFieldHash.get("syngasMassFlow"));
+        syngasMassFlowRate = Double.parseDouble((String) textFieldHash.get("synGasMassFlow"));
         airMassFlowRateRing1 = Double.parseDouble((String) textFieldHash.get("massAirRing1"));
         airMassFlowRateRing2 = Double.parseDouble((String) textFieldHash.get("massAirRing2"));
         flueGasMassFlowRateRing1 = Double.parseDouble((String) textFieldHash.get("massAirFlue1"));

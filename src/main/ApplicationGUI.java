@@ -2454,6 +2454,7 @@ public class ApplicationGUI extends javax.swing.JFrame {
             }
         }
 
+        // DO NOT REMOVE THIS LINE, THIS IS NOT IN THE AIR SPECIES ARRAY
         textFieldHash.put("H2OairByMass", air_H2ObyMass_tf.getText());
 
         textFieldHash.put("TotalMassAirFlow", air_massFlowRate_total_tf.getText());
@@ -2464,9 +2465,9 @@ public class ApplicationGUI extends javax.swing.JFrame {
         textFieldHash.put("ammoniaInjectionSiteTF", ammoniaInjectionSiteTF.getText());
 
         textFieldHash.put("flueTempF", flueGas_tempF_tf.getText());
-        textFieldHash.put("jTextField16", air_totalVolumeFraction_tf.getText());
-        textFieldHash.put("jTextField43", flueGas_total_tf.getText());
-        textFieldHash.put("jTextField7", ammoniaInject_total_tf.getText());
+        textFieldHash.put("airTotalVolumeFraction", air_totalVolumeFraction_tf.getText());
+        textFieldHash.put("FlueGasTotal", flueGas_total_tf.getText());
+        textFieldHash.put("ammoniaInjectTotal", ammoniaInject_total_tf.getText());
         textFieldHash.put("massAirFlue1", flueGas_massFlowRate_ring1_tf.getText());
         textFieldHash.put("massAirFlue2", flueGas_massFlowRate_ring2_tf.getText());
         textFieldHash.put("massAirRing1", air_massFlowRate_ring1_tf.getText());
@@ -2475,7 +2476,7 @@ public class ApplicationGUI extends javax.swing.JFrame {
         textFieldHash.put("ring2distanceTF", ring2distanceTF.getText());
         textFieldHash.put("synTempF", syn_tempF_tf.getText());
         textFieldHash.put("synTotalTF", syn_totalFraction_tf.getText());
-        textFieldHash.put("syngasMassFlow", syn_VolFlowRate_tf.getText());
+        textFieldHash.put("synGasMassFlow", syn_VolFlowRate_tf.getText());
         textFieldHash.put("tempLossPerFoot", tempLossPerFoot.getText());
         textFieldHash.put("thermOxDiameter", thermOxDiameter.getText());
         textFieldHash.put("thermOxLength", thermOxLength.getText());
