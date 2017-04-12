@@ -32,5 +32,14 @@ public class Constants {
     static final double DEFAULT_AMMONIA_H2O_MASS = 0.80;
     static final double DEFAULT_AMMONIA_NH3_MASS = 0.20;
 
+    static final double DEFAULT_THERM_OXIDIZER_DIAMETER = 4.9;
+    static final double DEFAULT_THERM_OXIDIZER_LENGTH = 40;
+    static final double DEFAULT_THERM_OXIDIZER_LENGTH_INC = 1;
+    static final double DEFAULT_THERM_OXIDIZER_RING_1_DISTANCE = 3;
+    static final double DEFAULT_THERM_OXIDIZER_RING_2_DISTANCE = 5;
+    static final double DEFAULT_THERM_OXIDIZER_AMMONIA_INJ_DISTANCE = 35;
+    static final double DEFAULT_THERM_OXIDIZER_HEAT_LOSS_COEFFICIENT = 0.37;
+    static final double DEFAULT_THERM_OXIDIZER_AMBIENT_TEMP_FAHRENHEIT = 68;
+
     static final String TEMP_FARENHEIT_LABEL = "Temperature (\u00b0F)";
 }
