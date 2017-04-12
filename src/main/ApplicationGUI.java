@@ -192,18 +192,18 @@ public class ApplicationGUI extends javax.swing.JFrame {
         jProgressBar1 = new javax.swing.JProgressBar();
         clockLabel1 = new main.ClockLabel();
         thermalOxidizerDesign_panel = new javax.swing.JPanel();
-        jLabel1 = new javax.swing.JLabel();
-        jLabel5 = new javax.swing.JLabel();
-        jLabel14 = new javax.swing.JLabel();
-        jLabel39 = new javax.swing.JLabel();
-        jLabel40 = new javax.swing.JLabel();
+        thermal_oxidizer_diameter_label = new javax.swing.JLabel();
+        thermal_oxidizer_length_label = new javax.swing.JLabel();
+        theraml_oxidizer_length_inc_label = new javax.swing.JLabel();
+        thermal_oxidizer_ring_1_dist_label = new javax.swing.JLabel();
+        thermal_oxidizer_ring_2_dist_label = new javax.swing.JLabel();
+        thermal_oxidizer_ammonia_inj_dist_label = new javax.swing.JLabel();
         thermOxDiameter = new javax.swing.JTextField();
         thermOxLength = new javax.swing.JTextField();
         thermOxLengthInc = new javax.swing.JTextField();
         ring1distanceTF = new javax.swing.JTextField();
         ring2distanceTF = new javax.swing.JTextField();
         jLabel53 = new javax.swing.JLabel();
-        jLabel54 = new javax.swing.JLabel();
         ammoniaInjectionSiteTF = new javax.swing.JTextField();
         jLabel74 = new javax.swing.JLabel();
         tempLossPerFoot = new javax.swing.JTextField();
@@ -1358,20 +1358,20 @@ public class ApplicationGUI extends javax.swing.JFrame {
         thermalOxidizerDesign_panel.setBackground(new java.awt.Color(205, 198, 144));
         thermalOxidizerDesign_panel.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(51, 51, 51)));
 
-        jLabel1.setBackground(new java.awt.Color(255, 153, 0));
-        jLabel1.setText("Diameter");
+        thermal_oxidizer_diameter_label.setBackground(new java.awt.Color(255, 153, 0));
+        thermal_oxidizer_diameter_label.setText("Diameter");
 
-        jLabel5.setBackground(new java.awt.Color(255, 153, 0));
-        jLabel5.setText("Length");
+        thermal_oxidizer_length_label.setBackground(new java.awt.Color(255, 153, 0));
+        thermal_oxidizer_length_label.setText("Length");
 
-        jLabel14.setBackground(new java.awt.Color(255, 153, 0));
-        jLabel14.setText("Lenth Increment");
+        theraml_oxidizer_length_inc_label.setBackground(new java.awt.Color(255, 153, 0));
+        theraml_oxidizer_length_inc_label.setText("Lenth Increment");
 
-        jLabel39.setBackground(new java.awt.Color(255, 153, 0));
-        jLabel39.setText("Ring 1 Distance");
+        thermal_oxidizer_ring_1_dist_label.setBackground(new java.awt.Color(255, 153, 0));
+        thermal_oxidizer_ring_1_dist_label.setText("Ring 1 Distance");
 
-        jLabel40.setBackground(new java.awt.Color(255, 153, 0));
-        jLabel40.setText("Ring 2 Distance");
+        thermal_oxidizer_ring_2_dist_label.setBackground(new java.awt.Color(255, 153, 0));
+        thermal_oxidizer_ring_2_dist_label.setText("Ring 2 Distance");
 
         thermOxDiameter.setColumns(5);
         thermOxDiameter.setHorizontalAlignment(javax.swing.JTextField.TRAILING);
@@ -1418,8 +1418,8 @@ public class ApplicationGUI extends javax.swing.JFrame {
         jLabel53.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel53.setText("Thermal Oxidizer Design");
 
-        jLabel54.setBackground(new java.awt.Color(255, 153, 0));
-        jLabel54.setText("NH3(aq) distance");
+        thermal_oxidizer_ammonia_inj_dist_label.setBackground(new java.awt.Color(255, 153, 0));
+        thermal_oxidizer_ammonia_inj_dist_label.setText("NH3(aq) distance");
 
         ammoniaInjectionSiteTF.setColumns(5);
         ammoniaInjectionSiteTF.setHorizontalAlignment(javax.swing.JTextField.TRAILING);
@@ -1477,12 +1477,12 @@ public class ApplicationGUI extends javax.swing.JFrame {
                                     .addGroup(thermalOxidizerDesign_panelLayout.createSequentialGroup()
                                         .addGap(14, 14, 14)
                                         .addGroup(thermalOxidizerDesign_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                            .addComponent(jLabel5)
-                                            .addComponent(jLabel1)
-                                            .addComponent(jLabel14)
-                                            .addComponent(jLabel39)
-                                            .addComponent(jLabel40)
-                                            .addComponent(jLabel54)))
+                                            .addComponent(thermal_oxidizer_length_label)
+                                            .addComponent(thermal_oxidizer_diameter_label)
+                                            .addComponent(theraml_oxidizer_length_inc_label)
+                                            .addComponent(thermal_oxidizer_ring_1_dist_label)
+                                            .addComponent(thermal_oxidizer_ring_2_dist_label)
+                                            .addComponent(thermal_oxidizer_ammonia_inj_dist_label)))
                                     .addComponent(jLabel75, javax.swing.GroupLayout.Alignment.TRAILING))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addGroup(thermalOxidizerDesign_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -1520,33 +1520,33 @@ public class ApplicationGUI extends javax.swing.JFrame {
                 .addComponent(jLabel53)
                 .addGap(18, 18, 18)
                 .addGroup(thermalOxidizerDesign_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel1)
+                    .addComponent(thermal_oxidizer_diameter_label)
                     .addComponent(thermOxDiameter, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel34))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(thermalOxidizerDesign_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(thermOxLength, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel5)
+                    .addComponent(thermal_oxidizer_length_label)
                     .addComponent(jLabel42))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(thermalOxidizerDesign_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel14)
+                    .addComponent(theraml_oxidizer_length_inc_label)
                     .addComponent(thermOxLengthInc, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel48))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(thermalOxidizerDesign_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(ring1distanceTF, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel39)
+                    .addComponent(thermal_oxidizer_ring_1_dist_label)
                     .addComponent(jLabel72))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(thermalOxidizerDesign_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(ring2distanceTF, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel40)
+                    .addComponent(thermal_oxidizer_ring_2_dist_label)
                     .addComponent(jLabel76))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(thermalOxidizerDesign_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(ammoniaInjectionSiteTF, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel54)
+                    .addComponent(thermal_oxidizer_ammonia_inj_dist_label)
                     .addComponent(jLabel77))
                 .addGap(18, 18, 18)
                 .addComponent(jLabel78)
@@ -2161,25 +2161,25 @@ public class ApplicationGUI extends javax.swing.JFrame {
     private javax.swing.JLabel flueGas_total_label;
     private javax.swing.JTextField flueGas_total_tf;
     private javax.swing.JLabel flueGas_volumeFraction_label;
-    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel thermal_oxidizer_diameter_label;
     private javax.swing.JLabel air_mfr_pph_unit_label;
     private javax.swing.JLabel air_mfr_percentage_label;
-    private javax.swing.JLabel jLabel14;
+    private javax.swing.JLabel theraml_oxidizer_length_inc_label;
     private javax.swing.JLabel jLabel15;
     private javax.swing.JLabel jLabel16;
     private javax.swing.JLabel jLabel17;
     private javax.swing.JLabel jLabel34;
-    private javax.swing.JLabel jLabel39;
+    private javax.swing.JLabel thermal_oxidizer_ring_1_dist_label;
     private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel40;
+    private javax.swing.JLabel thermal_oxidizer_ring_2_dist_label;
     private javax.swing.JLabel jLabel42;
     private javax.swing.JLabel jLabel48;
     private javax.swing.JLabel jLabel49;
-    private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel thermal_oxidizer_length_label;
     private javax.swing.JLabel jLabel50;
     private javax.swing.JLabel jLabel52;
     private javax.swing.JLabel jLabel53;
-    private javax.swing.JLabel jLabel54;
+    private javax.swing.JLabel thermal_oxidizer_ammonia_inj_dist_label;
     private javax.swing.JLabel jLabel58;
     private javax.swing.JLabel jLabel68;
     private javax.swing.JLabel jLabel69;
