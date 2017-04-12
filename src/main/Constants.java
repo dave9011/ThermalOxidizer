@@ -70,4 +70,13 @@ public class Constants {
     static final String SYN_CO_HASH_KEY = "COsyn";
     static final String SYN_CO2_HASH_KEY = "CO2syn";
     static final String SYN_HCL_HASH_KEY = "HCLsyn";
+
+    static final String FLUE_GAS_N2_HASH_KEY = "flueGasN2";
+    static final String FLUE_GAS_AR_HASH_KEY = "flueGasAr";
+    static final String FLUE_GAS_O2_HASH_KEY = "flueGasO2";
+    static final String FLUE_GAS_H2O_HASH_KEY = "flueGasH2O";
+    static final String FLUE_GAS_CO2_HASH_KEY = "flueGasCO2";
+
+    static final String AMMONIA_H2O_HASH_KEY = "ammoniaInjectH2O";
+    static final String AMMONIA_NH3_HASH_KEY = "ammoniaInjectNH3";
 }

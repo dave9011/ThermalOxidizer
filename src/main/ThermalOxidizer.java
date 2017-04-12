@@ -772,11 +772,11 @@ public class ThermalOxidizer extends SwingWorker<Integer, String> {
         // This code multiplies the mol fraction of the composition of flue gas
         // by its MW. Then sums those multiples into a variable. Then each individual
         // mol fraction times its MW is divided by its sum (i.e. Xi =Yi*MW/sum(Yi*MW))
-        molN2InFlueTimesMW = Double.parseDouble((String) textFieldHash.get("flueGasN2")) * 2 * N_MW;
-        molArInFlueTimesMW = Double.parseDouble((String) textFieldHash.get("flueGasAr")) * AR_MW;
-        molO2InFlueTimesMW = Double.parseDouble((String) textFieldHash.get("flueGasO2")) * 2 * O_MW;
-        molH2OInFlueTimesMW = Double.parseDouble((String) textFieldHash.get("flueGasH2O")) * (2 * H_MW + O_MW);
-        molCO2InFlueTimesMW = Double.parseDouble((String) textFieldHash.get("flueGasCO2")) * (C_MW + 2 * O_MW);
+        molN2InFlueTimesMW = Double.parseDouble((String) textFieldHash.get(Constants.FLUE_GAS_N2_HASH_KEY)) * 2 * N_MW;
+        molArInFlueTimesMW = Double.parseDouble((String) textFieldHash.get(Constants.FLUE_GAS_AR_HASH_KEY)) * AR_MW;
+        molO2InFlueTimesMW = Double.parseDouble((String) textFieldHash.get(Constants.FLUE_GAS_O2_HASH_KEY)) * 2 * O_MW;
+        molH2OInFlueTimesMW = Double.parseDouble((String) textFieldHash.get(Constants.FLUE_GAS_H2O_HASH_KEY)) * (2 * H_MW + O_MW);
+        molCO2InFlueTimesMW = Double.parseDouble((String) textFieldHash.get(Constants.FLUE_GAS_CO2_HASH_KEY)) * (C_MW + 2 * O_MW);
         sumMolsTimesMWInFlue = molN2InFlueTimesMW + molArInFlueTimesMW
                 + molO2InFlueTimesMW + molO2InFlueTimesMW + molH2OInFlueTimesMW
                 + molCO2InFlueTimesMW;
@@ -840,8 +840,8 @@ public class ThermalOxidizer extends SwingWorker<Integer, String> {
             deltaHFlueGasRing2 = 0;
         }
 
-        double ammoniaInjH2OMass = Double.parseDouble((String) textFieldHash.get("ammoniaInjectH2O"));
-        double ammoniaInjNH3Mass = Double.parseDouble((String) textFieldHash.get("ammoniaInjectNH3"));
+        double ammoniaInjH2OMass = Double.parseDouble((String) textFieldHash.get(Constants.AMMONIA_H2O_HASH_KEY));
+        double ammoniaInjNH3Mass = Double.parseDouble((String) textFieldHash.get(Constants.AMMONIA_NH3_HASH_KEY));
 
         double tempAmmoniaF = Double.parseDouble((String) textFieldHash.get("ammoniaInjectTempF"));
         double tempAmmoniaK = (tempAmmoniaF + 459.67) * 5 / 9.;
@@ -1673,8 +1673,8 @@ public class ThermalOxidizer extends SwingWorker<Integer, String> {
         double arraySum = 0.0;
         double[] massValuesArray = new double[numSpecies];
 
-        double ammoniaInjH2OMass = Double.parseDouble((String) textFieldHash.get("ammoniaInjectH2O"));
-        double ammoniaInjNH3Mass = Double.parseDouble((String) textFieldHash.get("ammoniaInjectNH3"));
+        double ammoniaInjH2OMass = Double.parseDouble((String) textFieldHash.get(Constants.AMMONIA_H2O_HASH_KEY));
+        double ammoniaInjNH3Mass = Double.parseDouble((String) textFieldHash.get(Constants.AMMONIA_NH3_HASH_KEY));
 
         for (speciesIndex = 0; speciesIndex < numSpecies; speciesIndex++) {
 
