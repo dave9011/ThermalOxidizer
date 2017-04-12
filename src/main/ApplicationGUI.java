@@ -2371,7 +2371,7 @@ public class ApplicationGUI extends javax.swing.JFrame {
         textFieldHash = new HashMap();
 
         ArrayList<JTextField>[] arrayLists = new ArrayList[]{synGasSpeciesTextFieldsList, airSpeciesTextFieldsList, flueGasSpeciesTextFieldsList, ammoniaSpeciesTextFieldsList,
-                synGasVolFlowRateTextFieldsArrayList};
+                synGasVolFlowRateTextFieldsArrayList, airMassFlowRateTextFieldsArrayList};
 
         for (ArrayList<JTextField> arrayList : arrayLists) {
             for (JTextField textField : arrayList) {
@@ -2415,6 +2415,10 @@ public class ApplicationGUI extends javax.swing.JFrame {
 
         for (JTextField textField : synGasSpeciesTextFieldsList) {
             ((ThermOxInputField)textField).resetValue();
+        }
+
+        for (JTextField textField : synGasVolFlowRateTextFieldsArrayList) {
+            ((ThermOxInputField)textField).resetValue(false);
         }
 
         //update total of syn gas species
