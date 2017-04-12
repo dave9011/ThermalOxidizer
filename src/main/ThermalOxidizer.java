@@ -615,16 +615,16 @@ public class ThermalOxidizer extends SwingWorker<Integer, String> {
         tempSyngasF = Double.parseDouble((String) textFieldHash.get("synTempF"));
         tempSyngasK = (tempSyngasF + 459.67) * 5 / 9.;
         //Get the length and diameter of the thermal oxidizer
-        toLength = Double.parseDouble((String) textFieldHash.get("thermOxLength"));
-        toDiameter = Double.parseDouble((String) textFieldHash.get("thermOxDiameter"));
+        toLength = Double.parseDouble((String) textFieldHash.get(Constants.TO_DESIGN_LENGTH_HASH_KEY));
+        toDiameter = Double.parseDouble((String) textFieldHash.get(Constants.TO_DESIGN_DIAMETER_HASH_KEY));
 
         //get ring1, ring2, and ammonia injection site locations
-        ring1dist = Double.parseDouble((String) textFieldHash.get("ring1distanceTF"));
-        ring2dist = Double.parseDouble((String) textFieldHash.get("ring2distanceTF"));
-        nh3InjSite = Double.parseDouble((String) textFieldHash.get("ammoniaInjectionSiteTF"));
+        ring1dist = Double.parseDouble((String) textFieldHash.get(Constants.TO_DESIGN_RING_1_DIST_HASH_KEY));
+        ring2dist = Double.parseDouble((String) textFieldHash.get(Constants.TO_DESIGN_RING_2_DIST_HASH_KEY));
+        nh3InjSite = Double.parseDouble((String) textFieldHash.get(Constants.TO_DESIGN_AMMONIA_INJ_DIST_HASH_KEY));
 
         //Get the length increments to be used
-        deltaIncrement = Double.parseDouble((String) textFieldHash.get("thermOxLengthInc"));
+        deltaIncrement = Double.parseDouble((String) textFieldHash.get(Constants.TO_DESIGN_LENGTH_INC_HASH_KEY));
 
         //Set the current reactor laction to increment so that we dont start at 0
         reactorLocation = deltaIncrement;
@@ -1850,10 +1850,10 @@ public class ThermalOxidizer extends SwingWorker<Integer, String> {
 
         }
 
-        double U = Double.parseDouble((String) textFieldHash.get("tempLossPerFoot"));
+        double U = Double.parseDouble((String) textFieldHash.get(Constants.TO_DESIGN_HEAT_LOSS_COEFFICIENT_HASH_KEY));
         double currentTempF;
         
-        double ambientTemp = Double.parseDouble((String) textFieldHash.get("ambientTemp"));
+        double ambientTemp = Double.parseDouble((String) textFieldHash.get(Constants.TO_DESIGN_AMBIENT_TEMP_HASH_KEY));
 
         outerArea = Math.PI * (toDiameter + 2) * deltaIncrement;// A = pi*D*L (L is equal to increment length)
         currentTempF = newTempK * 9 / 5.0 - 459.67;
@@ -3375,10 +3375,10 @@ public class ThermalOxidizer extends SwingWorker<Integer, String> {
         
         tempGuessOldF = tempGuessOldK * 9/5. - 459.67;
         
-        double heatLossCoefficient = Double.parseDouble((String) textFieldHash.get("tempLossPerFoot"));
+        double heatLossCoefficient = Double.parseDouble((String) textFieldHash.get(Constants.TO_DESIGN_HEAT_LOSS_COEFFICIENT_HASH_KEY));
         double totalHeat;
         
-        double ambientTemp = Double.parseDouble((String) textFieldHash.get("ambientTemp"));
+        double ambientTemp = Double.parseDouble((String) textFieldHash.get(Constants.TO_DESIGN_AMBIENT_TEMP_HASH_KEY));
         
         totalHeat = heatLossCoefficient * outerArea * (tempGuessOldF - ambientTemp) + ammoniaInjMassFlow * 1050; //Btu/hr
         tempGuessNewF = tempGuessOldF - (totalHeat / sumNCp);

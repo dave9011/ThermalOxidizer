@@ -79,4 +79,13 @@ public class Constants {
 
     static final String AMMONIA_H2O_HASH_KEY = "ammoniaInjectH2O";
     static final String AMMONIA_NH3_HASH_KEY = "ammoniaInjectNH3";
+
+    static final String TO_DESIGN_DIAMETER_HASH_KEY = "thermOxDiameter";
+    static final String TO_DESIGN_LENGTH_HASH_KEY = "thermOxLength";
+    static final String TO_DESIGN_LENGTH_INC_HASH_KEY = "thermOxLengthInc";
+    static final String TO_DESIGN_RING_1_DIST_HASH_KEY = "ring1distanceTF";
+    static final String TO_DESIGN_RING_2_DIST_HASH_KEY = "ring2distanceTF";
+    static final String TO_DESIGN_AMMONIA_INJ_DIST_HASH_KEY = "ammoniaInjectionSiteTF";
+    static final String TO_DESIGN_HEAT_LOSS_COEFFICIENT_HASH_KEY = "heatLossCoefficient";
+    static final String TO_DESIGN_AMBIENT_TEMP_HASH_KEY = "ambientTemp";
 }
