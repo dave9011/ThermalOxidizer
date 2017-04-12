@@ -2385,6 +2385,7 @@ public class ApplicationGUI extends javax.swing.JFrame {
 
         // DO NOT REMOVE THIS LINE, THIS IS NOT IN THE AIR SPECIES ARRAY
         textFieldHash.put("H2OairByMass", air_H2ObyMass_tf.getText());
+        textFieldHash.put("TotalMassAirFlow", air_massFlowRate_total_tf.getText());
 
         textFieldHash.put("TotalMassFlueGas", flueGas_massFlowRate_total_tf.getText());
         textFieldHash.put("ammoniaInjectMassFlow", ammoniaInject_massFlowRate_tf.getText());
