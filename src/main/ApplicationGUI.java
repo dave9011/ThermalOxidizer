@@ -367,7 +367,7 @@ public class ApplicationGUI extends javax.swing.JFrame {
 
         synVolumeFraction_label.setText("Volume Fraction");
 
-        airSpecies_label.setText("Species");
+        airSpecies_label.setText(Constants.SPECIES_LABEL);
 
         javax.swing.GroupLayout synGasPanel_subPanel1Layout = new javax.swing.GroupLayout(synGasPanel_subPanel1);
         synGasPanel_subPanel1.setLayout(synGasPanel_subPanel1Layout);
@@ -478,7 +478,7 @@ public class ApplicationGUI extends javax.swing.JFrame {
         syn_VolFlowRate_tf.setColumns(6);
         syn_tempF_tf.setColumns(6);
 
-        synVolFlowRate_units_label.setText("acfm");
+        synVolFlowRate_units_label.setText(Constants.LBS_PER_HR_LABEL);
 
         javax.swing.GroupLayout synGasPanel_subPanel2Layout = new javax.swing.GroupLayout(synGasPanel_subPanel2);
         synGasPanel_subPanel2.setLayout(synGasPanel_subPanel2Layout);
@@ -565,7 +565,7 @@ public class ApplicationGUI extends javax.swing.JFrame {
 
         air_massFlowRate_total_tf.setColumns(5);
 
-        air_mfr_pph_unit_label.setText("(lbs/hr)");
+        air_mfr_pph_unit_label.setText(Constants.LBS_PER_HR_LABEL);
         air_mfr_percentage_label.setText("%");
 
         air_massFlowRate_ring1_percentage_tf.setColumns(5);
@@ -645,7 +645,7 @@ public class ApplicationGUI extends javax.swing.JFrame {
 
         air_VolumeFraction_label.setText("Volume Fraction");
 
-        air_species_label.setText("Species");
+        air_species_label.setText(Constants.SPECIES_LABEL);
 
         air_N2_tf.setColumns(7);
         air_N2_tf.setHorizontalAlignment(javax.swing.JTextField.TRAILING);
@@ -781,7 +781,7 @@ public class ApplicationGUI extends javax.swing.JFrame {
         jLabel68.setText("Mass Flow Rate ----------------------");
 
         jLabel16.setBackground(new java.awt.Color(255, 153, 0));
-        jLabel16.setText("(lbs/hr)");
+        jLabel16.setText(Constants.LBS_PER_HR_LABEL);
 
         flueGas_massFlowRate_ring1_tf.setColumns(5);
         flueGas_massFlowRate_ring1_tf.setHorizontalAlignment(javax.swing.JTextField.TRAILING);
@@ -977,7 +977,7 @@ public class ApplicationGUI extends javax.swing.JFrame {
         });
 
         flueGas_species_label.setBackground(new java.awt.Color(255, 153, 0));
-        flueGas_species_label.setText("Species");
+        flueGas_species_label.setText(Constants.SPECIES_LABEL);
 
         flueGas_volumeFraction_label.setBackground(new java.awt.Color(255, 153, 0));
         flueGas_volumeFraction_label.setText("Volume Fraction");
@@ -1111,7 +1111,7 @@ public class ApplicationGUI extends javax.swing.JFrame {
         jPanel12.setOpaque(false);
 
         jLabel49.setBackground(new java.awt.Color(255, 153, 0));
-        jLabel49.setText("Species");
+        jLabel49.setText(Constants.SPECIES_LABEL);
 
         ammoniaInject_H2O_label.setBackground(new java.awt.Color(255, 153, 0));
         ammoniaInject_H2O_label.setText("H2O");
@@ -1187,7 +1187,7 @@ public class ApplicationGUI extends javax.swing.JFrame {
         jLabel52.setText("Mass Flow Rate ----------------------");
 
         jLabel4.setBackground(new java.awt.Color(255, 153, 0));
-        jLabel4.setText("(lbs/hr)");
+        jLabel4.setText(Constants.LBS_PER_HR_LABEL);
 
         ammoniaInject_massFlow_label.setBackground(new java.awt.Color(255, 153, 0));
         ammoniaInject_massFlow_label.setText("Total");
@@ -1546,7 +1546,7 @@ public class ApplicationGUI extends javax.swing.JFrame {
                 {null, null}
             },
             new String [] {
-                "Species", "Concentration (ppm)"
+                Constants.SPECIES_LABEL, "Concentration (ppm)"
             }
         ) {
             Class[] types = new Class [] {
@@ -1666,7 +1666,7 @@ public class ApplicationGUI extends javax.swing.JFrame {
         outlet_concentration_table.getColumnModel().getColumn(0).setCellRenderer(render);
         outlet_concentration_table.getColumnModel().getColumn(1).setCellRenderer(render);
 
-        outlet_concentration_table.setValueAt("Species", 0, 0);
+        outlet_concentration_table.setValueAt(Constants.SPECIES_LABEL, 0, 0);
         outlet_concentration_table.setValueAt("Outlet Concentration", 0, 1);
 
         jTabbedPane.addTab("Output", tab2_panel);

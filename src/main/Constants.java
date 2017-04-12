@@ -41,5 +41,7 @@ public class Constants {
     static final double DEFAULT_THERM_OXIDIZER_HEAT_LOSS_COEFFICIENT = 0.37;
     static final double DEFAULT_THERM_OXIDIZER_AMBIENT_TEMP_FAHRENHEIT = 68;
 
+    static final String SPECIES_LABEL = "Species";
     static final String TEMP_FARENHEIT_LABEL = "Temperature (\u00b0F)";
+    static final String LBS_PER_HR_LABEL = "(lbs/hr)";
 }
