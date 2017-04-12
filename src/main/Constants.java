@@ -14,11 +14,14 @@ public class Constants {
     static final double DEFAULT_SYN_GAS_C6H6 = 0.0129;
     static final double DEFAULT_SYN_GAS_NH3 = 0.0248;
     static final double DEFAULT_SYN_GAS_VOL_FLOW_RATE = 2040;
-    static final double DEFAULT_SYN_GAS_TEMP = 1205;
+    static final double DEFAULT_SYN_GAS_TEMP_FAHRENHEIT = 1205;
 
     static final double DEFAULT_AIR_N2 = 0.78;
     static final double DEFAULT_AIR_O2 = 0.21;
     static final double DEFAULT_AIR_AR = 0.01;
+    static final double DEFAULT_AIR_MFR_RING_1 = 3900;
+    static final double DEFAULT_AIR_MFR_RING_2 = 4000;
+    static final double DEFAULT_AIR_TEMP_FAHRENHEIT = 77;
 
     static final double DEFAULT_FLUE_GAS_N2 = 0.5000;
     static final double DEFAULT_FLUE_GAS_AR = 0;

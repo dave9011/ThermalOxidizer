@@ -116,25 +116,21 @@ public class ApplicationGUI extends javax.swing.JFrame {
         synGasPanel_subPanel2 = new javax.swing.JPanel();
         synVolFlowRate_label = new javax.swing.JLabel();
         syn_VolFlowRate_tf = new ThermOxInputField.Builder("synGasMassFlow", Constants.DEFAULT_SYN_GAS_VOL_FLOW_RATE).labelName("Vol Flow Rate").jLabel(synVolFlowRate_label = new javax.swing.JLabel()).build();
-        syn_tempF_tf = new ThermOxInputField.Builder("synTempF", Constants.DEFAULT_SYN_GAS_TEMP).labelName(Constants.TEMP_FARENHEIT_LABEL).jLabel(synTemp_label = new javax.swing.JLabel()).build();
+        syn_tempF_tf = new ThermOxInputField.Builder("synTempF", Constants.DEFAULT_SYN_GAS_TEMP_FAHRENHEIT).labelName(Constants.TEMP_FARENHEIT_LABEL).jLabel(synTemp_label = new javax.swing.JLabel()).build();
         synVolFlowRate_units_label = new javax.swing.JLabel();
         air_panel = new javax.swing.JPanel();
         air_title_label = new javax.swing.JLabel();
         airPanel_subPanel1 = new javax.swing.JPanel();
         jLabel58 = new javax.swing.JLabel();
-        air_massFlowRate_ring1_label = new javax.swing.JLabel();
-        air_massFlowRate_ring2_label = new javax.swing.JLabel();
-        air_massFlowRateTotal_label = new javax.swing.JLabel();
-        air_tempF_label = new javax.swing.JLabel();
-        air_tempF_tf = new javax.swing.JTextField();
-        air_massFlowRate_total_tf = new javax.swing.JTextField();
-        air_massFlowRate_ring2_tf = new javax.swing.JTextField();
-        air_massFlowRate_ring1_tf = new javax.swing.JTextField();
-        jLabel11 = new javax.swing.JLabel();
-        jLabel12 = new javax.swing.JLabel();
-        air_massFlowRate_ring1_percentage_tf = new javax.swing.JTextField();
-        air_massFlowRate_ring2_percentage_tf = new javax.swing.JTextField();
-        air_massFlowRate_total_percentage_tf = new javax.swing.JTextField();
+        air_massFlowRate_ring1_tf = new ThermOxInputField.Builder("massAirRing1", Constants.DEFAULT_AIR_MFR_RING_1).labelName("Ring 1").jLabel(air_massFlowRate_ring1_label = new javax.swing.JLabel()).build();
+        air_massFlowRate_ring2_tf = new ThermOxInputField.Builder("massAirRing2", Constants.DEFAULT_AIR_MFR_RING_2).labelName("Ring 2").jLabel(air_massFlowRate_ring2_label = new javax.swing.JLabel()).build();
+        air_massFlowRate_total_tf = new ThermOxInputField.Builder("TotalMassAirFlow", 0).labelName("Total").jLabel(air_massFlowRateTotal_label = new javax.swing.JLabel()).userEditable(false).build();
+        air_tempF_tf = new ThermOxInputField.Builder("airTempF", Constants.DEFAULT_AIR_TEMP_FAHRENHEIT).labelName(Constants.TEMP_FARENHEIT_LABEL).jLabel(air_tempF_label = new javax.swing.JLabel()).build();
+        air_mfr_pph_unit_label = new javax.swing.JLabel();
+        air_mfr_percentage_label = new javax.swing.JLabel();
+        air_massFlowRate_ring1_percentage_tf = new ThermOxInputField.Builder("massAirRing1Percentage", 0).userEditable(false).build();
+        air_massFlowRate_ring2_percentage_tf = new ThermOxInputField.Builder("massAirRing2Percentage", 0).userEditable(false).build();
+        air_massFlowRate_total_percentage_tf = new ThermOxInputField.Builder("massAirTotalPercentage", 0).userEditable(false).build();
         air_VolumeFraction_label = new javax.swing.JLabel();
         air_species_label = new javax.swing.JLabel();
         air_N2_tf = new ThermOxInputField.Builder("N2air", Constants.DEFAULT_AIR_N2).labelName("N2").jLabel(air_N2_label = new javax.swing.JLabel()).userEditable(false).build();
@@ -565,73 +561,24 @@ public class ApplicationGUI extends javax.swing.JFrame {
 
         jLabel58.setText("Mass Flow Rate -------------------------------------");
 
-        air_massFlowRate_ring1_label.setText("Ring 1");
-
-        air_massFlowRate_ring2_label.setText("Ring 2");
-
-        air_massFlowRateTotal_label.setText("Total");
-
-        air_tempF_label.setText("Temperature (\u00b0F)");
-
         air_tempF_tf.setColumns(5);
-        air_tempF_tf.setHorizontalAlignment(javax.swing.JTextField.TRAILING);
-        air_tempF_tf.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                air_tempF_tfActionPerformed(evt);
-            }
-        });
-
-        air_massFlowRate_total_tf.setEditable(false);
-        air_massFlowRate_total_tf.setBackground(new java.awt.Color(230, 230, 230));
-        air_massFlowRate_total_tf.setColumns(5);
-        air_massFlowRate_total_tf.setHorizontalAlignment(javax.swing.JTextField.TRAILING);
-        air_massFlowRate_total_tf.setFocusable(false);
-
-        air_massFlowRate_ring2_tf.setColumns(5);
-        air_massFlowRate_ring2_tf.setHorizontalAlignment(javax.swing.JTextField.TRAILING);
-        air_massFlowRate_ring2_tf.setText("0");
-        air_massFlowRate_ring2_tf.setInputVerifier(new MyAbstractValidator(this, air_massFlowRate_ring2_tf, ""));
-        air_massFlowRate_ring2_tf.setName("air_ring2"); // NOI18N
-        air_massFlowRate_ring2_tf.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                air_massFlowRate_ring2_tfActionPerformed(evt);
-            }
-        });
 
         air_massFlowRate_ring1_tf.setColumns(5);
-        air_massFlowRate_ring1_tf.setHorizontalAlignment(javax.swing.JTextField.TRAILING);
-        air_massFlowRate_ring1_tf.setText("0");
         air_massFlowRate_ring1_tf.setInputVerifier(new MyAbstractValidator(this, air_massFlowRate_ring1_tf, ""));
         air_massFlowRate_ring1_tf.setName("air_ring1"); // NOI18N
-        air_massFlowRate_ring1_tf.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                air_massFlowRate_ring1_tfActionPerformed(evt);
-            }
-        });
 
-        jLabel11.setText("(lbs/hr)");
+        air_massFlowRate_ring2_tf.setColumns(5);
+        air_massFlowRate_ring2_tf.setInputVerifier(new MyAbstractValidator(this, air_massFlowRate_ring2_tf, ""));
+        air_massFlowRate_ring2_tf.setName("air_ring2"); // NOI18N
 
-        jLabel12.setText("%");
+        air_massFlowRate_total_tf.setColumns(5);
 
-        air_massFlowRate_ring1_percentage_tf.setEditable(false);
-        air_massFlowRate_ring1_percentage_tf.setBackground(new java.awt.Color(230, 230, 230));
+        air_mfr_pph_unit_label.setText("(lbs/hr)");
+        air_mfr_percentage_label.setText("%");
+
         air_massFlowRate_ring1_percentage_tf.setColumns(5);
-        air_massFlowRate_ring1_percentage_tf.setHorizontalAlignment(javax.swing.JTextField.TRAILING);
-        air_massFlowRate_ring1_percentage_tf.setText("0");
-        air_massFlowRate_ring1_percentage_tf.setFocusable(false);
-
-        air_massFlowRate_ring2_percentage_tf.setEditable(false);
-        air_massFlowRate_ring2_percentage_tf.setBackground(new java.awt.Color(230, 230, 230));
         air_massFlowRate_ring2_percentage_tf.setColumns(5);
-        air_massFlowRate_ring2_percentage_tf.setHorizontalAlignment(javax.swing.JTextField.TRAILING);
-        air_massFlowRate_ring2_percentage_tf.setText("0");
-        air_massFlowRate_ring2_percentage_tf.setFocusable(false);
-
-        air_massFlowRate_total_percentage_tf.setEditable(false);
-        air_massFlowRate_total_percentage_tf.setBackground(new java.awt.Color(230, 230, 230));
         air_massFlowRate_total_percentage_tf.setColumns(5);
-        air_massFlowRate_total_percentage_tf.setHorizontalAlignment(javax.swing.JTextField.TRAILING);
-        air_massFlowRate_total_percentage_tf.setFocusable(false);
 
         javax.swing.GroupLayout airPanel_subPanel1Layout = new javax.swing.GroupLayout(airPanel_subPanel1);
         airPanel_subPanel1.setLayout(airPanel_subPanel1Layout);
@@ -647,7 +594,7 @@ public class ApplicationGUI extends javax.swing.JFrame {
                     .addGroup(airPanel_subPanel1Layout.createSequentialGroup()
                         .addGap(16, 16, 16)
                         .addGroup(airPanel_subPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jLabel11, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(air_mfr_pph_unit_label, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(airPanel_subPanel1Layout.createSequentialGroup()
                                 .addComponent(air_massFlowRate_ring1_label)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -667,7 +614,7 @@ public class ApplicationGUI extends javax.swing.JFrame {
                             .addComponent(air_massFlowRate_total_percentage_tf, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(airPanel_subPanel1Layout.createSequentialGroup()
                                 .addGap(11, 11, 11)
-                                .addComponent(jLabel12))))
+                                .addComponent(air_mfr_percentage_label))))
                     .addGroup(airPanel_subPanel1Layout.createSequentialGroup()
                         .addGap(8, 8, 8)
                         .addComponent(jLabel58)))
@@ -680,8 +627,8 @@ public class ApplicationGUI extends javax.swing.JFrame {
                 .addComponent(jLabel58)
                 .addGap(18, 18, 18)
                 .addGroup(airPanel_subPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel12)
-                    .addComponent(jLabel11))
+                    .addComponent(air_mfr_percentage_label)
+                    .addComponent(air_mfr_pph_unit_label))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(airPanel_subPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(air_massFlowRate_ring1_label)
@@ -2152,17 +2099,17 @@ public class ApplicationGUI extends javax.swing.JFrame {
     private javax.swing.JLabel air_VolumeFraction_label;
     private javax.swing.JLabel air_massFlowRateTotal_label;
     private javax.swing.JLabel air_massFlowRate_ring1_label;
-    private javax.swing.JTextField air_massFlowRate_ring1_percentage_tf;
-    private javax.swing.JTextField air_massFlowRate_ring1_tf;
+    private ThermOxInputField air_massFlowRate_ring1_percentage_tf;
+    private ThermOxInputField air_massFlowRate_ring1_tf;
     private javax.swing.JLabel air_massFlowRate_ring2_label;
-    private javax.swing.JTextField air_massFlowRate_ring2_percentage_tf;
-    private javax.swing.JTextField air_massFlowRate_ring2_tf;
-    private javax.swing.JTextField air_massFlowRate_total_percentage_tf;
-    private javax.swing.JTextField air_massFlowRate_total_tf;
+    private ThermOxInputField air_massFlowRate_ring2_percentage_tf;
+    private ThermOxInputField air_massFlowRate_ring2_tf;
+    private ThermOxInputField air_massFlowRate_total_percentage_tf;
+    private ThermOxInputField air_massFlowRate_total_tf;
     private javax.swing.JPanel air_panel;
     private javax.swing.JLabel air_species_label;
     private javax.swing.JLabel air_tempF_label;
-    private javax.swing.JTextField air_tempF_tf;
+    private ThermOxInputField air_tempF_tf;
     private javax.swing.JLabel air_title_label;
     private javax.swing.JTextField air_totalVolumeFraction_tf;
     private javax.swing.JTextField ambientTemp_tf;
@@ -2215,8 +2162,8 @@ public class ApplicationGUI extends javax.swing.JFrame {
     private javax.swing.JTextField flueGas_total_tf;
     private javax.swing.JLabel flueGas_volumeFraction_label;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel11;
-    private javax.swing.JLabel jLabel12;
+    private javax.swing.JLabel air_mfr_pph_unit_label;
+    private javax.swing.JLabel air_mfr_percentage_label;
     private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel15;
     private javax.swing.JLabel jLabel16;
@@ -2439,9 +2386,7 @@ public class ApplicationGUI extends javax.swing.JFrame {
         // DO NOT REMOVE THIS LINE, THIS IS NOT IN THE AIR SPECIES ARRAY
         textFieldHash.put("H2OairByMass", air_H2ObyMass_tf.getText());
 
-        textFieldHash.put("TotalMassAirFlow", air_massFlowRate_total_tf.getText());
         textFieldHash.put("TotalMassFlueGas", flueGas_massFlowRate_total_tf.getText());
-        textFieldHash.put("airTempF", air_tempF_tf.getText());
         textFieldHash.put("ammoniaInjectMassFlow", ammoniaInject_massFlowRate_tf.getText());
         textFieldHash.put("ammoniaInjectTempF", ammoniaInject_tempF_tf.getText());
         textFieldHash.put("ammoniaInjectionSiteTF", ammoniaInjectionSiteTF.getText());
@@ -2452,8 +2397,6 @@ public class ApplicationGUI extends javax.swing.JFrame {
         textFieldHash.put("ammoniaInjectTotal", ammoniaInject_total_tf.getText());
         textFieldHash.put("massAirFlue1", flueGas_massFlowRate_ring1_tf.getText());
         textFieldHash.put("massAirFlue2", flueGas_massFlowRate_ring2_tf.getText());
-        textFieldHash.put("massAirRing1", air_massFlowRate_ring1_tf.getText());
-        textFieldHash.put("massAirRing2", air_massFlowRate_ring2_tf.getText());
         textFieldHash.put("ring1distanceTF", ring1distanceTF.getText());
         textFieldHash.put("ring2distanceTF", ring2distanceTF.getText());
         textFieldHash.put("synTotalTF", syn_totalFraction_tf.getText());
@@ -2505,18 +2448,14 @@ public class ApplicationGUI extends javax.swing.JFrame {
         //update total of ammonia injection
         updateFields("ammoniaInj_species");
 
-        for (JTextField textField : synGasVolFlowRateTextFieldsArrayList) {
+        for (JTextField textField : airMassFlowRateTextFieldsArrayList) {
             ((ThermOxInputField)textField).resetValue(false);
         }
-
-        air_massFlowRate_ring1_tf.setText("3900");
-        air_massFlowRate_ring2_tf.setText("4000");
 
         //update the percentages for the air mass flow rate in rings 1 and 2
         updateFields("air_ring1");
         updateFields("air_ring2");
 
-        air_tempF_tf.setText("77");
         flueGas_massFlowRate_ring1_tf.setText("0");
         flueGas_massFlowRate_ring2_tf.setText("500");
 
@@ -3141,7 +3080,8 @@ public class ApplicationGUI extends javax.swing.JFrame {
         
         return true;
     }
-    
+
+    // TODO: finish these
     private void clearFields (){
         // Clear synthesis gas fields
         clearTextFieldsInList(synGasSpeciesTextFieldsList, "0.0");
