@@ -24,13 +24,9 @@ public class ThermOxInputField extends JTextField {
             this.defaultPresetValue = defaultPresetValue;
         }
 
-        public Builder labelName (String labelName) {
-            this.labelName = labelName;
-            return this;
-        }
-
-        public Builder jLabel (JLabel jLabel) {
+        public Builder jLabel (JLabel jLabel, String labelName) {
             this.jLabel = jLabel;
+            this.labelName = labelName;
             return this;
         }
 
@@ -75,7 +71,11 @@ public class ThermOxInputField extends JTextField {
     }
 
     public String getLabelName() {
-        return this.labelName;
+        if (this.jLabel != null && this.labelName != null) {
+            return this.labelName;
+        } else {
+            return "";
+        }
     }
 
     public JLabel getjLabel() {
