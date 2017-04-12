@@ -670,18 +670,18 @@ public class ThermalOxidizer extends SwingWorker<Integer, String> {
         cpNOInSyngas = (ALPHA_NO * tempSyn + (BETA_NO) / 2 * tempSyn2 + GAMMA_NO / 3 * tempSyn3) / tempSyn;
         // CP values in Btu/lbmol-F or cal/gmol-C
 
-        double molFlowRateArSyn = Double.parseDouble((String) textFieldHash.get("ARsyn")) * molFlowRateSyngas;
-        double molFlowRateC6H6Syn = Double.parseDouble((String) textFieldHash.get("C6H6syn")) * molFlowRateSyngas;
-        double molFlowRateCH4Syn = Double.parseDouble((String) textFieldHash.get("CH4syn")) * molFlowRateSyngas;
-        double molFlowRateCOSyn = Double.parseDouble((String) textFieldHash.get("COsyn")) * molFlowRateSyngas;
-        double molFlowRateCO2Syn = Double.parseDouble((String) textFieldHash.get("CO2syn")) * molFlowRateSyngas;
-        double molFlowRateH2Syn = Double.parseDouble((String) textFieldHash.get("H2syn")) * molFlowRateSyngas;
-        double molFlowRateH2OSyn = Double.parseDouble((String) textFieldHash.get("H2Osyn")) * molFlowRateSyngas;
-        double molFlowRateH2SSyn = Double.parseDouble((String) textFieldHash.get("H2Ssyn")) * molFlowRateSyngas;
-        double molFlowRateHClSyn = Double.parseDouble((String) textFieldHash.get("HCLsyn")) * molFlowRateSyngas;
-        double molFlowRateN2Syn = Double.parseDouble((String) textFieldHash.get("N2syn")) * molFlowRateSyngas;
-        double molFlowRateNH3Syn = Double.parseDouble((String) textFieldHash.get("NH3syn")) * molFlowRateSyngas;
-        double molFlowRateO2Syn = Double.parseDouble((String) textFieldHash.get("O2syn")) * molFlowRateSyngas;
+        double molFlowRateArSyn = Double.parseDouble((String) textFieldHash.get(Constants.SYN_AR_HASH_KEY)) * molFlowRateSyngas;
+        double molFlowRateC6H6Syn = Double.parseDouble((String) textFieldHash.get(Constants.SYN_C6H6_HASH_KEY)) * molFlowRateSyngas;
+        double molFlowRateCH4Syn = Double.parseDouble((String) textFieldHash.get(Constants.SYN_CH4_HASH_KEY)) * molFlowRateSyngas;
+        double molFlowRateCOSyn = Double.parseDouble((String) textFieldHash.get(Constants.SYN_CO_HASH_KEY)) * molFlowRateSyngas;
+        double molFlowRateCO2Syn = Double.parseDouble((String) textFieldHash.get(Constants.SYN_CO2_HASH_KEY)) * molFlowRateSyngas;
+        double molFlowRateH2Syn = Double.parseDouble((String) textFieldHash.get(Constants.SYN_H2_HASH_KEY)) * molFlowRateSyngas;
+        double molFlowRateH2OSyn = Double.parseDouble((String) textFieldHash.get(Constants.SYN_H2O_HASH_KEY)) * molFlowRateSyngas;
+        double molFlowRateH2SSyn = Double.parseDouble((String) textFieldHash.get(Constants.SYN_H2S_HASH_KEY)) * molFlowRateSyngas;
+        double molFlowRateHClSyn = Double.parseDouble((String) textFieldHash.get(Constants.SYN_HCL_HASH_KEY)) * molFlowRateSyngas;
+        double molFlowRateN2Syn = Double.parseDouble((String) textFieldHash.get(Constants.SYN_N2_HASH_KEY)) * molFlowRateSyngas;
+        double molFlowRateNH3Syn = Double.parseDouble((String) textFieldHash.get(Constants.SYN_NH3_HASH_KEY)) * molFlowRateSyngas;
+        double molFlowRateO2Syn = Double.parseDouble((String) textFieldHash.get(Constants.SYN_O2_HASH_KEY)) * molFlowRateSyngas;
                
         double massFlowRateArSyn = molFlowRateArSyn * AR_MW;
         double massFlowRateC6H6Syn = molFlowRateC6H6Syn * (6 * C_MW + 6 * H_MW);
@@ -1001,40 +1001,40 @@ public class ThermalOxidizer extends SwingWorker<Integer, String> {
                     //switch statememnt to select what textfield content is copied to the file
                     switch (speciesIndex) {
                         case 0:
-                            tfText = ((String) textFieldHash.get("ARsyn"));
+                            tfText = ((String) textFieldHash.get(Constants.SYN_AR_HASH_KEY));
                             break;
                         case 1:
-                            tfText = ((String) textFieldHash.get("C6H6syn"));
+                            tfText = ((String) textFieldHash.get(Constants.SYN_C6H6_HASH_KEY));
                             break;
                         case 2:
-                            tfText = ((String) textFieldHash.get("CH4syn"));
+                            tfText = ((String) textFieldHash.get(Constants.SYN_CH4_HASH_KEY));
                             break;
                         case 3:
-                            tfText = ((String) textFieldHash.get("COsyn"));
+                            tfText = ((String) textFieldHash.get(Constants.SYN_CO_HASH_KEY));
                             break;
                         case 4:
-                            tfText = ((String) textFieldHash.get("CO2syn"));
+                            tfText = ((String) textFieldHash.get(Constants.SYN_CO2_HASH_KEY));
                             break;
                         case 5:
-                            tfText = ((String) textFieldHash.get("H2syn"));
+                            tfText = ((String) textFieldHash.get(Constants.SYN_H2_HASH_KEY));
                             break;
                         case 6:
-                            tfText = ((String) textFieldHash.get("H2Osyn"));
+                            tfText = ((String) textFieldHash.get(Constants.SYN_H2O_HASH_KEY));
                             break;
                         case 7:
-                            tfText = ((String) textFieldHash.get("H2Ssyn"));
+                            tfText = ((String) textFieldHash.get(Constants.SYN_H2S_HASH_KEY));
                             break;
                         case 8:
-                            tfText = ((String) textFieldHash.get("HCLsyn"));
+                            tfText = ((String) textFieldHash.get(Constants.SYN_HCL_HASH_KEY));
                             break;
                         case 9:
-                            tfText = ((String) textFieldHash.get("N2syn"));
+                            tfText = ((String) textFieldHash.get(Constants.SYN_N2_HASH_KEY));
                             break;
                         case 10:
-                            tfText = ((String) textFieldHash.get("NH3syn"));
+                            tfText = ((String) textFieldHash.get(Constants.SYN_NH3_HASH_KEY));
                             break;
                         case 11:
-                            tfText = ((String) textFieldHash.get("O2syn"));
+                            tfText = ((String) textFieldHash.get(Constants.SYN_O2_HASH_KEY));
                             break;
                         default:
                             break;

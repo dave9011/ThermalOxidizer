@@ -57,4 +57,17 @@ public class Constants {
     static final String CO_LABEL = "CO";
     static final String CO2_LABEL = "CO2";
     static final String HCL_LABEL = "HCL";
+
+    static final String SYN_N2_HASH_KEY = "N2syn";
+    static final String SYN_AR_HASH_KEY = "ARsyn";
+    static final String SYN_O2_HASH_KEY = "O2syn";
+    static final String SYN_H2O_HASH_KEY = "H2Osyn";
+    static final String SYN_C6H6_HASH_KEY = "C6H6syn";
+    static final String SYN_CH4_HASH_KEY = "CH4syn";
+    static final String SYN_NH3_HASH_KEY = "NH3syn";
+    static final String SYN_H2S_HASH_KEY = "H2Ssyn";
+    static final String SYN_H2_HASH_KEY = "H2syn";
+    static final String SYN_CO_HASH_KEY = "COsyn";
+    static final String SYN_CO2_HASH_KEY = "CO2syn";
+    static final String SYN_HCL_HASH_KEY = "HCLsyn";
 }
