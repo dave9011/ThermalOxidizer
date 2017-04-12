@@ -42,6 +42,19 @@ public class Constants {
     static final double DEFAULT_THERM_OXIDIZER_AMBIENT_TEMP_FAHRENHEIT = 68;
 
     static final String SPECIES_LABEL = "Species";
-    static final String TEMP_FARENHEIT_LABEL = "Temperature (\u00b0F)";
+    static final String TEMP_FAHRENHEIT_LABEL = "Temperature (\u00b0F)";
     static final String LBS_PER_HR_LABEL = "(lbs/hr)";
+
+    static final String N2_LABEL = "N2";
+    static final String AR_LABEL = "AR";
+    static final String O2_LABEL = "O2";
+    static final String H2O_LABEL = "H2O";
+    static final String C6H6_LABEL = "C6H6";
+    static final String CH4_LABEL = "CH4";
+    static final String NH3_LABEL = "NH3";
+    static final String H2S_LABEL = "H2S";
+    static final String H2_LABEL = "H2";
+    static final String CO_LABEL = "CO";
+    static final String CO2_LABEL = "CO2";
+    static final String HCL_LABEL = "HCL";
 }

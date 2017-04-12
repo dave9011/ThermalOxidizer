@@ -98,25 +98,25 @@ public class ApplicationGUI extends javax.swing.JFrame {
         synGas_title_label = new javax.swing.JLabel();
         synGasPanel_subPanel1 = new javax.swing.JPanel();
         syn_total_label = new javax.swing.JLabel();
-        syn_N2_tf = new ThermOxInputField.Builder("N2syn", Constants.DEFAULT_SYN_GAS_N2).jLabel(synN2_label = new javax.swing.JLabel(), "N2").build();
-        syn_AR_tf = new ThermOxInputField.Builder("ARsyn", Constants.DEFAULT_SYN_GAS_AR).jLabel(synAR_label = new javax.swing.JLabel(), "AR").build();
-        syn_O2_tf = new ThermOxInputField.Builder("O2syn", Constants.DEFAULT_SYN_GAS_O2).jLabel(synO2_label = new javax.swing.JLabel(), "O2").build();
-        syn_H2O_tf = new ThermOxInputField.Builder("H2Osyn", Constants.DEFAULT_SYN_GAS_H2O).jLabel(synH2O_label = new javax.swing.JLabel(), "H20").build();
-        syn_C6H6_tf = new ThermOxInputField.Builder("C6H6syn", Constants.DEFAULT_SYN_GAS_C6H6).jLabel(synC6H6_label = new javax.swing.JLabel(), "C6H6").build();
-        syn_CH4_tf = new ThermOxInputField.Builder("CH4syn", Constants.DEFAULT_SYN_GAS_CH4).jLabel(synCH4_label = new javax.swing.JLabel(), "CH4").build();
-        syn_NH3_tf = new ThermOxInputField.Builder("NH3syn", Constants.DEFAULT_SYN_GAS_NH3).jLabel(synNH3_label = new javax.swing.JLabel(), "NH3").build();
-        syn_H2S_tf = new ThermOxInputField.Builder("H2Ssyn", Constants.DEFAULT_SYN_GAS_H2S).jLabel(synH2S_label = new javax.swing.JLabel(), "H2S").build();
-        syn_H2_tf = new ThermOxInputField.Builder("H2syn", Constants.DEFAULT_SYN_GAS_H2).jLabel(synH2_label = new javax.swing.JLabel(), "H2").build();
-        syn_CO_tf = new ThermOxInputField.Builder("COsyn", Constants.DEFAULT_SYN_GAS_CO).jLabel(synCO_label = new javax.swing.JLabel(), "CO").build();
-        syn_CO2_tf = new ThermOxInputField.Builder("CO2syn", Constants.DEFAULT_SYN_GAS_CO2).jLabel(synCO2_label = new javax.swing.JLabel(), "CO2").build();
-        syn_HCL_tf = new ThermOxInputField.Builder("HCLsyn", Constants.DEFAULT_SYN_GAS_HCL).jLabel(synHCL_label = new javax.swing.JLabel(), "HCL").build();
+        syn_N2_tf = new ThermOxInputField.Builder("N2syn", Constants.DEFAULT_SYN_GAS_N2).jLabel(synN2_label = new javax.swing.JLabel(), Constants.N2_LABEL).build();
+        syn_AR_tf = new ThermOxInputField.Builder("ARsyn", Constants.DEFAULT_SYN_GAS_AR).jLabel(synAR_label = new javax.swing.JLabel(), Constants.AR_LABEL).build();
+        syn_O2_tf = new ThermOxInputField.Builder("O2syn", Constants.DEFAULT_SYN_GAS_O2).jLabel(synO2_label = new javax.swing.JLabel(), Constants.O2_LABEL).build();
+        syn_H2O_tf = new ThermOxInputField.Builder("H2Osyn", Constants.DEFAULT_SYN_GAS_H2O).jLabel(synH2O_label = new javax.swing.JLabel(), Constants.H2O_LABEL).build();
+        syn_C6H6_tf = new ThermOxInputField.Builder("C6H6syn", Constants.DEFAULT_SYN_GAS_C6H6).jLabel(synC6H6_label = new javax.swing.JLabel(), Constants.C6H6_LABEL).build();
+        syn_CH4_tf = new ThermOxInputField.Builder("CH4syn", Constants.DEFAULT_SYN_GAS_CH4).jLabel(synCH4_label = new javax.swing.JLabel(), Constants.CH4_LABEL).build();
+        syn_NH3_tf = new ThermOxInputField.Builder("NH3syn", Constants.DEFAULT_SYN_GAS_NH3).jLabel(synNH3_label = new javax.swing.JLabel(), Constants.NH3_LABEL).build();
+        syn_H2S_tf = new ThermOxInputField.Builder("H2Ssyn", Constants.DEFAULT_SYN_GAS_H2S).jLabel(synH2S_label = new javax.swing.JLabel(), Constants.H2S_LABEL).build();
+        syn_H2_tf = new ThermOxInputField.Builder("H2syn", Constants.DEFAULT_SYN_GAS_H2).jLabel(synH2_label = new javax.swing.JLabel(), Constants.H2_LABEL).build();
+        syn_CO_tf = new ThermOxInputField.Builder("COsyn", Constants.DEFAULT_SYN_GAS_CO).jLabel(synCO_label = new javax.swing.JLabel(), Constants.CO_LABEL).build();
+        syn_CO2_tf = new ThermOxInputField.Builder("CO2syn", Constants.DEFAULT_SYN_GAS_CO2).jLabel(synCO2_label = new javax.swing.JLabel(), Constants.CO2_LABEL).build();
+        syn_HCL_tf = new ThermOxInputField.Builder("HCLsyn", Constants.DEFAULT_SYN_GAS_HCL).jLabel(synHCL_label = new javax.swing.JLabel(), Constants.HCL_LABEL).build();
         syn_totalFraction_tf = new javax.swing.JTextField();
         synVolumeFraction_label = new javax.swing.JLabel();
         airSpecies_label = new javax.swing.JLabel();
         synGasPanel_subPanel2 = new javax.swing.JPanel();
         synVolFlowRate_label = new javax.swing.JLabel();
         syn_VolFlowRate_tf = new ThermOxInputField.Builder("synGasMassFlow", Constants.DEFAULT_SYN_GAS_VOL_FLOW_RATE).jLabel(synVolFlowRate_label = new javax.swing.JLabel(), "Vol Flow Rate").build();
-        syn_tempF_tf = new ThermOxInputField.Builder("synTempF", Constants.DEFAULT_SYN_GAS_TEMP_FAHRENHEIT).jLabel(synTemp_label = new javax.swing.JLabel(), Constants.TEMP_FARENHEIT_LABEL).build();
+        syn_tempF_tf = new ThermOxInputField.Builder("synTempF", Constants.DEFAULT_SYN_GAS_TEMP_FAHRENHEIT).jLabel(synTemp_label = new javax.swing.JLabel(), Constants.TEMP_FAHRENHEIT_LABEL).build();
         synVolFlowRate_units_label = new javax.swing.JLabel();
         air_panel = new javax.swing.JPanel();
         air_title_label = new javax.swing.JLabel();
@@ -125,7 +125,7 @@ public class ApplicationGUI extends javax.swing.JFrame {
         air_massFlowRate_ring1_tf = new ThermOxInputField.Builder("massAirRing1", Constants.DEFAULT_AIR_MFR_RING_1).jLabel(air_massFlowRate_ring1_label = new javax.swing.JLabel(), "Ring 1").build();
         air_massFlowRate_ring2_tf = new ThermOxInputField.Builder("massAirRing2", Constants.DEFAULT_AIR_MFR_RING_2).jLabel(air_massFlowRate_ring2_label = new javax.swing.JLabel(), "Ring 2").build();
         air_massFlowRate_total_tf = new ThermOxInputField.Builder("TotalMassAirFlow", 0).jLabel(air_massFlowRateTotal_label = new javax.swing.JLabel(), "Total").userEditable(false).build();
-        air_tempF_tf = new ThermOxInputField.Builder("airTempF", Constants.DEFAULT_AIR_TEMP_FAHRENHEIT).jLabel(air_tempF_label = new javax.swing.JLabel(), Constants.TEMP_FARENHEIT_LABEL).build();
+        air_tempF_tf = new ThermOxInputField.Builder("airTempF", Constants.DEFAULT_AIR_TEMP_FAHRENHEIT).jLabel(air_tempF_label = new javax.swing.JLabel(), Constants.TEMP_FAHRENHEIT_LABEL).build();
         air_mfr_pph_unit_label = new javax.swing.JLabel();
         air_mfr_percentage_label = new javax.swing.JLabel();
         air_massFlowRate_ring1_percentage_tf = new ThermOxInputField.Builder("massAirRing1Percentage", 0).userEditable(false).build();
@@ -133,10 +133,10 @@ public class ApplicationGUI extends javax.swing.JFrame {
         air_massFlowRate_total_percentage_tf = new ThermOxInputField.Builder("massAirTotalPercentage", 0).userEditable(false).build();
         air_VolumeFraction_label = new javax.swing.JLabel();
         air_species_label = new javax.swing.JLabel();
-        air_N2_tf = new ThermOxInputField.Builder("N2air", Constants.DEFAULT_AIR_N2).jLabel(air_N2_label = new javax.swing.JLabel(), "N2").userEditable(false).build();
-        air_AR_tf = new ThermOxInputField.Builder("ARair", Constants.DEFAULT_AIR_AR).jLabel(airAR_label = new javax.swing.JLabel(), "AR").userEditable(false).build();
-        air_O2_tf = new ThermOxInputField.Builder("O2air", Constants.DEFAULT_AIR_O2).jLabel(airO2_label = new javax.swing.JLabel(), "O2").userEditable(false).build();
-        air_H2ObyMass_tf = new ThermOxInputField.Builder("H2OairByMass", 0).jLabel(airH2O_label = new javax.swing.JLabel(), "H2O").build();
+        air_N2_tf = new ThermOxInputField.Builder("N2air", Constants.DEFAULT_AIR_N2).jLabel(air_N2_label = new javax.swing.JLabel(), Constants.N2_LABEL).userEditable(false).build();
+        air_AR_tf = new ThermOxInputField.Builder("ARair", Constants.DEFAULT_AIR_AR).jLabel(airAR_label = new javax.swing.JLabel(), Constants.AR_LABEL).userEditable(false).build();
+        air_O2_tf = new ThermOxInputField.Builder("O2air", Constants.DEFAULT_AIR_O2).jLabel(airO2_label = new javax.swing.JLabel(), Constants.O2_LABEL).userEditable(false).build();
+        air_H2ObyMass_tf = new ThermOxInputField.Builder("H2OairByMass", 0).jLabel(airH2O_label = new javax.swing.JLabel(), Constants.H2O_LABEL).build();
         air_H2ObyVolume_tf = new ThermOxInputField.Builder("H2OairByVolume", 0).userEditable(false).build();
         airVolumeFractionTotal_label = new javax.swing.JLabel();
         air_totalVolumeFraction_tf =  new javax.swing.JTextField();
@@ -164,19 +164,19 @@ public class ApplicationGUI extends javax.swing.JFrame {
         flueGas_total_label = new javax.swing.JLabel();
         flueGas_species_label = new javax.swing.JLabel();
         flueGas_volumeFraction_label = new javax.swing.JLabel();
-        flueGas_N2_tf = new ThermOxInputField.Builder("flueGasN2", Constants.DEFAULT_FLUE_GAS_N2).jLabel(flueGas_N2_label = new javax.swing.JLabel(), "N2").build();
-        flueGas_AR_tf = new ThermOxInputField.Builder("flueGasAr", Constants.DEFAULT_FLUE_GAS_AR).jLabel(flueGas_AR_label = new javax.swing.JLabel(), "AR").build();
-        flueGas_O2_tf = new ThermOxInputField.Builder("flueGasO2", Constants.DEFAULT_FLUE_GAS_O2).jLabel(flueGas_O2_label = new javax.swing.JLabel(), "O2").build();
-        flueGas_H2O_tf = new ThermOxInputField.Builder("flueGasH2O", Constants.DEFAULT_FLUE_GAS_H2O).jLabel(flueGas_H2O_label = new javax.swing.JLabel(), "H2O").build();
-        flueGas_CO2_tf = new ThermOxInputField.Builder("flueGasCO2", Constants.DEFAULT_FLUE_GAS_CO2).jLabel(flueGas_CO2_label = new javax.swing.JLabel(), "CO2").build();
+        flueGas_N2_tf = new ThermOxInputField.Builder("flueGasN2", Constants.DEFAULT_FLUE_GAS_N2).jLabel(flueGas_N2_label = new javax.swing.JLabel(), Constants.N2_LABEL).build();
+        flueGas_AR_tf = new ThermOxInputField.Builder("flueGasAr", Constants.DEFAULT_FLUE_GAS_AR).jLabel(flueGas_AR_label = new javax.swing.JLabel(), Constants.AR_LABEL).build();
+        flueGas_O2_tf = new ThermOxInputField.Builder("flueGasO2", Constants.DEFAULT_FLUE_GAS_O2).jLabel(flueGas_O2_label = new javax.swing.JLabel(), Constants.O2_LABEL).build();
+        flueGas_H2O_tf = new ThermOxInputField.Builder("flueGasH2O", Constants.DEFAULT_FLUE_GAS_H2O).jLabel(flueGas_H2O_label = new javax.swing.JLabel(), Constants.H2O_LABEL).build();
+        flueGas_CO2_tf = new ThermOxInputField.Builder("flueGasCO2", Constants.DEFAULT_FLUE_GAS_CO2).jLabel(flueGas_CO2_label = new javax.swing.JLabel(), Constants.CO2_LABEL).build();
         ammonia_panel = new javax.swing.JPanel();
         ammonia_subPanel1 = new javax.swing.JPanel();
         ammonia_title_label = new javax.swing.JLabel();
         jPanel12 = new javax.swing.JPanel();
         jLabel49 = new javax.swing.JLabel();
         jLabel50 = new javax.swing.JLabel();
-        ammoniaInject_H2O_tf = new ThermOxInputField.Builder("ammoniaInjectH2O", Constants.DEFAULT_AMMONIA_H2O_MASS).jLabel(ammoniaInject_H2O_label = new javax.swing.JLabel(), "H2O").build();
-        ammoniaInject_NH3_tf = new ThermOxInputField.Builder("ammoniaInjectNH3", Constants.DEFAULT_AMMONIA_NH3_MASS).jLabel(ammoniaInject_NH3_label = new javax.swing.JLabel(), "NH3").build();
+        ammoniaInject_H2O_tf = new ThermOxInputField.Builder("ammoniaInjectH2O", Constants.DEFAULT_AMMONIA_H2O_MASS).jLabel(ammoniaInject_H2O_label = new javax.swing.JLabel(), Constants.H2O_LABEL).build();
+        ammoniaInject_NH3_tf = new ThermOxInputField.Builder("ammoniaInjectNH3", Constants.DEFAULT_AMMONIA_NH3_MASS).jLabel(ammoniaInject_NH3_label = new javax.swing.JLabel(), Constants.NH3_LABEL).build();
         ammoniaInject_total_tf = new javax.swing.JTextField();
         ammoniaInject_total_label = new javax.swing.JLabel();
         jPanel13 = new javax.swing.JPanel();
@@ -935,7 +935,7 @@ public class ApplicationGUI extends javax.swing.JFrame {
         flueGas_total_label.setText("Total");
 
         flueGas_CO2_label.setBackground(new java.awt.Color(255, 153, 0));
-        flueGas_CO2_label.setText("CO2");
+        flueGas_CO2_label.setText(Constants.CO2_LABEL);
 
         flueGas_CO2_tf.setColumns(7);
         flueGas_CO2_tf.setHorizontalAlignment(javax.swing.JTextField.TRAILING);
@@ -960,10 +960,10 @@ public class ApplicationGUI extends javax.swing.JFrame {
         });
 
         flueGas_H2O_label.setBackground(new java.awt.Color(255, 153, 0));
-        flueGas_H2O_label.setText("H2O");
+        flueGas_H2O_label.setText(Constants.H2O_LABEL);
 
         flueGas_O2_label.setBackground(new java.awt.Color(255, 153, 0));
-        flueGas_O2_label.setText("O2");
+        flueGas_O2_label.setText(Constants.O2_LABEL);
 
         flueGas_O2_tf.setColumns(7);
         flueGas_O2_tf.setHorizontalAlignment(javax.swing.JTextField.TRAILING);
@@ -987,10 +987,10 @@ public class ApplicationGUI extends javax.swing.JFrame {
         flueGas_N2_tf.setName("flueGas_species"); // NOI18N
 
         flueGas_N2_label.setBackground(new java.awt.Color(255, 153, 0));
-        flueGas_N2_label.setText("N2");
+        flueGas_N2_label.setText(Constants.N2_LABEL);
 
         flueGas_AR_label.setBackground(new java.awt.Color(255, 153, 0));
-        flueGas_AR_label.setText("AR");
+        flueGas_AR_label.setText(Constants.AR_LABEL);
 
         flueGas_AR_tf.setColumns(7);
         flueGas_AR_tf.setHorizontalAlignment(javax.swing.JTextField.TRAILING);
@@ -1114,7 +1114,7 @@ public class ApplicationGUI extends javax.swing.JFrame {
         jLabel49.setText(Constants.SPECIES_LABEL);
 
         ammoniaInject_H2O_label.setBackground(new java.awt.Color(255, 153, 0));
-        ammoniaInject_H2O_label.setText("H2O");
+        ammoniaInject_H2O_label.setText(Constants.H2O_LABEL);
 
         jLabel50.setBackground(new java.awt.Color(255, 153, 0));
         jLabel50.setText("Mass Fraction");
@@ -1124,7 +1124,7 @@ public class ApplicationGUI extends javax.swing.JFrame {
         ammoniaInject_H2O_tf.setName("ammoniaInj_species"); // NOI18N
 
         ammoniaInject_NH3_label.setBackground(new java.awt.Color(255, 153, 0));
-        ammoniaInject_NH3_label.setText("NH3");
+        ammoniaInject_NH3_label.setText(Constants.NH3_LABEL);
 
         ammoniaInject_NH3_tf.setColumns(7);
         ammoniaInject_NH3_tf.setInputVerifier(new MyAbstractValidator(this, ammoniaInject_NH3_tf, ""));
